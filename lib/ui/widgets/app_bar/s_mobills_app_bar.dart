@@ -32,7 +32,7 @@ class SMobillsAppBar extends StatelessWidget implements PreferredSizeWidget {
       foregroundColor: foregroundColor,
       centerTitle: !isHomePage,
       title: Padding(
-        padding: const EdgeInsets.only(left: 20),
+        padding: EdgeInsets.only(left: isHomePage ? 20 : 0),
         child: Text(
           isHomePage ? 'Olá $title' : title,
           style: SMobillsTextStyles.h5.copyWith(fontWeight: FontWeight.w700),
