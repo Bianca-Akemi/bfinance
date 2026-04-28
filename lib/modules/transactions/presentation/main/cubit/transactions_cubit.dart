@@ -52,7 +52,11 @@ class TransactionsCubit extends Cubit<TransactionsState> {
     _floatingButtonToggle();
     await AppRouter.router.pushNamed(
       Routes.newTransaction.name,
-      extra: {'type': type},
+      extra: {
+        'type': type,
+        'year': state.year,
+        'month': state.month,
+      },
     );
 
     await _loadTransactions();
@@ -76,7 +80,7 @@ class TransactionsCubit extends Cubit<TransactionsState> {
   }
 
   void nextMonth() {
-    if (state.month == 1) {
+    if (state.month == 12) {
       emit(state.copyWith(year: state.year + 1, month: 1));
     } else {
       emit(state.copyWith(month: state.month + 1));
@@ -85,7 +89,7 @@ class TransactionsCubit extends Cubit<TransactionsState> {
   }
 
   void previousMonth() {
-    if (state.month == 12) {
+    if (state.month == 1) {
       emit(state.copyWith(year: state.year - 1, month: 12));
     } else {
       emit(state.copyWith(month: state.month - 1));

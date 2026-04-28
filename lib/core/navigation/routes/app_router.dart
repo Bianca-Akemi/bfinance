@@ -123,7 +123,13 @@ class AppRouter {
                 builder: (context, state) {
                   final extras = state.extra! as Map<String, dynamic>;
                   final transactionType = extras['type'] as TransactionType;
-                  return NewTransactionPage(transactionType: transactionType);
+                  final year = extras['year'] as int;
+                  final month = extras['month'] as int;
+                  return NewTransactionPage(
+                    transactionType: transactionType,
+                    referenceYear: year,
+                    referenceMonth: month,
+                  );
                 },
               ),
               GoRoute(

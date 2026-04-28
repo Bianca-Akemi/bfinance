@@ -18,7 +18,7 @@ class MonthlySelect extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 16),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           InkWell(
             onTap: onTapBack.call,
@@ -34,7 +34,6 @@ class MonthlySelect extends StatelessWidget {
               ),
             ),
           ),
-          SMobillsInline.custom(100),
           Text(
             title,
             style: SMobillsTextStyles.h6.copyWith(
@@ -42,7 +41,6 @@ class MonthlySelect extends StatelessWidget {
               color: context.colorScheme.onPrimary,
             ),
           ),
-          SMobillsInline.custom(100),
           InkWell(
             onTap: onTapNext,
             child: Container(

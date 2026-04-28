@@ -20,6 +20,8 @@ abstract class TransactionState with _$TransactionState {
     @Default(-1) int bankAccountId,
     @Default('Selecione a conta') String bankAccountName,
     @Default(-1) int transactionId,
+    @Default(0) int referenceYear,
+    @Default(0) int referenceMonth,
     DateTime? selectedDate,
   }) = _Initial;
 }

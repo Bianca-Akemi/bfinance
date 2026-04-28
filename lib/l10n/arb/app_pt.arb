@@ -52,5 +52,8 @@
     "emptyBankAccountsDetails": "Você não possui nenhuma conta cadastrada",
     "editAccount": "Editar conta",
     "editAccountDetails": "Edite os campos que quiser e não se esqueça de salvar",
-    "account": "Conta"
+    "account": "Conta",
+    "logoutConfirmTitle": "Sair da conta",
+    "logoutConfirmMessage": "Tem certeza que deseja sair da sua conta?",
+    "confirm": "Confirmar"
 }

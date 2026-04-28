@@ -52,5 +52,8 @@
     "emptyBankAccountsDetails": "You do not have any registered account",
     "editAccount": "Edit Account",
     "editAccountDetails": "Edit the fields you want and don't forget to save",
-    "account": "Account"
+    "account": "Account",
+    "logoutConfirmTitle": "Log out",
+    "logoutConfirmMessage": "Are you sure you want to log out?",
+    "confirm": "Confirm"
 }

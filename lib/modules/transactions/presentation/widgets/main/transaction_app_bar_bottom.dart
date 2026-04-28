@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:s_mobills/core/helpers/date_helper.dart';
 import 'package:s_mobills/modules/transactions/presentation/widgets/widgets.dart';
 import 'package:s_mobills/ui/utils/s_mobills_styles.dart';
 
 class TransactionAppBarBottom extends StatelessWidget
     implements PreferredSizeWidget {
   const TransactionAppBarBottom({
-    required this.title,
+    required this.month,
+    required this.year,
     required this.onTapBack,
     required this.onTapNext,
     super.key,
   });
 
-  final String title;
+  final int month;
+  final int year;
   final VoidCallback onTapNext;
   final VoidCallback onTapBack;
 
@@ -22,11 +25,7 @@ class TransactionAppBarBottom extends StatelessWidget
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Positioned.fill(
-          child: Container(
-            color: context.colorScheme.surface,
-          ),
-        ),
+        Positioned.fill(child: Container(color: context.colorScheme.surface)),
         Container(
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.only(
@@ -39,7 +38,7 @@ class TransactionAppBarBottom extends StatelessWidget
           child: Column(
             children: [
               MonthlySelect(
-                title: title,
+                title: DateHelper.formatterMonthAndYearBy(year, month),
                 onTapBack: onTapBack.call,
                 onTapNext: onTapNext.call,
               ),

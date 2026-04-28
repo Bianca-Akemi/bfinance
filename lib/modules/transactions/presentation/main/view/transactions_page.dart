@@ -36,7 +36,8 @@ class TransactionsView extends StatelessWidget {
             elevation: 0,
             customPreferredSize: const Size.fromHeight(170),
             bottom: TransactionAppBarBottom(
-              title: DateHelper.formatterBy(state.year, state.month),
+              month: state.month,
+              year: state.year,
               onTapBack: context.read<TransactionsCubit>().previousMonth,
               onTapNext: context.read<TransactionsCubit>().nextMonth,
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:s_mobills/core/helpers/date_helper.dart';
+import 'package:s_mobills/modules/home/presentation/widgets/home_empty_state.dart';
 import 'package:s_mobills/modules/home/presentation/widgets/home_header.dart';
 import 'package:s_mobills/modules/home/presentation/widgets/month_balance.dart';
 import 'package:s_mobills/modules/home/presentation/widgets/spending_bar_chart.dart';
@@ -40,7 +41,8 @@ class HomeView extends StatelessWidget {
             isHomePage: true,
             customPreferredSize: const Size.fromHeight(170),
             bottom: TransactionAppBarBottom(
-              title: DateHelper.formatterBy(state.year, state.month),
+              month: state.month,
+              year: state.year,
               onTapBack: context.read<HomeCubit>().previousMonth,
               onTapNext: context.read<HomeCubit>().nextMonth,
             ),
@@ -63,21 +65,30 @@ class HomeView extends StatelessWidget {
                       hasIncome: state.totalIncome.value > 0,
                     ),
                     SMobillsSpacing.md,
-                    SpendingCategory(
-                      categoriesDataSource: state.categoriesDataSource,
-                      month: DateHelper.formatterBy(state.year, state.month),
-                    ),
-                    SMobillsSpacing.lg,
-                    state.lastSevenDaysExpenseEmpty
-                        ? const SizedBox.shrink()
-                        : SpendingBarChart(
-                            expenseDays: state.lastSevenDaysExpense,
-                            incomeDays: state.lastSevenDaysIncome,
+                    state.categoriesDataSource.isEmpty
+                        ? const HomeEmptyState()
+                        : SpendingCategory(
+                            categoriesDataSource: state.categoriesDataSource,
+                            month: DateHelper.formatterMonthAndYearBy(
+                              state.year,
+                              state.month,
+                            ),
                           ),
                     SMobillsSpacing.lg,
                     state.lastSevenDaysExpenseEmpty
                         ? const SizedBox.shrink()
-                        : SpendingFrequency(days: state.lastSevenDaysExpense),
+                        : Column(
+                            children: [
+                              SpendingBarChart(
+                                expenseDays: state.lastSevenDaysExpense,
+                                incomeDays: state.lastSevenDaysIncome,
+                              ),
+                              SMobillsSpacing.lg,
+                              SpendingFrequency(
+                                days: state.lastSevenDaysExpense,
+                              ),
+                            ],
+                          ),
                   ],
                 ),
               ),

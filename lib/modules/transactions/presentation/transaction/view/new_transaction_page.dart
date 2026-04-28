@@ -9,10 +9,14 @@ import 'package:s_mobills/modules/transactions/module.dart';
 class NewTransactionPage extends StatelessWidget {
   const NewTransactionPage({
     required this.transactionType,
+    required this.referenceYear,
+    required this.referenceMonth,
     super.key,
   });
 
   final TransactionType transactionType;
+  final int referenceYear;
+  final int referenceMonth;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +27,8 @@ class NewTransactionPage extends StatelessWidget {
         updateTransactionUseCase: GetIt.I<UpdateTransactionUseCase>(),
       )..setupTransactionType(
           transactionType: transactionType,
+          referenceYear: referenceYear,
+          referenceMonth: referenceMonth,
         ),
       child: const TransactionView(),
     );

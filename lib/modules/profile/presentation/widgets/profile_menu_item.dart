@@ -24,27 +24,26 @@ class ProfileMenuItem extends StatelessWidget {
     return InkWell(
       onTap: onTap.call,
       borderRadius: BorderRadius.circular(12),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 4,
-          vertical: 14,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         child: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: (isDestructive
-                        ? context.colorScheme.error
-                        : context.colorScheme.primary)
-                    .withValues(alpha: 0.1),
+                color:
+                    (isDestructive
+                            ? context.colorScheme.error
+                            : context.colorScheme.primary)
+                        .withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(
-                icon,
-                size: 24,
-                color: color,
-              ),
+              child: Icon(icon, size: 24, color: color),
             ),
             const SizedBox(width: 16),
             Expanded(

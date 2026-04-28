@@ -9,9 +9,9 @@ class DateHelper {
     return DateTime(year, month + 1, 0, 23, 59, 59);
   }
 
-  static String formatterBy(int year, int month) {
+  static String formatterMonthAndYearBy(int year, int month) {
     final date = DateTime(year, month + 1, 0, 23, 59, 59);
-    final inputFormat = DateFormat('MMMM', 'pt_BR');
+    final inputFormat = DateFormat("MMMM 'de' yyyy", 'pt_BR');
     return inputFormat.format(date);
   }
 }

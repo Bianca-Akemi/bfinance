@@ -32,40 +32,47 @@ class MonthBalance extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        spacing: 5,
-                        children: [
-                          const Icon(
-                            Icons.south_outlined,
-                            color: Colors.green,
-                            size: 35,
-                          ),
-                          _BalanceRow(
-                            label: 'receitas',
-                            value: totalIncome,
-                            valueColor: const Color(0xFF4CAF50),
-                            context: context,
-                          ),
-                        ],
+                      Expanded(
+                        child: Row(
+                          spacing: 5,
+                          children: [
+                            const Icon(
+                              Icons.south_outlined,
+                              color: Colors.green,
+                              size: 35,
+                            ),
+                            Flexible(
+                              child: _BalanceRow(
+                                label: 'receitas',
+                                value: totalIncome,
+                                valueColor: const Color(0xFF4CAF50),
+                                context: context,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       SMobillsSpacing.sm,
-                      Row(
-                        spacing: 5,
-                        children: [
-                          const Icon(
-                            Icons.north_outlined,
-                            color: Color(0xFFBA3229),
-                            size: 35,
-                          ),
-                          _BalanceRow(
-                            label: 'despesas',
-                            value: totalExpanse,
-                            valueColor: const Color(0xFFBA3229),
-                            context: context,
-                          ),
-                        ],
+                      Expanded(
+                        child: Row(
+                          spacing: 5,
+                          children: [
+                            const Icon(
+                              Icons.north_outlined,
+                              color: Color(0xFFBA3229),
+                              size: 35,
+                            ),
+                            Flexible(
+                              child: _BalanceRow(
+                                label: 'despesas',
+                                value: totalExpanse,
+                                valueColor: const Color(0xFFBA3229),
+                                context: context,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -163,11 +170,11 @@ class MonthBalance extends StatelessWidget {
                       'Registre para calcular sua economia.'
                 : spentTooMuch
                 ? 'Você está gastando demais. '
-                      'Registre suas despesas e se controle.'
+                      'Registre suas despesas e se controle. 😕'
                 : 'Você está no controle, '
-                      'continue assim!',
+                      'continue assim! 🥳',
             textAlign: TextAlign.center,
-            style: SMobillsTextStyles.body2.copyWith(
+            style: SMobillsTextStyles.body1.copyWith(
               color: context.colorScheme.onSurface.withValues(alpha: 0.6),
             ),
           ),
@@ -193,7 +200,6 @@ class _BalanceRow extends StatelessWidget {
   @override
   Widget build(BuildContext _) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(

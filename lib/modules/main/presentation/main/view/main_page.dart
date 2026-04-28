@@ -36,7 +36,10 @@ class MainPage extends StatelessWidget {
 
   static final List<_NavItem> _tabs = [
     _NavItem(route: Routes.home.path, icon: Icons.home_rounded),
-    _NavItem(route: Routes.transactions.path, icon: Icons.description_rounded),
+    _NavItem(
+      route: Routes.transactions.path,
+      icon: Icons.monetization_on,
+    ),
     _NavItem(route: Routes.profile.path, icon: Icons.person_rounded),
   ];
 }
@@ -80,8 +83,8 @@ class _CustomNavBar extends StatelessWidget {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
                   curve: Curves.easeInOut,
-                  width: isSelected ? 52 : 48,
-                  height: isSelected ? 52 : 48,
+                  width: isSelected ? 60 : 48,
+                  height: isSelected ? 60 : 48,
                   decoration: BoxDecoration(
                     color: isSelected ? Colors.white : Colors.transparent,
                     shape: BoxShape.circle,

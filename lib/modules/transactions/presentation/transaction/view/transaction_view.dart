@@ -189,9 +189,28 @@ class TransactionView extends StatelessWidget {
   }
 
   List<Widget> _dateOptions(TransactionState state, BuildContext context) {
+    final refYear = state.referenceYear;
+    final refMonth = state.referenceMonth;
+    final firstDayOfMonth = DateTime(refYear, refMonth);
+    final lastDayOfMonth = DateTime(refYear, refMonth + 1, 0);
+
+    final now = DateTime.now();
+    final yesterday = now.subtract(const Duration(days: 1));
+    final isYesterdayInRefMonth =
+        yesterday.month == refMonth && yesterday.year == refYear;
+    final isTodayInRefMonth =
+        now.month == refMonth && now.year == refYear;
+
+    DateTime clampedInitialDate(DateTime? candidate) {
+      final d = candidate ?? firstDayOfMonth;
+      if (d.isBefore(firstDayOfMonth)) return firstDayOfMonth;
+      if (d.isAfter(lastDayOfMonth)) return lastDayOfMonth;
+      return d;
+    }
+
     return [
       Visibility(
-        visible: state.showAllDateOptions,
+        visible: state.showAllDateOptions && isYesterdayInRefMonth,
         child: GestureDetector(
           onTap: () => context.read<TransactionCubit>().onChangeSelectedDate(
             TransactionDate.yesterdayDate,
@@ -204,9 +223,9 @@ class TransactionView extends StatelessWidget {
           ),
         ),
       ),
-      SMobillsInline.sm,
+      if (isYesterdayInRefMonth) SMobillsInline.sm,
       Visibility(
-        visible: state.showAllDateOptions,
+        visible: state.showAllDateOptions && isTodayInRefMonth,
         child: GestureDetector(
           onTap: () => context.read<TransactionCubit>().onChangeSelectedDate(
             TransactionDate.todayDate,
@@ -219,16 +238,16 @@ class TransactionView extends StatelessWidget {
           ),
         ),
       ),
-      SMobillsInline.sm,
+      if (isTodayInRefMonth) SMobillsInline.sm,
       Visibility(
         visible: state.showAllDateOptions,
         child: GestureDetector(
           onTap: () async {
             final date = await showDatePicker(
               context: context,
-              initialDate: state.selectedDate ?? DateTime.now(),
-              firstDate: TransactionDate.initialDate,
-              lastDate: TransactionDate.lastDate,
+              initialDate: clampedInitialDate(state.selectedDate),
+              firstDate: firstDayOfMonth,
+              lastDate: lastDayOfMonth,
             );
 
             context.read<TransactionCubit>().onChangeSelectedDate(date);
@@ -245,9 +264,9 @@ class TransactionView extends StatelessWidget {
           onTap: () async {
             final date = await showDatePicker(
               context: context,
-              initialDate: state.selectedDate ?? DateTime.now(),
-              firstDate: TransactionDate.initialDate,
-              lastDate: TransactionDate.lastDate,
+              initialDate: clampedInitialDate(state.selectedDate),
+              firstDate: firstDayOfMonth,
+              lastDate: lastDayOfMonth,
             );
             context.read<TransactionCubit>().onChangeSelectedDate(date);
           },

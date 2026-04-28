@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TransactionState {
 
- double get transactionValue; String get description; bool get done; bool get showAllDateOptions; bool get isLoading; TransactionType get transactionType; CategoryType get categoryType; int get bankAccountId; String get bankAccountName; int get transactionId; DateTime? get selectedDate;
+ double get transactionValue; String get description; bool get done; bool get showAllDateOptions; bool get isLoading; TransactionType get transactionType; CategoryType get categoryType; int get bankAccountId; String get bankAccountName; int get transactionId; int get referenceYear; int get referenceMonth; DateTime? get selectedDate;
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $TransactionStateCopyWith<TransactionState> get copyWith => _$TransactionStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionState&&(identical(other.transactionValue, transactionValue) || other.transactionValue == transactionValue)&&(identical(other.description, description) || other.description == description)&&(identical(other.done, done) || other.done == done)&&(identical(other.showAllDateOptions, showAllDateOptions) || other.showAllDateOptions == showAllDateOptions)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.transactionType, transactionType) || other.transactionType == transactionType)&&(identical(other.categoryType, categoryType) || other.categoryType == categoryType)&&(identical(other.bankAccountId, bankAccountId) || other.bankAccountId == bankAccountId)&&(identical(other.bankAccountName, bankAccountName) || other.bankAccountName == bankAccountName)&&(identical(other.transactionId, transactionId) || other.transactionId == transactionId)&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionState&&(identical(other.transactionValue, transactionValue) || other.transactionValue == transactionValue)&&(identical(other.description, description) || other.description == description)&&(identical(other.done, done) || other.done == done)&&(identical(other.showAllDateOptions, showAllDateOptions) || other.showAllDateOptions == showAllDateOptions)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.transactionType, transactionType) || other.transactionType == transactionType)&&(identical(other.categoryType, categoryType) || other.categoryType == categoryType)&&(identical(other.bankAccountId, bankAccountId) || other.bankAccountId == bankAccountId)&&(identical(other.bankAccountName, bankAccountName) || other.bankAccountName == bankAccountName)&&(identical(other.transactionId, transactionId) || other.transactionId == transactionId)&&(identical(other.referenceYear, referenceYear) || other.referenceYear == referenceYear)&&(identical(other.referenceMonth, referenceMonth) || other.referenceMonth == referenceMonth)&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,transactionValue,description,done,showAllDateOptions,isLoading,transactionType,categoryType,bankAccountId,bankAccountName,transactionId,selectedDate);
+int get hashCode => Object.hash(runtimeType,transactionValue,description,done,showAllDateOptions,isLoading,transactionType,categoryType,bankAccountId,bankAccountName,transactionId,referenceYear,referenceMonth,selectedDate);
 
 @override
 String toString() {
-  return 'TransactionState(transactionValue: $transactionValue, description: $description, done: $done, showAllDateOptions: $showAllDateOptions, isLoading: $isLoading, transactionType: $transactionType, categoryType: $categoryType, bankAccountId: $bankAccountId, bankAccountName: $bankAccountName, transactionId: $transactionId, selectedDate: $selectedDate)';
+  return 'TransactionState(transactionValue: $transactionValue, description: $description, done: $done, showAllDateOptions: $showAllDateOptions, isLoading: $isLoading, transactionType: $transactionType, categoryType: $categoryType, bankAccountId: $bankAccountId, bankAccountName: $bankAccountName, transactionId: $transactionId, referenceYear: $referenceYear, referenceMonth: $referenceMonth, selectedDate: $selectedDate)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $TransactionStateCopyWith<$Res>  {
   factory $TransactionStateCopyWith(TransactionState value, $Res Function(TransactionState) _then) = _$TransactionStateCopyWithImpl;
 @useResult
 $Res call({
- double transactionValue, String description, bool done, bool showAllDateOptions, bool isLoading, TransactionType transactionType, CategoryType categoryType, int bankAccountId, String bankAccountName, int transactionId, DateTime? selectedDate
+ double transactionValue, String description, bool done, bool showAllDateOptions, bool isLoading, TransactionType transactionType, CategoryType categoryType, int bankAccountId, String bankAccountName, int transactionId, int referenceYear, int referenceMonth, DateTime? selectedDate
 });
 
 
@@ -62,7 +62,7 @@ class _$TransactionStateCopyWithImpl<$Res>
 
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? transactionValue = null,Object? description = null,Object? done = null,Object? showAllDateOptions = null,Object? isLoading = null,Object? transactionType = null,Object? categoryType = null,Object? bankAccountId = null,Object? bankAccountName = null,Object? transactionId = null,Object? selectedDate = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? transactionValue = null,Object? description = null,Object? done = null,Object? showAllDateOptions = null,Object? isLoading = null,Object? transactionType = null,Object? categoryType = null,Object? bankAccountId = null,Object? bankAccountName = null,Object? transactionId = null,Object? referenceYear = null,Object? referenceMonth = null,Object? selectedDate = freezed,}) {
   return _then(_self.copyWith(
 transactionValue: null == transactionValue ? _self.transactionValue : transactionValue // ignore: cast_nullable_to_non_nullable
 as double,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
@@ -74,6 +74,8 @@ as TransactionType,categoryType: null == categoryType ? _self.categoryType : cat
 as CategoryType,bankAccountId: null == bankAccountId ? _self.bankAccountId : bankAccountId // ignore: cast_nullable_to_non_nullable
 as int,bankAccountName: null == bankAccountName ? _self.bankAccountName : bankAccountName // ignore: cast_nullable_to_non_nullable
 as String,transactionId: null == transactionId ? _self.transactionId : transactionId // ignore: cast_nullable_to_non_nullable
+as int,referenceYear: null == referenceYear ? _self.referenceYear : referenceYear // ignore: cast_nullable_to_non_nullable
+as int,referenceMonth: null == referenceMonth ? _self.referenceMonth : referenceMonth // ignore: cast_nullable_to_non_nullable
 as int,selectedDate: freezed == selectedDate ? _self.selectedDate : selectedDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
@@ -160,10 +162,10 @@ return initial(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( double transactionValue,  String description,  bool done,  bool showAllDateOptions,  bool isLoading,  TransactionType transactionType,  CategoryType categoryType,  int bankAccountId,  String bankAccountName,  int transactionId,  DateTime? selectedDate)?  initial,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( double transactionValue,  String description,  bool done,  bool showAllDateOptions,  bool isLoading,  TransactionType transactionType,  CategoryType categoryType,  int bankAccountId,  String bankAccountName,  int transactionId,  int referenceYear,  int referenceMonth,  DateTime? selectedDate)?  initial,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial(_that.transactionValue,_that.description,_that.done,_that.showAllDateOptions,_that.isLoading,_that.transactionType,_that.categoryType,_that.bankAccountId,_that.bankAccountName,_that.transactionId,_that.selectedDate);case _:
+return initial(_that.transactionValue,_that.description,_that.done,_that.showAllDateOptions,_that.isLoading,_that.transactionType,_that.categoryType,_that.bankAccountId,_that.bankAccountName,_that.transactionId,_that.referenceYear,_that.referenceMonth,_that.selectedDate);case _:
   return orElse();
 
 }
@@ -181,10 +183,10 @@ return initial(_that.transactionValue,_that.description,_that.done,_that.showAll
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( double transactionValue,  String description,  bool done,  bool showAllDateOptions,  bool isLoading,  TransactionType transactionType,  CategoryType categoryType,  int bankAccountId,  String bankAccountName,  int transactionId,  DateTime? selectedDate)  initial,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( double transactionValue,  String description,  bool done,  bool showAllDateOptions,  bool isLoading,  TransactionType transactionType,  CategoryType categoryType,  int bankAccountId,  String bankAccountName,  int transactionId,  int referenceYear,  int referenceMonth,  DateTime? selectedDate)  initial,}) {final _that = this;
 switch (_that) {
 case _Initial():
-return initial(_that.transactionValue,_that.description,_that.done,_that.showAllDateOptions,_that.isLoading,_that.transactionType,_that.categoryType,_that.bankAccountId,_that.bankAccountName,_that.transactionId,_that.selectedDate);case _:
+return initial(_that.transactionValue,_that.description,_that.done,_that.showAllDateOptions,_that.isLoading,_that.transactionType,_that.categoryType,_that.bankAccountId,_that.bankAccountName,_that.transactionId,_that.referenceYear,_that.referenceMonth,_that.selectedDate);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +203,10 @@ return initial(_that.transactionValue,_that.description,_that.done,_that.showAll
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( double transactionValue,  String description,  bool done,  bool showAllDateOptions,  bool isLoading,  TransactionType transactionType,  CategoryType categoryType,  int bankAccountId,  String bankAccountName,  int transactionId,  DateTime? selectedDate)?  initial,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( double transactionValue,  String description,  bool done,  bool showAllDateOptions,  bool isLoading,  TransactionType transactionType,  CategoryType categoryType,  int bankAccountId,  String bankAccountName,  int transactionId,  int referenceYear,  int referenceMonth,  DateTime? selectedDate)?  initial,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial(_that.transactionValue,_that.description,_that.done,_that.showAllDateOptions,_that.isLoading,_that.transactionType,_that.categoryType,_that.bankAccountId,_that.bankAccountName,_that.transactionId,_that.selectedDate);case _:
+return initial(_that.transactionValue,_that.description,_that.done,_that.showAllDateOptions,_that.isLoading,_that.transactionType,_that.categoryType,_that.bankAccountId,_that.bankAccountName,_that.transactionId,_that.referenceYear,_that.referenceMonth,_that.selectedDate);case _:
   return null;
 
 }
@@ -216,7 +218,7 @@ return initial(_that.transactionValue,_that.description,_that.done,_that.showAll
 
 
 class _Initial implements TransactionState {
-  const _Initial({this.transactionValue = 0.0, this.description = '', this.done = false, this.showAllDateOptions = true, this.isLoading = false, this.transactionType = TransactionType.income, this.categoryType = CategoryType.food, this.bankAccountId = -1, this.bankAccountName = 'Selecione a conta', this.transactionId = -1, this.selectedDate});
+  const _Initial({this.transactionValue = 0.0, this.description = '', this.done = false, this.showAllDateOptions = true, this.isLoading = false, this.transactionType = TransactionType.income, this.categoryType = CategoryType.food, this.bankAccountId = -1, this.bankAccountName = 'Selecione a conta', this.transactionId = -1, this.referenceYear = 0, this.referenceMonth = 0, this.selectedDate});
   
 
 @override@JsonKey() final  double transactionValue;
@@ -229,6 +231,8 @@ class _Initial implements TransactionState {
 @override@JsonKey() final  int bankAccountId;
 @override@JsonKey() final  String bankAccountName;
 @override@JsonKey() final  int transactionId;
+@override@JsonKey() final  int referenceYear;
+@override@JsonKey() final  int referenceMonth;
 @override final  DateTime? selectedDate;
 
 /// Create a copy of TransactionState
@@ -241,16 +245,16 @@ _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&(identical(other.transactionValue, transactionValue) || other.transactionValue == transactionValue)&&(identical(other.description, description) || other.description == description)&&(identical(other.done, done) || other.done == done)&&(identical(other.showAllDateOptions, showAllDateOptions) || other.showAllDateOptions == showAllDateOptions)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.transactionType, transactionType) || other.transactionType == transactionType)&&(identical(other.categoryType, categoryType) || other.categoryType == categoryType)&&(identical(other.bankAccountId, bankAccountId) || other.bankAccountId == bankAccountId)&&(identical(other.bankAccountName, bankAccountName) || other.bankAccountName == bankAccountName)&&(identical(other.transactionId, transactionId) || other.transactionId == transactionId)&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&(identical(other.transactionValue, transactionValue) || other.transactionValue == transactionValue)&&(identical(other.description, description) || other.description == description)&&(identical(other.done, done) || other.done == done)&&(identical(other.showAllDateOptions, showAllDateOptions) || other.showAllDateOptions == showAllDateOptions)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.transactionType, transactionType) || other.transactionType == transactionType)&&(identical(other.categoryType, categoryType) || other.categoryType == categoryType)&&(identical(other.bankAccountId, bankAccountId) || other.bankAccountId == bankAccountId)&&(identical(other.bankAccountName, bankAccountName) || other.bankAccountName == bankAccountName)&&(identical(other.transactionId, transactionId) || other.transactionId == transactionId)&&(identical(other.referenceYear, referenceYear) || other.referenceYear == referenceYear)&&(identical(other.referenceMonth, referenceMonth) || other.referenceMonth == referenceMonth)&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,transactionValue,description,done,showAllDateOptions,isLoading,transactionType,categoryType,bankAccountId,bankAccountName,transactionId,selectedDate);
+int get hashCode => Object.hash(runtimeType,transactionValue,description,done,showAllDateOptions,isLoading,transactionType,categoryType,bankAccountId,bankAccountName,transactionId,referenceYear,referenceMonth,selectedDate);
 
 @override
 String toString() {
-  return 'TransactionState.initial(transactionValue: $transactionValue, description: $description, done: $done, showAllDateOptions: $showAllDateOptions, isLoading: $isLoading, transactionType: $transactionType, categoryType: $categoryType, bankAccountId: $bankAccountId, bankAccountName: $bankAccountName, transactionId: $transactionId, selectedDate: $selectedDate)';
+  return 'TransactionState.initial(transactionValue: $transactionValue, description: $description, done: $done, showAllDateOptions: $showAllDateOptions, isLoading: $isLoading, transactionType: $transactionType, categoryType: $categoryType, bankAccountId: $bankAccountId, bankAccountName: $bankAccountName, transactionId: $transactionId, referenceYear: $referenceYear, referenceMonth: $referenceMonth, selectedDate: $selectedDate)';
 }
 
 
@@ -261,7 +265,7 @@ abstract mixin class _$InitialCopyWith<$Res> implements $TransactionStateCopyWit
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
 @override @useResult
 $Res call({
- double transactionValue, String description, bool done, bool showAllDateOptions, bool isLoading, TransactionType transactionType, CategoryType categoryType, int bankAccountId, String bankAccountName, int transactionId, DateTime? selectedDate
+ double transactionValue, String description, bool done, bool showAllDateOptions, bool isLoading, TransactionType transactionType, CategoryType categoryType, int bankAccountId, String bankAccountName, int transactionId, int referenceYear, int referenceMonth, DateTime? selectedDate
 });
 
 
@@ -278,7 +282,7 @@ class __$InitialCopyWithImpl<$Res>
 
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? transactionValue = null,Object? description = null,Object? done = null,Object? showAllDateOptions = null,Object? isLoading = null,Object? transactionType = null,Object? categoryType = null,Object? bankAccountId = null,Object? bankAccountName = null,Object? transactionId = null,Object? selectedDate = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? transactionValue = null,Object? description = null,Object? done = null,Object? showAllDateOptions = null,Object? isLoading = null,Object? transactionType = null,Object? categoryType = null,Object? bankAccountId = null,Object? bankAccountName = null,Object? transactionId = null,Object? referenceYear = null,Object? referenceMonth = null,Object? selectedDate = freezed,}) {
   return _then(_Initial(
 transactionValue: null == transactionValue ? _self.transactionValue : transactionValue // ignore: cast_nullable_to_non_nullable
 as double,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
@@ -290,6 +294,8 @@ as TransactionType,categoryType: null == categoryType ? _self.categoryType : cat
 as CategoryType,bankAccountId: null == bankAccountId ? _self.bankAccountId : bankAccountId // ignore: cast_nullable_to_non_nullable
 as int,bankAccountName: null == bankAccountName ? _self.bankAccountName : bankAccountName // ignore: cast_nullable_to_non_nullable
 as String,transactionId: null == transactionId ? _self.transactionId : transactionId // ignore: cast_nullable_to_non_nullable
+as int,referenceYear: null == referenceYear ? _self.referenceYear : referenceYear // ignore: cast_nullable_to_non_nullable
+as int,referenceMonth: null == referenceMonth ? _self.referenceMonth : referenceMonth // ignore: cast_nullable_to_non_nullable
 as int,selectedDate: freezed == selectedDate ? _self.selectedDate : selectedDate // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));

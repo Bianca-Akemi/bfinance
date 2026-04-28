@@ -18,7 +18,11 @@ class EditTransactionPage extends StatelessWidget {
         deleteTransactionUseCase: GetIt.I<DeleteTransactionUseCase>(),
         newTransactionUseCase: GetIt.I<NewTransactionUseCase>(),
         updateTransactionUseCase: GetIt.I<UpdateTransactionUseCase>(),
-      )..setupTransaction(transaction: transaction),
+      )..setupTransaction(
+          transaction: transaction,
+          referenceYear: transaction.date.year,
+          referenceMonth: transaction.date.month,
+        ),
       child: const TransactionView(),
     );
   }

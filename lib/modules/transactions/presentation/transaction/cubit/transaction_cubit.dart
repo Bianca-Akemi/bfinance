@@ -36,10 +36,16 @@ class TransactionCubit extends Cubit<TransactionState> {
     initDoubleValue: 0,
   );
 
-  void setupTransactionType({required TransactionType transactionType}) {
+  void setupTransactionType({
+    required TransactionType transactionType,
+    required int referenceYear,
+    required int referenceMonth,
+  }) {
     emit(
       state.copyWith(
         transactionType: transactionType,
+        referenceYear: referenceYear,
+        referenceMonth: referenceMonth,
         categoryType: transactionType == TransactionType.income
             ? CategoryType.investments
             : CategoryType.food,
@@ -48,7 +54,11 @@ class TransactionCubit extends Cubit<TransactionState> {
     onChangeSelectedDate(DateTime.now());
   }
 
-  void setupTransaction({required Transaction transaction}) {
+  void setupTransaction({
+    required Transaction transaction,
+    required int referenceYear,
+    required int referenceMonth,
+  }) {
     transactionValueCurrencyTextFieldController.text =
         transaction.value.formatted;
     descriptionTextEditingController.text = transaction.description;
@@ -64,6 +74,8 @@ class TransactionCubit extends Cubit<TransactionState> {
         selectedDate: transaction.date,
         transactionType: transaction.type,
         categoryType: transaction.category,
+        referenceYear: referenceYear,
+        referenceMonth: referenceMonth,
       ),
     );
   }

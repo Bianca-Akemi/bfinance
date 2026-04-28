@@ -168,4 +168,14 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get account => 'Conta';
+
+  @override
+  String get logoutConfirmTitle => 'Sair da conta';
+
+  @override
+  String get logoutConfirmMessage =>
+      'Tem certeza que deseja sair da sua conta?';
+
+  @override
+  String get confirm => 'Confirmar';
 }
