@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:s_mobills/core/helpers/date_helper.dart';
 import 'package:s_mobills/modules/home/presentation/widgets/home_header.dart';
 import 'package:s_mobills/modules/home/presentation/widgets/month_balance.dart';
+import 'package:s_mobills/modules/home/presentation/widgets/spending_bar_chart.dart';
 import 'package:s_mobills/modules/home/presentation/widgets/spending_category.dart';
 import 'package:s_mobills/modules/home/presentation/widgets/spending_frequency.dart';
 import 'package:s_mobills/modules/modules.dart';
@@ -19,6 +20,7 @@ class HomePage extends StatelessWidget {
       create: (_) => HomeCubit(
         getTransactionsPeriodUseCase: GetIt.I<GetTransactionsPeriodUseCase>(),
         getUserBankAccountsUseCase: GetIt.I<GetUserBankAccountsUseCase>(),
+        doGetUserInfoUseCase: GetIt.I<DoGetUserInfoUseCase>(),
       ),
       child: const HomeView(),
     );
@@ -34,8 +36,9 @@ class HomeView extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: SMobillsAppBar(
-            title: '',
-            customPreferredSize: const Size.fromHeight(75),
+            title: state.userName,
+            isHomePage: true,
+            customPreferredSize: const Size.fromHeight(170),
             bottom: TransactionAppBarBottom(
               title: DateHelper.formatterBy(state.year, state.month),
               onTapBack: context.read<HomeCubit>().previousMonth,
@@ -48,34 +51,37 @@ class HomeView extends StatelessWidget {
               enabled: state.isLoading,
               child: SingleChildScrollView(
                 child: Column(
-                children: [
-                  HomeHeader(
-                    totalIncome: state.totalIncome.formatted,
-                    totalExpanse: state.totalExpense.formatted,
-                    balance: state.balanceInAccounts.formatted,
-                  ),
-                  SMobillsSpacing.md,
-                  MonthBalance(
-                    totalIncome: state.totalIncome.formatted,
-                    totalExpanse: state.totalExpense.formatted,
-                    balance: state.balance.formatted,
-                    balancePercent:
-                        '${state.economyPercent.isNaN ? 0.00 : state.economyPercent.toStringAsFixed(2)}%',
-                    spentTooMuch: state.spendingTooMuch,
-                  ),
-                  SMobillsSpacing.md,
-                  SpendingCategory(
-                    categoriesDataSource: state.categoriesDataSource,
-                  ),
-                  SMobillsSpacing.md,
-                  SpendingFrequency(
-                    days: state.lastSevenDaysExpense,
-                    isSpendingEmpty: state.lastSevenDaysExpenseEmpty,
-                  ),
-                ],
+                  children: [
+                    HomeHeader(balance: state.balanceInAccounts.formatted),
+                    MonthBalance(
+                      totalIncome: state.totalIncome.formatted,
+                      totalExpanse: state.totalExpense.formatted,
+                      balance: state.balance.formatted,
+                      balancePercent:
+                          '${state.economyPercent.toStringAsFixed(2)}%',
+                      spentTooMuch: state.spendingTooMuch,
+                      hasIncome: state.totalIncome.value > 0,
+                    ),
+                    SMobillsSpacing.md,
+                    SpendingCategory(
+                      categoriesDataSource: state.categoriesDataSource,
+                      month: DateHelper.formatterBy(state.year, state.month),
+                    ),
+                    SMobillsSpacing.lg,
+                    state.lastSevenDaysExpenseEmpty
+                        ? const SizedBox.shrink()
+                        : SpendingBarChart(
+                            expenseDays: state.lastSevenDaysExpense,
+                            incomeDays: state.lastSevenDaysIncome,
+                          ),
+                    SMobillsSpacing.lg,
+                    state.lastSevenDaysExpenseEmpty
+                        ? const SizedBox.shrink()
+                        : SpendingFrequency(days: state.lastSevenDaysExpense),
+                  ],
+                ),
               ),
             ),
-          ),
           ),
         );
       },

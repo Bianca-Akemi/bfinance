@@ -87,11 +87,7 @@ class InputRow extends StatelessWidget {
             onChanged: onChanged,
           ),
         if (type == InputRowType.selectable)
-          _SelectableRow(
-            icon: icon,
-            hintText: hintText,
-            options: options,
-          ),
+          _SelectableRow(icon: icon, hintText: hintText, options: options),
         const SMobillsDivider(isVertical: false),
       ],
     );
@@ -119,18 +115,10 @@ class _SelectableRow extends StatelessWidget {
           color: context.colorScheme.onBackground.withOpacity(0.80),
           size: 24,
         ),
-        const SizedBox(
-          width: 8,
-        ),
-        Text(
-          hintText,
-          style: SMobillsTextStyles.body1,
-        ),
+        const SizedBox(width: 8),
+        Text(hintText, style: SMobillsTextStyles.body1),
         const Spacer(),
-        if (options != null)
-          Row(
-            children: options!,
-          ),
+        if (options != null) Row(children: options!),
       ],
     );
   }
@@ -156,18 +144,28 @@ class _CheckboxRow extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: context.colorScheme.onBackground.withOpacity(0.80),
-          size: 24,
+          color: switchOn ?? false
+              ? Colors.green
+              : context.colorScheme.onBackground,
+          size: 28,
         ),
-        const SizedBox(
-          width: 8,
-        ),
+        const SizedBox(width: 8),
         Text(
           hintText,
-          style: SMobillsTextStyles.body1,
+          style: SMobillsTextStyles.body1.copyWith(
+            color: switchOn ?? false
+                ? Colors.green
+                : context.colorScheme.onBackground,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const Spacer(),
-        Switch(value: switchOn ?? false, onChanged: onChanged),
+        Switch(
+          value: switchOn ?? false,
+          onChanged: onChanged,
+          inactiveTrackColor: Colors.white,
+          activeTrackColor: Colors.green,
+        ),
       ],
     );
   }
@@ -188,32 +186,34 @@ class _TextRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Icon(
-          icon,
-          color: context.colorScheme.onBackground.withOpacity(0.80),
-          size: 24,
-        ),
-        const SizedBox(
-          width: 8,
-        ),
-        Flexible(
-          child: TextField(
-            controller: controller,
-            style: TextStyle(color: context.colorScheme.onBackground),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: hintText,
-              hintStyle: TextStyle(
-                color: context.colorScheme.onBackground.withOpacity(0.50),
-              ),
-            ),
-            keyboardType: textInputType,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(
+            icon,
+            color: context.colorScheme.onBackground.withOpacity(0.80),
+            size: 28,
           ),
-        ),
-      ],
+          const SizedBox(width: 8),
+          Flexible(
+            child: TextField(
+              controller: controller,
+              style: TextStyle(color: context.colorScheme.onBackground),
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                border: InputBorder.none,
+                hintText: hintText,
+                hintStyle: TextStyle(
+                  color: context.colorScheme.onBackground.withOpacity(0.50),
+                ),
+              ),
+              keyboardType: textInputType,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

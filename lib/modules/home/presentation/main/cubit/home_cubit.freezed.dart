@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeState {
 
- List<SalesData> get lastSevenDaysExpense; bool get lastSevenDaysExpenseEmpty; List<PieByCategory> get categoriesDataSource; Currency get totalExpense; Currency get totalIncome; Currency get balance; Currency get balanceInAccounts; double get economyPercent; bool get spendingTooMuch; int get year; int get month; bool get isLoading;
+ List<SalesData> get lastSevenDaysExpense; List<SalesData> get lastSevenDaysIncome; bool get lastSevenDaysExpenseEmpty; List<PieByCategory> get categoriesDataSource; Currency get totalExpense; Currency get totalIncome; Currency get balance; Currency get balanceInAccounts; double get economyPercent; bool get spendingTooMuch; int get year; int get month; bool get isLoading; String get userName;
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&const DeepCollectionEquality().equals(other.lastSevenDaysExpense, lastSevenDaysExpense)&&(identical(other.lastSevenDaysExpenseEmpty, lastSevenDaysExpenseEmpty) || other.lastSevenDaysExpenseEmpty == lastSevenDaysExpenseEmpty)&&const DeepCollectionEquality().equals(other.categoriesDataSource, categoriesDataSource)&&(identical(other.totalExpense, totalExpense) || other.totalExpense == totalExpense)&&(identical(other.totalIncome, totalIncome) || other.totalIncome == totalIncome)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.balanceInAccounts, balanceInAccounts) || other.balanceInAccounts == balanceInAccounts)&&(identical(other.economyPercent, economyPercent) || other.economyPercent == economyPercent)&&(identical(other.spendingTooMuch, spendingTooMuch) || other.spendingTooMuch == spendingTooMuch)&&(identical(other.year, year) || other.year == year)&&(identical(other.month, month) || other.month == month)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&const DeepCollectionEquality().equals(other.lastSevenDaysExpense, lastSevenDaysExpense)&&const DeepCollectionEquality().equals(other.lastSevenDaysIncome, lastSevenDaysIncome)&&(identical(other.lastSevenDaysExpenseEmpty, lastSevenDaysExpenseEmpty) || other.lastSevenDaysExpenseEmpty == lastSevenDaysExpenseEmpty)&&const DeepCollectionEquality().equals(other.categoriesDataSource, categoriesDataSource)&&(identical(other.totalExpense, totalExpense) || other.totalExpense == totalExpense)&&(identical(other.totalIncome, totalIncome) || other.totalIncome == totalIncome)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.balanceInAccounts, balanceInAccounts) || other.balanceInAccounts == balanceInAccounts)&&(identical(other.economyPercent, economyPercent) || other.economyPercent == economyPercent)&&(identical(other.spendingTooMuch, spendingTooMuch) || other.spendingTooMuch == spendingTooMuch)&&(identical(other.year, year) || other.year == year)&&(identical(other.month, month) || other.month == month)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.userName, userName) || other.userName == userName));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(lastSevenDaysExpense),lastSevenDaysExpenseEmpty,const DeepCollectionEquality().hash(categoriesDataSource),totalExpense,totalIncome,balance,balanceInAccounts,economyPercent,spendingTooMuch,year,month,isLoading);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(lastSevenDaysExpense),const DeepCollectionEquality().hash(lastSevenDaysIncome),lastSevenDaysExpenseEmpty,const DeepCollectionEquality().hash(categoriesDataSource),totalExpense,totalIncome,balance,balanceInAccounts,economyPercent,spendingTooMuch,year,month,isLoading,userName);
 
 @override
 String toString() {
-  return 'HomeState(lastSevenDaysExpense: $lastSevenDaysExpense, lastSevenDaysExpenseEmpty: $lastSevenDaysExpenseEmpty, categoriesDataSource: $categoriesDataSource, totalExpense: $totalExpense, totalIncome: $totalIncome, balance: $balance, balanceInAccounts: $balanceInAccounts, economyPercent: $economyPercent, spendingTooMuch: $spendingTooMuch, year: $year, month: $month, isLoading: $isLoading)';
+  return 'HomeState(lastSevenDaysExpense: $lastSevenDaysExpense, lastSevenDaysIncome: $lastSevenDaysIncome, lastSevenDaysExpenseEmpty: $lastSevenDaysExpenseEmpty, categoriesDataSource: $categoriesDataSource, totalExpense: $totalExpense, totalIncome: $totalIncome, balance: $balance, balanceInAccounts: $balanceInAccounts, economyPercent: $economyPercent, spendingTooMuch: $spendingTooMuch, year: $year, month: $month, isLoading: $isLoading, userName: $userName)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $HomeStateCopyWith<$Res>  {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
 @useResult
 $Res call({
- List<SalesData> lastSevenDaysExpense, bool lastSevenDaysExpenseEmpty, List<PieByCategory> categoriesDataSource, Currency totalExpense, Currency totalIncome, Currency balance, Currency balanceInAccounts, double economyPercent, bool spendingTooMuch, int year, int month, bool isLoading
+ List<SalesData> lastSevenDaysExpense, List<SalesData> lastSevenDaysIncome, bool lastSevenDaysExpenseEmpty, List<PieByCategory> categoriesDataSource, Currency totalExpense, Currency totalIncome, Currency balance, Currency balanceInAccounts, double economyPercent, bool spendingTooMuch, int year, int month, bool isLoading, String userName
 });
 
 
@@ -62,9 +62,10 @@ class _$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? lastSevenDaysExpense = null,Object? lastSevenDaysExpenseEmpty = null,Object? categoriesDataSource = null,Object? totalExpense = null,Object? totalIncome = null,Object? balance = null,Object? balanceInAccounts = null,Object? economyPercent = null,Object? spendingTooMuch = null,Object? year = null,Object? month = null,Object? isLoading = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? lastSevenDaysExpense = null,Object? lastSevenDaysIncome = null,Object? lastSevenDaysExpenseEmpty = null,Object? categoriesDataSource = null,Object? totalExpense = null,Object? totalIncome = null,Object? balance = null,Object? balanceInAccounts = null,Object? economyPercent = null,Object? spendingTooMuch = null,Object? year = null,Object? month = null,Object? isLoading = null,Object? userName = null,}) {
   return _then(_self.copyWith(
 lastSevenDaysExpense: null == lastSevenDaysExpense ? _self.lastSevenDaysExpense : lastSevenDaysExpense // ignore: cast_nullable_to_non_nullable
+as List<SalesData>,lastSevenDaysIncome: null == lastSevenDaysIncome ? _self.lastSevenDaysIncome : lastSevenDaysIncome // ignore: cast_nullable_to_non_nullable
 as List<SalesData>,lastSevenDaysExpenseEmpty: null == lastSevenDaysExpenseEmpty ? _self.lastSevenDaysExpenseEmpty : lastSevenDaysExpenseEmpty // ignore: cast_nullable_to_non_nullable
 as bool,categoriesDataSource: null == categoriesDataSource ? _self.categoriesDataSource : categoriesDataSource // ignore: cast_nullable_to_non_nullable
 as List<PieByCategory>,totalExpense: null == totalExpense ? _self.totalExpense : totalExpense // ignore: cast_nullable_to_non_nullable
@@ -76,7 +77,8 @@ as double,spendingTooMuch: null == spendingTooMuch ? _self.spendingTooMuch : spe
 as bool,year: null == year ? _self.year : year // ignore: cast_nullable_to_non_nullable
 as int,month: null == month ? _self.month : month // ignore: cast_nullable_to_non_nullable
 as int,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,userName: null == userName ? _self.userName : userName // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -161,10 +163,10 @@ return initial(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<SalesData> lastSevenDaysExpense,  bool lastSevenDaysExpenseEmpty,  List<PieByCategory> categoriesDataSource,  Currency totalExpense,  Currency totalIncome,  Currency balance,  Currency balanceInAccounts,  double economyPercent,  bool spendingTooMuch,  int year,  int month,  bool isLoading)?  initial,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<SalesData> lastSevenDaysExpense,  List<SalesData> lastSevenDaysIncome,  bool lastSevenDaysExpenseEmpty,  List<PieByCategory> categoriesDataSource,  Currency totalExpense,  Currency totalIncome,  Currency balance,  Currency balanceInAccounts,  double economyPercent,  bool spendingTooMuch,  int year,  int month,  bool isLoading,  String userName)?  initial,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial(_that.lastSevenDaysExpense,_that.lastSevenDaysExpenseEmpty,_that.categoriesDataSource,_that.totalExpense,_that.totalIncome,_that.balance,_that.balanceInAccounts,_that.economyPercent,_that.spendingTooMuch,_that.year,_that.month,_that.isLoading);case _:
+return initial(_that.lastSevenDaysExpense,_that.lastSevenDaysIncome,_that.lastSevenDaysExpenseEmpty,_that.categoriesDataSource,_that.totalExpense,_that.totalIncome,_that.balance,_that.balanceInAccounts,_that.economyPercent,_that.spendingTooMuch,_that.year,_that.month,_that.isLoading,_that.userName);case _:
   return orElse();
 
 }
@@ -182,10 +184,10 @@ return initial(_that.lastSevenDaysExpense,_that.lastSevenDaysExpenseEmpty,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<SalesData> lastSevenDaysExpense,  bool lastSevenDaysExpenseEmpty,  List<PieByCategory> categoriesDataSource,  Currency totalExpense,  Currency totalIncome,  Currency balance,  Currency balanceInAccounts,  double economyPercent,  bool spendingTooMuch,  int year,  int month,  bool isLoading)  initial,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<SalesData> lastSevenDaysExpense,  List<SalesData> lastSevenDaysIncome,  bool lastSevenDaysExpenseEmpty,  List<PieByCategory> categoriesDataSource,  Currency totalExpense,  Currency totalIncome,  Currency balance,  Currency balanceInAccounts,  double economyPercent,  bool spendingTooMuch,  int year,  int month,  bool isLoading,  String userName)  initial,}) {final _that = this;
 switch (_that) {
 case _Initial():
-return initial(_that.lastSevenDaysExpense,_that.lastSevenDaysExpenseEmpty,_that.categoriesDataSource,_that.totalExpense,_that.totalIncome,_that.balance,_that.balanceInAccounts,_that.economyPercent,_that.spendingTooMuch,_that.year,_that.month,_that.isLoading);case _:
+return initial(_that.lastSevenDaysExpense,_that.lastSevenDaysIncome,_that.lastSevenDaysExpenseEmpty,_that.categoriesDataSource,_that.totalExpense,_that.totalIncome,_that.balance,_that.balanceInAccounts,_that.economyPercent,_that.spendingTooMuch,_that.year,_that.month,_that.isLoading,_that.userName);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +204,10 @@ return initial(_that.lastSevenDaysExpense,_that.lastSevenDaysExpenseEmpty,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<SalesData> lastSevenDaysExpense,  bool lastSevenDaysExpenseEmpty,  List<PieByCategory> categoriesDataSource,  Currency totalExpense,  Currency totalIncome,  Currency balance,  Currency balanceInAccounts,  double economyPercent,  bool spendingTooMuch,  int year,  int month,  bool isLoading)?  initial,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<SalesData> lastSevenDaysExpense,  List<SalesData> lastSevenDaysIncome,  bool lastSevenDaysExpenseEmpty,  List<PieByCategory> categoriesDataSource,  Currency totalExpense,  Currency totalIncome,  Currency balance,  Currency balanceInAccounts,  double economyPercent,  bool spendingTooMuch,  int year,  int month,  bool isLoading,  String userName)?  initial,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial(_that.lastSevenDaysExpense,_that.lastSevenDaysExpenseEmpty,_that.categoriesDataSource,_that.totalExpense,_that.totalIncome,_that.balance,_that.balanceInAccounts,_that.economyPercent,_that.spendingTooMuch,_that.year,_that.month,_that.isLoading);case _:
+return initial(_that.lastSevenDaysExpense,_that.lastSevenDaysIncome,_that.lastSevenDaysExpenseEmpty,_that.categoriesDataSource,_that.totalExpense,_that.totalIncome,_that.balance,_that.balanceInAccounts,_that.economyPercent,_that.spendingTooMuch,_that.year,_that.month,_that.isLoading,_that.userName);case _:
   return null;
 
 }
@@ -217,7 +219,7 @@ return initial(_that.lastSevenDaysExpense,_that.lastSevenDaysExpenseEmpty,_that.
 
 
 class _Initial implements HomeState {
-  const _Initial({final  List<SalesData> lastSevenDaysExpense = const [], this.lastSevenDaysExpenseEmpty = false, final  List<PieByCategory> categoriesDataSource = const [], this.totalExpense = _currencyZero, this.totalIncome = _currencyZero, this.balance = _currencyZero, this.balanceInAccounts = _currencyZero, this.economyPercent = 0.00, this.spendingTooMuch = false, this.year = 0, this.month = 0, this.isLoading = false}): _lastSevenDaysExpense = lastSevenDaysExpense,_categoriesDataSource = categoriesDataSource;
+  const _Initial({final  List<SalesData> lastSevenDaysExpense = const [], final  List<SalesData> lastSevenDaysIncome = const [], this.lastSevenDaysExpenseEmpty = false, final  List<PieByCategory> categoriesDataSource = const [], this.totalExpense = _currencyZero, this.totalIncome = _currencyZero, this.balance = _currencyZero, this.balanceInAccounts = _currencyZero, this.economyPercent = 0.00, this.spendingTooMuch = false, this.year = 0, this.month = 0, this.isLoading = false, this.userName = ''}): _lastSevenDaysExpense = lastSevenDaysExpense,_lastSevenDaysIncome = lastSevenDaysIncome,_categoriesDataSource = categoriesDataSource;
   
 
  final  List<SalesData> _lastSevenDaysExpense;
@@ -225,6 +227,13 @@ class _Initial implements HomeState {
   if (_lastSevenDaysExpense is EqualUnmodifiableListView) return _lastSevenDaysExpense;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_lastSevenDaysExpense);
+}
+
+ final  List<SalesData> _lastSevenDaysIncome;
+@override@JsonKey() List<SalesData> get lastSevenDaysIncome {
+  if (_lastSevenDaysIncome is EqualUnmodifiableListView) return _lastSevenDaysIncome;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_lastSevenDaysIncome);
 }
 
 @override@JsonKey() final  bool lastSevenDaysExpenseEmpty;
@@ -244,6 +253,7 @@ class _Initial implements HomeState {
 @override@JsonKey() final  int year;
 @override@JsonKey() final  int month;
 @override@JsonKey() final  bool isLoading;
+@override@JsonKey() final  String userName;
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
@@ -255,16 +265,16 @@ _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&const DeepCollectionEquality().equals(other._lastSevenDaysExpense, _lastSevenDaysExpense)&&(identical(other.lastSevenDaysExpenseEmpty, lastSevenDaysExpenseEmpty) || other.lastSevenDaysExpenseEmpty == lastSevenDaysExpenseEmpty)&&const DeepCollectionEquality().equals(other._categoriesDataSource, _categoriesDataSource)&&(identical(other.totalExpense, totalExpense) || other.totalExpense == totalExpense)&&(identical(other.totalIncome, totalIncome) || other.totalIncome == totalIncome)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.balanceInAccounts, balanceInAccounts) || other.balanceInAccounts == balanceInAccounts)&&(identical(other.economyPercent, economyPercent) || other.economyPercent == economyPercent)&&(identical(other.spendingTooMuch, spendingTooMuch) || other.spendingTooMuch == spendingTooMuch)&&(identical(other.year, year) || other.year == year)&&(identical(other.month, month) || other.month == month)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&const DeepCollectionEquality().equals(other._lastSevenDaysExpense, _lastSevenDaysExpense)&&const DeepCollectionEquality().equals(other._lastSevenDaysIncome, _lastSevenDaysIncome)&&(identical(other.lastSevenDaysExpenseEmpty, lastSevenDaysExpenseEmpty) || other.lastSevenDaysExpenseEmpty == lastSevenDaysExpenseEmpty)&&const DeepCollectionEquality().equals(other._categoriesDataSource, _categoriesDataSource)&&(identical(other.totalExpense, totalExpense) || other.totalExpense == totalExpense)&&(identical(other.totalIncome, totalIncome) || other.totalIncome == totalIncome)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.balanceInAccounts, balanceInAccounts) || other.balanceInAccounts == balanceInAccounts)&&(identical(other.economyPercent, economyPercent) || other.economyPercent == economyPercent)&&(identical(other.spendingTooMuch, spendingTooMuch) || other.spendingTooMuch == spendingTooMuch)&&(identical(other.year, year) || other.year == year)&&(identical(other.month, month) || other.month == month)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.userName, userName) || other.userName == userName));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_lastSevenDaysExpense),lastSevenDaysExpenseEmpty,const DeepCollectionEquality().hash(_categoriesDataSource),totalExpense,totalIncome,balance,balanceInAccounts,economyPercent,spendingTooMuch,year,month,isLoading);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_lastSevenDaysExpense),const DeepCollectionEquality().hash(_lastSevenDaysIncome),lastSevenDaysExpenseEmpty,const DeepCollectionEquality().hash(_categoriesDataSource),totalExpense,totalIncome,balance,balanceInAccounts,economyPercent,spendingTooMuch,year,month,isLoading,userName);
 
 @override
 String toString() {
-  return 'HomeState.initial(lastSevenDaysExpense: $lastSevenDaysExpense, lastSevenDaysExpenseEmpty: $lastSevenDaysExpenseEmpty, categoriesDataSource: $categoriesDataSource, totalExpense: $totalExpense, totalIncome: $totalIncome, balance: $balance, balanceInAccounts: $balanceInAccounts, economyPercent: $economyPercent, spendingTooMuch: $spendingTooMuch, year: $year, month: $month, isLoading: $isLoading)';
+  return 'HomeState.initial(lastSevenDaysExpense: $lastSevenDaysExpense, lastSevenDaysIncome: $lastSevenDaysIncome, lastSevenDaysExpenseEmpty: $lastSevenDaysExpenseEmpty, categoriesDataSource: $categoriesDataSource, totalExpense: $totalExpense, totalIncome: $totalIncome, balance: $balance, balanceInAccounts: $balanceInAccounts, economyPercent: $economyPercent, spendingTooMuch: $spendingTooMuch, year: $year, month: $month, isLoading: $isLoading, userName: $userName)';
 }
 
 
@@ -275,7 +285,7 @@ abstract mixin class _$InitialCopyWith<$Res> implements $HomeStateCopyWith<$Res>
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
 @override @useResult
 $Res call({
- List<SalesData> lastSevenDaysExpense, bool lastSevenDaysExpenseEmpty, List<PieByCategory> categoriesDataSource, Currency totalExpense, Currency totalIncome, Currency balance, Currency balanceInAccounts, double economyPercent, bool spendingTooMuch, int year, int month, bool isLoading
+ List<SalesData> lastSevenDaysExpense, List<SalesData> lastSevenDaysIncome, bool lastSevenDaysExpenseEmpty, List<PieByCategory> categoriesDataSource, Currency totalExpense, Currency totalIncome, Currency balance, Currency balanceInAccounts, double economyPercent, bool spendingTooMuch, int year, int month, bool isLoading, String userName
 });
 
 
@@ -292,9 +302,10 @@ class __$InitialCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? lastSevenDaysExpense = null,Object? lastSevenDaysExpenseEmpty = null,Object? categoriesDataSource = null,Object? totalExpense = null,Object? totalIncome = null,Object? balance = null,Object? balanceInAccounts = null,Object? economyPercent = null,Object? spendingTooMuch = null,Object? year = null,Object? month = null,Object? isLoading = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? lastSevenDaysExpense = null,Object? lastSevenDaysIncome = null,Object? lastSevenDaysExpenseEmpty = null,Object? categoriesDataSource = null,Object? totalExpense = null,Object? totalIncome = null,Object? balance = null,Object? balanceInAccounts = null,Object? economyPercent = null,Object? spendingTooMuch = null,Object? year = null,Object? month = null,Object? isLoading = null,Object? userName = null,}) {
   return _then(_Initial(
 lastSevenDaysExpense: null == lastSevenDaysExpense ? _self._lastSevenDaysExpense : lastSevenDaysExpense // ignore: cast_nullable_to_non_nullable
+as List<SalesData>,lastSevenDaysIncome: null == lastSevenDaysIncome ? _self._lastSevenDaysIncome : lastSevenDaysIncome // ignore: cast_nullable_to_non_nullable
 as List<SalesData>,lastSevenDaysExpenseEmpty: null == lastSevenDaysExpenseEmpty ? _self.lastSevenDaysExpenseEmpty : lastSevenDaysExpenseEmpty // ignore: cast_nullable_to_non_nullable
 as bool,categoriesDataSource: null == categoriesDataSource ? _self._categoriesDataSource : categoriesDataSource // ignore: cast_nullable_to_non_nullable
 as List<PieByCategory>,totalExpense: null == totalExpense ? _self.totalExpense : totalExpense // ignore: cast_nullable_to_non_nullable
@@ -306,7 +317,8 @@ as double,spendingTooMuch: null == spendingTooMuch ? _self.spendingTooMuch : spe
 as bool,year: null == year ? _self.year : year // ignore: cast_nullable_to_non_nullable
 as int,month: null == month ? _self.month : month // ignore: cast_nullable_to_non_nullable
 as int,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,userName: null == userName ? _self.userName : userName // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

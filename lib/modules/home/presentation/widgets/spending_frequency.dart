@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:s_mobills/modules/home/presentation/main/cubit/home_cubit.dart';
-import 'package:s_mobills/modules/home/presentation/widgets/home_empty_state.dart';
 import 'package:s_mobills/ui/utils/s_mobills_styles.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SpendingFrequency extends StatelessWidget {
-  const SpendingFrequency({
-    required this.days,
-    required this.isSpendingEmpty,
-    super.key,
-  });
+  const SpendingFrequency({required this.days, super.key});
 
   final List<SalesData> days;
-  final bool isSpendingEmpty;
+
+  static final _currencyFormat = NumberFormat.currency(
+    locale: 'pt_BR',
+    symbol: r'R$',
+    decimalDigits: 2,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -20,63 +20,51 @@ class SpendingFrequency extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Gastos nos últimos 7 dias',
+            'gastos dos últimos 7 dias',
             style: SMobillsTextStyles.subtitle1.copyWith(
-              color: Theme.of(context)
-                  .colorScheme
-                  .onSurface
-                  .withValues(alpha: 0.7),
+              color: Colors.black,
               fontWeight: FontWeight.w600,
             ),
           ),
           SMobillsSpacing.sm,
           Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: isSpendingEmpty
-                  ? const HomeEmptyState()
-                  : SfCartesianChart(
-                      plotAreaBorderWidth: 0,
-                      primaryXAxis: const CategoryAxis(
-                        interval: 6,
-                        majorGridLines:
-                            MajorGridLines(width: 0),
-                        majorTickLines:
-                            MajorTickLines(size: 0),
-                        edgeLabelPlacement:
-                            EdgeLabelPlacement.shift,
-                      ),
-                      primaryYAxis: const NumericAxis(
-                        labelFormat: r'R$ {value}',
-                        interval: 200,
-                        axisLine: AxisLine(width: 0),
-                        majorGridLines:
-                            MajorGridLines(width: 0),
-                        majorTickLines:
-                            MajorTickLines(size: 0),
-                      ),
-                      series: [
-                        SplineAreaSeries<SalesData, String>(
-                          dataSource: days,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primaryContainer
-                              .withValues(alpha: 0.6),
-                          borderColor: Theme.of(context)
-                              .colorScheme
-                              .primary,
-                          xValueMapper:
-                              (SalesData sales, _) =>
-                                  sales.year,
-                          yValueMapper:
-                              (SalesData sales, _) =>
-                                  sales.sales,
-                        ),
-                      ],
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              itemCount: days.length,
+              separatorBuilder: (_, __) => const Divider(height: 1),
+              itemBuilder: (context, index) {
+                final item = days[index];
+                return ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: CircleAvatar(
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.15),
+                    child: const Icon(
+                      Icons.north_outlined,
+                      color: Color(0xFFBA3229),
+                      size: 20,
                     ),
+                  ),
+                  title: Text(
+                    item.year,
+                    style: SMobillsTextStyles.body1.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  trailing: Text(
+                    _currencyFormat.format(item.sales),
+                    style: SMobillsTextStyles.body2.copyWith(
+                      color: const Color(0xFFBA3229),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],

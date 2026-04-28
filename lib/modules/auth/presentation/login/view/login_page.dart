@@ -13,9 +13,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => LoginCubit(
-        doLoginUseCase: GetIt.I<DoLoginUseCase>(),
-      ),
+      create: (_) => LoginCubit(doLoginUseCase: GetIt.I<DoLoginUseCase>()),
       child: const LoginView(),
     );
   }
@@ -33,90 +31,80 @@ class LoginView extends StatelessWidget {
             isLoading: state.isLoading,
             child: SingleChildScrollView(
               child: Stack(
-              children: [
-                const AuthHeader(),
-                AuthContainer(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 8),
-                      Text(
-                        context.l10n.login,
-                        textAlign: TextAlign.center,
-                        style: SMobillsTextStyles.h4.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: context.colorScheme.primary,
-                        ),
-                      ),
-                      SizedBox(
-                        height:
-                            context.mediaQuery.size.height * 0.05,
-                      ),
-                      SMobillsTextField(
-                        controller: context
-                            .read<LoginCubit>()
-                            .emailTextEditingController,
-                        hintText: context.l10n.email,
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      SMobillsTextField(
-                        controller: context
-                            .read<LoginCubit>()
-                            .passwordTextEditingController,
-                        hintText: context.l10n.password,
-                        obscureText: true,
-                      ),
-                      SizedBox(
-                        height:
-                            context.mediaQuery.size.height * 0.05,
-                      ),
-                      SMobillsButton(
-                        title: context.l10n.login,
-                        onPressed:
-                            context.read<LoginCubit>().login,
-                        isLoading: state.isLoading,
-                      ),
-                      SizedBox(
-                        height:
-                            context.mediaQuery.size.height * 0.05,
-                      ),
-                      Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            context.l10n.dontHaveAccount,
-                            textAlign: TextAlign.center,
-                            style: SMobillsTextStyles.body1
-                                .copyWith(
-                              color: context
-                                  .colorScheme.onSurface
-                                  .withValues(alpha: 0.7),
-                            ),
+                children: [
+                  const AuthHeader(),
+                  AuthContainer(
+                    height: 0.65,
+                    marginTop: 0.38,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(80),
+                    ),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 8),
+                        Text(
+                          context.l10n.login,
+                          textAlign: TextAlign.center,
+                          style: SMobillsTextStyles.h3.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: context.colorScheme.primary,
                           ),
-                          const SizedBox(width: 8),
-                          GestureDetector(
-                            onTap: context
-                                .read<LoginCubit>()
-                                .signUp,
-                            child: Text(
-                              context.l10n.signUp,
+                        ),
+                        SMobillsTextField(
+                          title: context.l10n.email,
+                          controller: context
+                              .read<LoginCubit>()
+                              .emailTextEditingController,
+                          hintText: 'Digite seu e-mail',
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        SMobillsTextField(
+                          title: context.l10n.password,
+                          controller: context
+                              .read<LoginCubit>()
+                              .passwordTextEditingController,
+                          hintText: 'Digite sua senha',
+                          obscureText: true,
+                        ),
+                        SizedBox(height: context.mediaQuery.size.height * 0.02),
+                        SMobillsButton(
+                          title: 'Entrar',
+                          onPressed: context.read<LoginCubit>().login,
+                          isLoading: state.isLoading,
+                        ),
+                        SizedBox(height: context.mediaQuery.size.height * 0.05),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              context.l10n.dontHaveAccount,
                               textAlign: TextAlign.center,
-                              style: SMobillsTextStyles.button
-                                  .copyWith(
-                                color:
-                                    context.colorScheme.primary,
-                                fontWeight: FontWeight.bold,
+                              style: SMobillsTextStyles.body1.copyWith(
+                                color: context.colorScheme.onSurface.withValues(
+                                  alpha: 0.7,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            const SizedBox(width: 8),
+                            GestureDetector(
+                              onTap: context.read<LoginCubit>().signUp,
+                              child: Text(
+                                context.l10n.signUp,
+                                textAlign: TextAlign.center,
+                                style: SMobillsTextStyles.button.copyWith(
+                                  color: context.colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
           ),
         );
       },

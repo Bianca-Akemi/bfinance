@@ -3,26 +3,26 @@ import 'package:s_mobills/ui/ui.dart';
 
 class AuthContainer extends StatelessWidget {
   const AuthContainer({
+    required this.height,
+    required this.marginTop,
+    required this.borderRadius,
     required this.child,
     super.key,
   });
-
+  final double height;
+  final double marginTop;
+  final BorderRadius borderRadius;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(
-        vertical: context.mediaQuery.size.height * 0.15,
-        horizontal: context.mediaQuery.size.width * 0.06,
-      ),
-      padding: const EdgeInsets.only(top: 24),
-      height: context.mediaQuery.size.height * 0.70,
+      margin: EdgeInsets.only(top: context.mediaQuery.size.height * marginTop),
+      padding: const EdgeInsets.only(top: 40),
+      height: context.mediaQuery.size.height * height,
       width: context.mediaQuery.size.width,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(28),
-        ),
+        borderRadius: borderRadius,
         color: context.colorScheme.surface,
         boxShadow: [
           BoxShadow(

@@ -4,10 +4,7 @@ import 'package:s_mobills/l10n/l10n.dart';
 import 'package:s_mobills/ui/ui.dart';
 
 class TransactionValue extends StatelessWidget {
-  const TransactionValue({
-    required this.controller,
-    super.key,
-  });
+  const TransactionValue({required this.controller, super.key});
 
   final CurrencyTextFieldController controller;
 
@@ -18,11 +15,16 @@ class TransactionValue extends StatelessWidget {
       alignment: Alignment.topLeft,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 15,
         children: [
-          Text(
-            context.l10n.transactionValue,
-            style: SMobillsTextStyles.subtitle2.copyWith(
-              color: context.colorScheme.onPrimary,
+          Padding(
+            padding: const EdgeInsets.only(left: 5),
+            child: Text(
+              context.l10n.transactionValue,
+              style: SMobillsTextStyles.subtitle1.copyWith(
+                color: context.colorScheme.onPrimary,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
           TextField(
@@ -38,12 +40,12 @@ class TransactionValue extends StatelessWidget {
               border: InputBorder.none,
               hintText: r"R$ 0,00",
               hintStyle: SMobillsTextStyles.h4.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 color: context.colorScheme.onPrimary.withOpacity(0.75),
               ),
             ),
             style: SMobillsTextStyles.h4.copyWith(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
               color: context.colorScheme.onPrimary,
             ),
             keyboardType: TextInputType.number,

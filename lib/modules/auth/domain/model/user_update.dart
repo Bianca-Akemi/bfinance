@@ -10,7 +10,7 @@ class UserUpdate {
   factory UserUpdate.toDomain({required EditState state}) {
     return UserUpdate(
       name: state.name,
-      age: int.parse(state.age),
+      age: 18,
       email: state.email.trim(),
     );
   }

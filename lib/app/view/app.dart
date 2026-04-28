@@ -28,7 +28,7 @@ class App extends StatelessWidget {
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
-      fontFamily: 'Roboto',
+      fontFamily: 'Poppins',
       scaffoldBackgroundColor: colorScheme.surface,
       appBarTheme: AppBarTheme(
         centerTitle: true,
@@ -63,7 +63,7 @@ class App extends StatelessWidget {
             borderRadius: BorderRadius.circular(14),
           ),
           textStyle: const TextStyle(
-            fontFamily: 'Roboto',
+            fontFamily: 'Poppins',
             fontSize: 16,
             fontWeight: FontWeight.w600,
             letterSpacing: 0.5,

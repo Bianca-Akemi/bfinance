@@ -61,7 +61,6 @@ class AccountsView extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             heroTag: null,
-            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             onPressed: context.read<AccountsCubit>().createAccount,
             shape: const CircleBorder(),
             child: const Icon(Icons.add),

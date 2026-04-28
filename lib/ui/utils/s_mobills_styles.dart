@@ -67,79 +67,92 @@ class SMobillsTextStyles {
   const SMobillsTextStyles._();
 
   static const h1 = TextStyle(
-    fontFamily: 'Roboto-Light',
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w300,
     fontSize: FontSize.h1,
     letterSpacing: LetterSpacing.h1,
   );
 
   static const h2 = TextStyle(
-    fontFamily: 'Roboto-Light',
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w300,
     fontSize: FontSize.h2,
     letterSpacing: LetterSpacing.h2,
   );
 
   static const h3 = TextStyle(
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w400,
     fontSize: FontSize.h3,
     letterSpacing: LetterSpacing.h3,
   );
 
   static const h4 = TextStyle(
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w400,
     fontSize: FontSize.h4,
     letterSpacing: LetterSpacing.h4,
   );
 
   static const h5 = TextStyle(
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w400,
     fontSize: FontSize.h5,
     letterSpacing: LetterSpacing.h5,
   );
 
   static const h6 = TextStyle(
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w500,
     fontSize: FontSize.h6,
     letterSpacing: LetterSpacing.h6,
   );
 
   static const subtitle1 = TextStyle(
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w400,
     fontSize: FontSize.subtitle1,
     letterSpacing: LetterSpacing.subtitle1,
   );
 
   static const subtitle2 = TextStyle(
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w500,
     fontSize: FontSize.subtitle2,
     letterSpacing: LetterSpacing.subtitle2,
   );
 
   static const body1 = TextStyle(
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w400,
     fontSize: FontSize.body1,
     letterSpacing: LetterSpacing.body1,
   );
 
   static const body2 = TextStyle(
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w400,
     fontSize: FontSize.body2,
     letterSpacing: LetterSpacing.body2,
   );
 
   static const button = TextStyle(
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w500,
     fontSize: FontSize.button,
     letterSpacing: LetterSpacing.button,
   );
 
   static const caption = TextStyle(
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w400,
     fontSize: FontSize.caption,
     letterSpacing: LetterSpacing.caption,
   );
 
   static const overline = TextStyle(
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w400,
     fontSize: FontSize.overline,
     letterSpacing: LetterSpacing.overline,
   );

@@ -16,8 +16,7 @@ class TransactionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => TransactionsCubit(
-        getTransactionsPeriodUseCase:
-            GetIt.I<GetTransactionsPeriodUseCase>(),
+        getTransactionsPeriodUseCase: GetIt.I<GetTransactionsPeriodUseCase>(),
       ),
       child: const TransactionsView(),
     );
@@ -35,17 +34,11 @@ class TransactionsView extends StatelessWidget {
           appBar: SMobillsAppBar(
             title: context.l10n.transactions,
             elevation: 0,
-            customPreferredSize: const Size.fromHeight(100),
+            customPreferredSize: const Size.fromHeight(170),
             bottom: TransactionAppBarBottom(
-              title: DateHelper.formatterBy(
-                state.year,
-                state.month,
-              ),
-              onTapBack: context
-                  .read<TransactionsCubit>()
-                  .previousMonth,
-              onTapNext:
-                  context.read<TransactionsCubit>().nextMonth,
+              title: DateHelper.formatterBy(state.year, state.month),
+              onTapBack: context.read<TransactionsCubit>().previousMonth,
+              onTapNext: context.read<TransactionsCubit>().nextMonth,
             ),
           ),
           body: SMobillsLoadingOverlay(
@@ -59,8 +52,7 @@ class TransactionsView extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(24),
                           decoration: BoxDecoration(
-                            color: context
-                                .colorScheme.primaryContainer
+                            color: context.colorScheme.primaryContainer
                                 .withValues(alpha: 0.5),
                             shape: BoxShape.circle,
                           ),
@@ -80,110 +72,115 @@ class TransactionsView extends StatelessWidget {
                           'Você ainda não registrou nenhuma'
                           ' transação neste mês',
                           textAlign: TextAlign.center,
-                          style:
-                              SMobillsTextStyles.body1.copyWith(
-                            color: context
-                                .colorScheme.onSurface
-                                .withValues(alpha: 0.6),
+                          style: SMobillsTextStyles.body1.copyWith(
+                            color: context.colorScheme.onSurface.withValues(
+                              alpha: 0.6,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   )
-                : GroupedListView<dynamic, String>(
-                    elements: state.transactions,
-                    groupBy: (element) {
-                      final date = element.date as DateTime;
-                      final inputDateFormat =
-                          DateFormat('dd/MM/yyyy');
-                      final formattedDate =
-                          inputDateFormat.format(date);
-                      return formattedDate;
-                    },
-                    groupComparator: (value1, value2) =>
-                        value2.compareTo(value1),
-                    groupSeparatorBuilder: (String value) {
-                      final inputDateFormat =
-                          DateFormat('dd/MM/yyyy');
-                      final date = inputDateFormat.parse(value);
-                      final title =
-                          SMobillsDateFormatter.formatDate(
-                        context: context,
-                        date: date,
-                      );
+                : Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: GroupedListView<dynamic, String>(
+                      elements: state.transactions,
+                      groupBy: (element) {
+                        final date = element.date as DateTime;
+                        final inputDateFormat = DateFormat('dd/MM/yyyy');
+                        final formattedDate = inputDateFormat.format(date);
+                        return formattedDate;
+                      },
+                      groupComparator: (value1, value2) =>
+                          value2.compareTo(value1),
+                      groupSeparatorBuilder: (String value) {
+                        final inputDateFormat = DateFormat('dd/MM/yyyy');
+                        final date = inputDateFormat.parse(value);
+                        final title = SMobillsDateFormatter.formatDate(
+                          context: context,
+                          date: date,
+                        );
 
-                      return TransactionSectionTitle(
-                        title: title,
-                      );
-                    },
-                    itemBuilder: (_, element) {
-                      final transaction =
-                          element as Transaction;
-                      return InkWell(
-                        onTap: () => context
-                            .read<TransactionsCubit>()
-                            .editTransaction(
-                              transaction: transaction,
-                            ),
-                        child: TransactionItem(
-                          isExpense: transaction.type ==
-                              TransactionType.expense,
-                          isDone: transaction.done,
-                          name: transaction
-                              .category.displayName,
-                          description:
-                              transaction.description,
-                          value: transaction.value.formatted,
-                        ),
-                      );
-                    },
+                        return TransactionSectionTitle(title: title);
+                      },
+                      itemBuilder: (_, element) {
+                        final transaction = element as Transaction;
+                        return InkWell(
+                          onTap: () => context
+                              .read<TransactionsCubit>()
+                              .editTransaction(transaction: transaction),
+                          child: TransactionItem(
+                            isExpense:
+                                transaction.type == TransactionType.expense,
+                            isDone: transaction.done,
+                            name: transaction.category.displayName,
+                            description: transaction.description,
+                            value: transaction.value.formatted,
+                          ),
+                        );
+                      },
+                    ),
                   ),
           ),
           floatingActionButtonLocation: ExpandableFab.location,
           floatingActionButton: ExpandableFab(
-            key: context
-                .read<TransactionsCubit>()
-                .floatingButtonKey,
-            openButtonBuilder:
-                RotateFloatingActionButtonBuilder(
+            key: context.read<TransactionsCubit>().floatingButtonKey,
+            openButtonBuilder: RotateFloatingActionButtonBuilder(
               child: const Icon(Icons.add),
               shape: const CircleBorder(),
             ),
-            closeButtonBuilder:
-                RotateFloatingActionButtonBuilder(
+            closeButtonBuilder: RotateFloatingActionButtonBuilder(
               child: const Icon(Icons.close),
               shape: const CircleBorder(),
             ),
             children: [
-              FloatingActionButton(
-                heroTag: null,
-                backgroundColor:
-                    const Color(0xFF059669),
-                onPressed: () => context
-                    .read<TransactionsCubit>()
-                    .addTransaction(
-                      type: TransactionType.income,
+              Column(
+                spacing: 5,
+                children: [
+                  FloatingActionButton(
+                    heroTag: null,
+                    backgroundColor: const Color(0xFF059669),
+                    onPressed: () => context
+                        .read<TransactionsCubit>()
+                        .addTransaction(type: TransactionType.income),
+                    shape: const CircleBorder(),
+                    child: const Icon(
+                      Icons.north_outlined,
+                      color: Colors.white,
                     ),
-                shape: const CircleBorder(),
-                child: const Icon(
-                  Icons.north_outlined,
-                  color: Colors.white,
-                ),
+                  ),
+                  const Text(
+                    'Receita',
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
-              FloatingActionButton(
-                heroTag: null,
-                backgroundColor:
-                    const Color(0xFFDC2626),
-                onPressed: () => context
-                    .read<TransactionsCubit>()
-                    .addTransaction(
-                      type: TransactionType.expense,
+              Column(
+                spacing: 5,
+                children: [
+                  FloatingActionButton(
+                    heroTag: null,
+                    backgroundColor: const Color(0xFFDC2626),
+                    onPressed: () => context
+                        .read<TransactionsCubit>()
+                        .addTransaction(type: TransactionType.expense),
+                    shape: const CircleBorder(),
+                    child: const Icon(
+                      Icons.south_outlined,
+                      color: Colors.white,
                     ),
-                shape: const CircleBorder(),
-                child: const Icon(
-                  Icons.south_outlined,
-                  color: Colors.white,
-                ),
+                  ),
+                  const Text(
+                    'Despesa',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

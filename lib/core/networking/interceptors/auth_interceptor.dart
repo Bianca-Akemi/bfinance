@@ -34,11 +34,11 @@ class AuthInterceptor extends Interceptor {
     Response response,
     ResponseInterceptorHandler handler,
   ) {
-    final success = response.data != null;
+    final statusCode = response.statusCode ?? 0;
+    final isSuccessStatus = statusCode >= 200 && statusCode < 300;
 
-    if (success) return handler.next(response);
+    if (isSuccessStatus) return handler.next(response);
 
-    //Reject all error codes from server except 402 and 200 OK
     return handler.reject(
       DioError(
         requestOptions: response.requestOptions,

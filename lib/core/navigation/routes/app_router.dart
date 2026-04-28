@@ -201,39 +201,151 @@ class AppRouter {
 
   static GoRouter get router => _router;
 
-  static void showError({required String message}) {
-    final context = _rootNavigatorKey.currentContext!;
-    final height = MediaQuery.of(context).size.height;
+  static OverlayEntry? _currentOverlay;
 
-    final snackBar = SnackBar(
-      showCloseIcon: true,
-      backgroundColor: Colors.red,
-      behavior: SnackBarBehavior.floating,
-      margin: EdgeInsets.only(bottom: height - 150, left: 16, right: 16),
-      content: Text(
-        message,
-        style: SMobillsTextStyles.body1.copyWith(color: Colors.white),
+  static void _showOverlay({
+    required String message,
+    required Color backgroundColor,
+    required IconData icon,
+  }) {
+    _currentOverlay?.remove();
+    _currentOverlay = null;
+
+    final navigatorState = _rootNavigatorKey.currentState!;
+    final context = navigatorState.context;
+    final overlay = navigatorState.overlay!;
+    final topPadding = MediaQuery.of(context).padding.top;
+
+    late final OverlayEntry entry;
+    entry = OverlayEntry(
+      builder: (context) => _TopNotification(
+        message: message,
+        backgroundColor: backgroundColor,
+        icon: icon,
+        topPadding: topPadding,
+        onDismissed: () {
+          entry.remove();
+          if (_currentOverlay == entry) _currentOverlay = null;
+        },
       ),
     );
 
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    _currentOverlay = entry;
+    overlay.insert(entry);
+  }
+
+  static void showError({required String message}) {
+    _showOverlay(
+      message: message,
+      backgroundColor: Colors.red,
+      icon: Icons.error,
+    );
   }
 
   static void showSuccess({required String message}) {
-    final context = _rootNavigatorKey.currentContext!;
-    final height = MediaQuery.of(context).size.height;
-
-    final snackBar = SnackBar(
-      showCloseIcon: true,
+    _showOverlay(
+      message: message,
       backgroundColor: Colors.green,
-      behavior: SnackBarBehavior.floating,
-      margin: EdgeInsets.only(bottom: height - 150, left: 16, right: 16),
-      content: Text(
-        message,
-        style: SMobillsTextStyles.body1.copyWith(color: Colors.white),
+      icon: Icons.check_circle,
+    );
+  }
+}
+
+class _TopNotification extends StatefulWidget {
+  const _TopNotification({
+    required this.message,
+    required this.backgroundColor,
+    required this.icon,
+    required this.topPadding,
+    required this.onDismissed,
+  });
+
+  final String message;
+  final Color backgroundColor;
+  final IconData icon;
+  final double topPadding;
+  final VoidCallback onDismissed;
+
+  @override
+  State<_TopNotification> createState() => _TopNotificationState();
+}
+
+class _TopNotificationState extends State<_TopNotification>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<Offset> _slideAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, -1),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+
+    _controller.forward();
+    Future.delayed(const Duration(seconds: 3), _dismiss);
+  }
+
+  void _dismiss() {
+    if (!mounted) return;
+    _controller.reverse().then((_) {
+      if (mounted) widget.onDismissed();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: widget.topPadding + 16,
+      left: 16,
+      right: 16,
+      child: SlideTransition(
+        position: _slideAnimation,
+        child: GestureDetector(
+          onVerticalDragEnd: (details) {
+            if (details.primaryVelocity != null &&
+                details.primaryVelocity! < 0) {
+              _dismiss();
+            }
+          },
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: widget.backgroundColor,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 8,
+                children: [
+                  Icon(widget.icon, size: 20, color: Colors.white),
+                  Flexible(
+                    child: Text(
+                      widget.message,
+                      style: SMobillsTextStyles.body1.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
-
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

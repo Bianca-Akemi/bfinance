@@ -13,8 +13,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          SplashCubit(storage: GetIt.I<KeyValueStorageService>()),
+      create: (_) => SplashCubit(storage: GetIt.I<KeyValueStorageService>()),
       child: const SplashView(),
     );
   }
@@ -30,41 +29,44 @@ class SplashView extends StatelessWidget {
         context.read<SplashCubit>().checkIfUserAuthenticated();
 
         return Scaffold(
-          body: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  context.colorScheme.primary,
-                  context.colorScheme.secondary,
-                  context.colorScheme.tertiary,
-                ],
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: DefaultTextStyle(
-                    textAlign: TextAlign.center,
-                    style: SMobillsTextStyles.h2.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      letterSpacing: 2,
+          backgroundColor: context.colorScheme.primary,
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'lib/resources/icons/splash_logo.png',
+                      width: 200,
                     ),
-                    child: AnimatedTextKit(
-                      animatedTexts: [
-                        WavyAnimatedText(context.l10n.appName),
-                        FlickerAnimatedText(context.l10n.appName),
-                        ScaleAnimatedText(context.l10n.appName),
-                      ],
-                      totalRepeatCount: 100,
+                    DefaultTextStyle(
+                      textAlign: TextAlign.center,
+                      style: SMobillsTextStyles.h2.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white.withValues(alpha: 0.9),
+                        letterSpacing: 2,
+                      ),
+                      child: AnimatedTextKit(
+                        animatedTexts: [
+                          WavyAnimatedText(context.l10n.appName),
+                          FlickerAnimatedText(context.l10n.appName),
+                          ScaleAnimatedText(context.l10n.appName),
+                        ],
+                        totalRepeatCount: 100,
+                      ),
                     ),
-                  ),
+                    Text(
+                      'O melhor para suas finanças',
+                      style: SMobillsTextStyles.h6.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

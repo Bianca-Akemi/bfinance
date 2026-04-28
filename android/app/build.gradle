@@ -80,7 +80,7 @@ android {
         production {
             dimension "default"
             applicationIdSuffix ""
-            manifestPlaceholders = [appName: "BFinance"]
+            manifestPlaceholders = [appName: "bFinance"]
         }
         staging {
             dimension "default"

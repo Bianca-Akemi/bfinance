@@ -9,7 +9,7 @@ class AppLocalizationsPt extends AppLocalizations {
   AppLocalizationsPt([String locale = 'pt']) : super(locale);
 
   @override
-  String get appName => 'BFinance';
+  String get appName => 'bFinance';
 
   @override
   String get login => 'Login';
@@ -21,10 +21,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get password => 'Senha';
 
   @override
-  String get dontHaveAccount => 'Não tem uma conta?';
+  String get dontHaveAccount => 'Não possui uma conta?';
 
   @override
-  String get signUp => 'Criar conta';
+  String get signUp => 'Cadastre-se!';
 
   @override
   String get name => 'Nome';

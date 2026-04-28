@@ -3,10 +3,10 @@ import 'package:s_mobills/ui/ui.dart';
 
 class MonthlySelect extends StatelessWidget {
   const MonthlySelect({
-    super.key,
     required this.title,
     required this.onTapBack,
     required this.onTapNext,
+    super.key,
   });
 
   final String title;
@@ -22,27 +22,39 @@ class MonthlySelect extends StatelessWidget {
         children: [
           InkWell(
             onTap: onTapBack.call,
-            child: Icon(
-              Icons.keyboard_arrow_left_outlined,
-              color: context.colorScheme.onPrimary,
-              size: 32,
+            child: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(100)),
+                color: Colors.white,
+              ),
+              child: const Icon(
+                Icons.keyboard_arrow_left_outlined,
+                color: Colors.black,
+                size: 32,
+              ),
             ),
           ),
           SMobillsInline.custom(100),
           Text(
             title,
             style: SMobillsTextStyles.h6.copyWith(
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w700,
               color: context.colorScheme.onPrimary,
             ),
           ),
           SMobillsInline.custom(100),
           InkWell(
             onTap: onTapNext,
-            child: Icon(
-              Icons.keyboard_arrow_right_outlined,
-              color: context.colorScheme.onPrimary,
-              size: 32,
+            child: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(100)),
+                color: Colors.white,
+              ),
+              child: const Icon(
+                Icons.keyboard_arrow_right_outlined,
+                color: Colors.black,
+                size: 32,
+              ),
             ),
           ),
         ],

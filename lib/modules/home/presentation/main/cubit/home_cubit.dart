@@ -25,58 +25,107 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit({
     required this.getTransactionsPeriodUseCase,
     required this.getUserBankAccountsUseCase,
+    required this.doGetUserInfoUseCase,
   }) : super(const HomeState.initial()) {
     loadInfos();
   }
 
   final GetTransactionsPeriodUseCase getTransactionsPeriodUseCase;
   final GetUserBankAccountsUseCase getUserBankAccountsUseCase;
+  final DoGetUserInfoUseCase doGetUserInfoUseCase;
 
   Future<void> loadInfos() async {
     final date = DateTime.now();
     emit(state.copyWith(month: date.month, year: date.year));
 
+    await _loadUserInfo();
     await _loadLastSevenDays();
     await _loadTransactionsMonth();
     await _loadAllAccounts();
+  }
+
+  Future<void> _loadUserInfo() async {
+    try {
+      final user = await doGetUserInfoUseCase();
+      emit(state.copyWith(userName: user.name));
+    } on SMobillsException catch (e) {
+      AppRouter.showError(message: e.message);
+    }
   }
 
   Future<void> _loadLastSevenDays() async {
     try {
       emit(state.copyWith(isLoading: true));
       final inputFormatter = DateFormat('dd/MM');
-      final List<SalesData> days = [];
+      final expenseDays = <SalesData>[];
+      final incomeDays = <SalesData>[];
 
-      for (int i = 0; i < 7; i++) {
-        final date = DateTime.now().subtract(Duration(days: i));
-        days.add(SalesData(inputFormatter.format(date), 0));
+      final lastDayOfMonth =
+          DateHelper.lastDayMonth(state.year, state.month);
+      final referenceDate = DateTime.now().isBefore(lastDayOfMonth)
+          && state.year == DateTime.now().year
+          && state.month == DateTime.now().month
+          ? DateTime.now()
+          : lastDayOfMonth;
+
+      for (var i = 0; i < 7; i++) {
+        final date = referenceDate.subtract(Duration(days: i));
+        final label = inputFormatter.format(date);
+        expenseDays.add(SalesData(label, 0));
+        incomeDays.add(SalesData(label, 0));
       }
 
-      final start = DateTime.now().subtract(const Duration(days: 7));
-      final end = DateTime.now();
+      final start = referenceDate.subtract(const Duration(days: 7));
+      final end = referenceDate;
 
       final result = await getTransactionsPeriodUseCase(
         start: start,
         end: end,
       );
 
-      final lastSevenDaysExpense = result
-          .where(
-            (element) => element.type == TransactionType.expense,
-          )
+      final expenses = result
+          .where((e) => e.type == TransactionType.expense)
           .map(
-            (e) => SalesData(inputFormatter.format(e.date), e.value.value),
+            (e) => SalesData(
+              inputFormatter.format(e.date),
+              e.value.value,
+            ),
           );
 
-      for (final e in lastSevenDaysExpense) {
-        days.firstWhere((element) => e.year == element.year).sales += e.sales;
+      for (final e in expenses) {
+        final day = expenseDays.firstWhereOrNull(
+          (element) => e.year == element.year,
+        );
+        if (day != null) {
+          day.sales += e.sales;
+        }
       }
 
-      final lastSevenDaysExpenseEmpty = days.every((e) => e.sales == 0.00);
+      final incomes = result
+          .where((e) => e.type == TransactionType.income)
+          .map(
+            (e) => SalesData(
+              inputFormatter.format(e.date),
+              e.value.value,
+            ),
+          );
+
+      for (final e in incomes) {
+        final day = incomeDays.firstWhereOrNull(
+          (element) => e.year == element.year,
+        );
+        if (day != null) {
+          day.sales += e.sales;
+        }
+      }
+
+      final lastSevenDaysExpenseEmpty =
+          expenseDays.every((e) => e.sales == 0.00);
 
       emit(
         state.copyWith(
-          lastSevenDaysExpense: days.reversed.toList(),
+          lastSevenDaysExpense: expenseDays.reversed.toList(),
+          lastSevenDaysIncome: incomeDays.reversed.toList(),
           lastSevenDaysExpenseEmpty: lastSevenDaysExpenseEmpty,
         ),
       );
@@ -128,7 +177,8 @@ class HomeCubit extends Cubit<HomeState> {
       });
 
       double balance = totalIncome - totalExpense;
-      double economyPercent = (balance / totalIncome) * 100;
+      double economyPercent =
+          totalIncome > 0 ? (balance / totalIncome) * 100 : 0.0;
       bool spendingTooMuch = economyPercent < 20.00;
 
       emit(
@@ -169,20 +219,22 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void nextMonth() {
-    if (state.month == 1) {
+    if (state.month == 12) {
       emit(state.copyWith(year: state.year + 1, month: 1));
     } else {
       emit(state.copyWith(month: state.month + 1));
     }
     _loadTransactionsMonth();
+    _loadLastSevenDays();
   }
 
   void previousMonth() {
-    if (state.month == 12) {
+    if (state.month == 1) {
       emit(state.copyWith(year: state.year - 1, month: 12));
     } else {
       emit(state.copyWith(month: state.month - 1));
     }
     _loadTransactionsMonth();
+    _loadLastSevenDays();
   }
 }

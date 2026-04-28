@@ -24,27 +24,17 @@ class SMobillsButton extends StatelessWidget {
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      width: loading ? 64 : 220,
-      height: loading ? 64 : 52,
+      width: 300,
+      height: 52,
       child: ElevatedButton(
         style: buttonStyle,
         onPressed: loading ? null : onPressed.call,
-        child: loading
-            ? const SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.5,
-                  color: Colors.white,
-                ),
-              )
-            : Text(
-                title,
-                style: textStyle ??
-                    SMobillsTextStyles.button.copyWith(
-                      fontSize: FontSize.subtitle1,
-                    ),
-              ),
+        child: Text(
+          title,
+          style:
+              textStyle ??
+              SMobillsTextStyles.button.copyWith(fontSize: FontSize.subtitle1),
+        ),
       ),
     );
   }

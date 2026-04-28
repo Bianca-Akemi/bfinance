@@ -1,82 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:s_mobills/ui/ui.dart';
 
-class HomeHeader extends StatelessWidget implements PreferredSizeWidget {
-  const HomeHeader({
-    required this.balance,
-    required this.totalExpanse,
-    required this.totalIncome,
-    super.key,
-  });
-
+class HomeHeader extends StatefulWidget implements PreferredSizeWidget {
+  const HomeHeader({required this.balance, super.key});
   final String balance;
-  final String totalExpanse;
-  final String totalIncome;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(200);
+
+  @override
+  State<HomeHeader> createState() => _HomeHeaderState();
+}
+
+class _HomeHeaderState extends State<HomeHeader> {
+  bool _balanceVisible = false;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.all(20),
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(30),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(28),
-          bottomRight: Radius.circular(28),
-        ),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            context.colorScheme.primary,
-            context.colorScheme.secondary,
-          ],
-        ),
+        borderRadius: const BorderRadius.all(Radius.circular(28)),
+        border: Border.all(color: context.colorScheme.primary, width: 2),
+        color: Colors.white,
       ),
       child: Column(
         children: [
+          SMobillsSpacing.sm,
           Text(
-            'Saldo em contas',
-            style: SMobillsTextStyles.subtitle1.copyWith(
-              color: Colors.white.withValues(alpha: 0.8),
+            'saldo em contas',
+            style: SMobillsTextStyles.h6.copyWith(
+              color: context.colorScheme.primary,
+              fontWeight: FontWeight.bold,
             ),
           ),
           SMobillsSpacing.sm,
-          Text(
-            balance,
-            style: SMobillsTextStyles.h4.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          SMobillsSpacing.lg,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                HomeBalanceItem(
-                  title: 'Receitas',
-                  icon: Icons.north_outlined,
-                  color: const Color(0xFF34D399),
-                  value: totalIncome,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                _balanceVisible ? widget.balance : r'R$•••••',
+                style: SMobillsTextStyles.h4.copyWith(color: Colors.black),
+              ),
+              const SizedBox(width: 15),
+              GestureDetector(
+                onTap: () => setState(() => _balanceVisible = !_balanceVisible),
+                child: Icon(
+                  _balanceVisible ? Icons.visibility : Icons.visibility_off,
+                  color: context.colorScheme.primary,
+                  size: 30,
                 ),
-                HomeBalanceItem(
-                  title: 'Despesas',
-                  icon: Icons.south_outlined,
-                  color: const Color(0xFFFB7185),
-                  value: totalExpanse,
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          SMobillsSpacing.md,
+          SMobillsSpacing.sm,
         ],
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(200);
 }
 
 class HomeBalanceItem extends StatelessWidget {
@@ -103,11 +86,7 @@ class HomeBalanceItem extends StatelessWidget {
             color: color.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Icon(
-            icon,
-            color: color,
-            size: 20,
-          ),
+          child: Icon(icon, color: color, size: 20),
         ),
         SMobillsInline.md,
         Column(

@@ -4,7 +4,7 @@ class TransactionDate {
   static final yesterdayDate = DateTime.now().subtract(const Duration(days: 1));
   static final todayDate = DateTime.now();
   static final initialDate = DateTime(2023);
-  static final lastDate = DateTime(2025);
+  static final lastDate = DateTime(DateTime.now().year, DateTime.now().month + 1, 0);
 }
 
 @freezed

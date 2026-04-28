@@ -5,10 +5,7 @@ import 'package:s_mobills/core/model/transaction_type.dart';
 import 'package:s_mobills/modules/transactions/presentation/select_category/cubit/select_category_cubit.dart';
 
 class SelectCategoryPage extends StatelessWidget {
-  const SelectCategoryPage({
-    required this.type,
-    super.key,
-  });
+  const SelectCategoryPage({required this.type, super.key});
 
   final TransactionType type;
 
@@ -32,9 +29,7 @@ class SelectCategoryView extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.background,
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(15),
-            ),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
           ),
           child: ListView.separated(
             itemBuilder: (context, index) {
@@ -44,17 +39,17 @@ class SelectCategoryView extends StatelessWidget {
                     .read<SelectCategoryCubit>()
                     .onSelectedCategory(item),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 16,
+                  ),
                   child: Row(
                     children: [
                       CircleAvatar(
                         backgroundColor: item.color,
-                        child: Icon(item.icon),
+                        child: Icon(item.icon, color: Colors.white),
                       ),
-                      const SizedBox(
-                        width: 8,
-                      ),
+                      const SizedBox(width: 8),
                       Text(
                         item.displayName,
                         style: TextStyle(
@@ -71,8 +66,9 @@ class SelectCategoryView extends StatelessWidget {
             separatorBuilder: (context, index) {
               return Divider(
                 height: 0.25,
-                color:
-                    Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withOpacity(0.05),
               );
             },
             itemCount: state.categories.length,

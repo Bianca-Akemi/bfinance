@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:s_mobills/ui/ui.dart';
 
-class SMobillsAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
+class SMobillsAppBar extends StatelessWidget implements PreferredSizeWidget {
   const SMobillsAppBar({
     required this.title,
+    this.isHomePage = false,
     this.bottom,
     this.elevation,
     this.customPreferredSize,
@@ -14,6 +14,7 @@ class SMobillsAppBar extends StatelessWidget
   });
 
   final String title;
+  final bool isHomePage;
   final PreferredSizeWidget? bottom;
   final double? elevation;
   final Size? customPreferredSize;
@@ -27,13 +28,14 @@ class SMobillsAppBar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      centerTitle: true,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
-      title: Text(
-        title,
-        style: SMobillsTextStyles.h6.copyWith(
-          fontWeight: FontWeight.w700,
+      centerTitle: !isHomePage,
+      title: Padding(
+        padding: const EdgeInsets.only(left: 20),
+        child: Text(
+          isHomePage ? 'Olá $title' : title,
+          style: SMobillsTextStyles.h5.copyWith(fontWeight: FontWeight.w700),
         ),
       ),
       bottom: bottom,

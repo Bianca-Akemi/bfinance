@@ -8,54 +8,49 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 class SpendingCategory extends StatelessWidget {
   const SpendingCategory({
     required this.categoriesDataSource,
+    required this.month,
     super.key,
   });
 
   final List<PieByCategory> categoriesDataSource;
+  final String month;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Gastos por categoria',
-            style: SMobillsTextStyles.subtitle1.copyWith(
-              color: Theme.of(context)
-                  .colorScheme
-                  .onSurface
-                  .withValues(alpha: 0.7),
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SMobillsSpacing.sm,
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: categoriesDataSource.isEmpty
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+          child: Column(
+            children: [
+              Text(
+                'gastos por categoria - $month',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: SMobillsTextStyles.subtitle1.copyWith(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SMobillsSpacing.sm,
+              categoriesDataSource.isEmpty
                   ? const HomeEmptyState()
                   : SfCircularChart(
                       legend: const Legend(
                         isVisible: true,
-                        overflowMode:
-                            LegendItemOverflowMode.wrap,
+                        overflowMode: LegendItemOverflowMode.wrap,
                       ),
                       series: [
                         DoughnutSeries<PieByCategory, String>(
                           explode: true,
                           dataSource: categoriesDataSource,
-                          xValueMapper:
-                              (PieByCategory data, _) =>
-                                  data.categoryType.displayName,
-                          yValueMapper:
-                              (PieByCategory data, _) =>
-                                  data.value,
-                          dataLabelMapper:
-                              (PieByCategory data, _) =>
-                                  data.categoryType.displayName,
+                          xValueMapper: (PieByCategory data, _) =>
+                              data.categoryType.displayName,
+                          yValueMapper: (PieByCategory data, _) => data.value,
+                          dataLabelMapper: (PieByCategory data, _) =>
+                              data.categoryType.displayName,
                         ),
                       ],
                       tooltipBehavior: TooltipBehavior(
@@ -63,9 +58,9 @@ class SpendingCategory extends StatelessWidget {
                         format: r'point.x : R$ point.y',
                       ),
                     ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

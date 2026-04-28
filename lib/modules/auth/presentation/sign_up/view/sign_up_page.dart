@@ -11,9 +11,8 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => SignUpCubit(
-        doCreateUserUseCase: GetIt.I<DoCreateUserUseCase>(),
-      ),
+      create: (_) =>
+          SignUpCubit(doCreateUserUseCase: GetIt.I<DoCreateUserUseCase>()),
       child: const SignUpView(),
     );
   }
@@ -31,62 +30,64 @@ class SignUpView extends StatelessWidget {
             isLoading: state.isLoading,
             child: SingleChildScrollView(
               child: Stack(
-              children: [
-                const AuthHeader(),
-                AuthContainer(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 8),
-                      Text(
-                        context.l10n.signUp,
-                        textAlign: TextAlign.center,
-                        style: SMobillsTextStyles.h4.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: context.colorScheme.primary,
+                children: [
+                  const AuthHeader(isShowLogo: false),
+                  AuthContainer(
+                    height: 0.8,
+                    marginTop: 0.2,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(80),
+                    ),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 8),
+                        Text(
+                          'Criar nova conta',
+                          textAlign: TextAlign.center,
+                          style: SMobillsTextStyles.h4.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: context.colorScheme.primary,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height:
-                            context.mediaQuery.size.height * 0.025,
-                      ),
-                      SMobillsTextField(
-                        controller: context
-                            .read<SignUpCubit>()
-                            .nameTextEditingController,
-                        hintText: context.l10n.name,
-                        keyboardType: TextInputType.name,
-                      ),
-                      SMobillsTextField(
-                        controller: context
-                            .read<SignUpCubit>()
-                            .emailTextEditingController,
-                        hintText: context.l10n.email,
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      SMobillsTextField(
-                        hintText: context.l10n.password,
-                        controller: context
-                            .read<SignUpCubit>()
-                            .passwordTextEditingController,
-                        obscureText: true,
-                      ),
-                      SizedBox(
-                        height:
-                            context.mediaQuery.size.height * 0.05,
-                      ),
-                      SMobillsButton(
-                        title: context.l10n.signUp,
-                        onPressed: context
-                            .read<SignUpCubit>()
-                            .createAccount,
-                        isLoading: state.isLoading,
-                      ),
-                    ],
+                        SizedBox(
+                          height: context.mediaQuery.size.height * 0.025,
+                        ),
+                        SMobillsTextField(
+                          title: context.l10n.name,
+                          controller: context
+                              .read<SignUpCubit>()
+                              .nameTextEditingController,
+                          hintText: 'Digite seu nome ou apelido',
+                          keyboardType: TextInputType.name,
+                        ),
+                        SMobillsTextField(
+                          title: context.l10n.email,
+                          controller: context
+                              .read<SignUpCubit>()
+                              .emailTextEditingController,
+                          hintText: 'Digite seu melhor e-mail',
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        SMobillsTextField(
+                          title: context.l10n.password,
+                          hintText: 'Digite sua melhor senha',
+                          controller: context
+                              .read<SignUpCubit>()
+                              .passwordTextEditingController,
+                          obscureText: true,
+                        ),
+                        SizedBox(height: context.mediaQuery.size.height * 0.05),
+                        SMobillsButton(
+                          title: 'Salvar',
+                          onPressed: context.read<SignUpCubit>().createAccount,
+                          isLoading: state.isLoading,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
           ),
         );
       },
