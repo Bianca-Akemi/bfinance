@@ -15,7 +15,11 @@ _TransactionResponse _$TransactionResponseFromJson(Map<String, dynamic> json) =>
       date: DateTime.parse(json['Date'] as String),
       done: json['Done'] as bool,
       type: $enumDecode(_$TransactionTypeEnumMap, json['Type']),
-      category: $enumDecode(_$CategoryTypeEnumMap, json['Category']),
+      category: $enumDecode(
+        _$CategoryTypeEnumMap,
+        json['Category'],
+        unknownValue: CategoryType.others,
+      ),
     );
 
 Map<String, dynamic> _$TransactionResponseToJson(

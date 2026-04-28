@@ -55,5 +55,6 @@
     "account": "Account",
     "logoutConfirmTitle": "Log out",
     "logoutConfirmMessage": "Are you sure you want to log out?",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "newPassword": "New password"
 }

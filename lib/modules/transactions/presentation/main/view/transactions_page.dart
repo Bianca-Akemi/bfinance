@@ -34,7 +34,7 @@ class TransactionsView extends StatelessWidget {
           appBar: SMobillsAppBar(
             title: context.l10n.transactions,
             elevation: 0,
-            customPreferredSize: const Size.fromHeight(170),
+            customPreferredSize: const Size.fromHeight(150),
             bottom: TransactionAppBarBottom(
               month: state.month,
               year: state.year,

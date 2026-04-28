@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TransactionResponse {
 
-@JsonKey(name: 'Id') int get id;@JsonKey(name: 'Description') String get description;@JsonKey(name: 'Value') double get value;@JsonKey(name: 'AccountId') int get accountId;@JsonKey(name: 'Date') DateTime get date;@JsonKey(name: 'Done') bool get done;@JsonKey(name: 'Type') TransactionType get type;@JsonKey(name: 'Category') CategoryType get category;
+@JsonKey(name: 'Id') int get id;@JsonKey(name: 'Description') String get description;@JsonKey(name: 'Value') double get value;@JsonKey(name: 'AccountId') int get accountId;@JsonKey(name: 'Date') DateTime get date;@JsonKey(name: 'Done') bool get done;@JsonKey(name: 'Type') TransactionType get type;@JsonKey(name: 'Category', unknownEnumValue: CategoryType.others) CategoryType get category;
 /// Create a copy of TransactionResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $TransactionResponseCopyWith<$Res>  {
   factory $TransactionResponseCopyWith(TransactionResponse value, $Res Function(TransactionResponse) _then) = _$TransactionResponseCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'Id') int id,@JsonKey(name: 'Description') String description,@JsonKey(name: 'Value') double value,@JsonKey(name: 'AccountId') int accountId,@JsonKey(name: 'Date') DateTime date,@JsonKey(name: 'Done') bool done,@JsonKey(name: 'Type') TransactionType type,@JsonKey(name: 'Category') CategoryType category
+@JsonKey(name: 'Id') int id,@JsonKey(name: 'Description') String description,@JsonKey(name: 'Value') double value,@JsonKey(name: 'AccountId') int accountId,@JsonKey(name: 'Date') DateTime date,@JsonKey(name: 'Done') bool done,@JsonKey(name: 'Type') TransactionType type,@JsonKey(name: 'Category', unknownEnumValue: CategoryType.others) CategoryType category
 });
 
 
@@ -160,7 +160,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'Id')  int id, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Value')  double value, @JsonKey(name: 'AccountId')  int accountId, @JsonKey(name: 'Date')  DateTime date, @JsonKey(name: 'Done')  bool done, @JsonKey(name: 'Type')  TransactionType type, @JsonKey(name: 'Category')  CategoryType category)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'Id')  int id, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Value')  double value, @JsonKey(name: 'AccountId')  int accountId, @JsonKey(name: 'Date')  DateTime date, @JsonKey(name: 'Done')  bool done, @JsonKey(name: 'Type')  TransactionType type, @JsonKey(name: 'Category', unknownEnumValue: CategoryType.others)  CategoryType category)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TransactionResponse() when $default != null:
 return $default(_that.id,_that.description,_that.value,_that.accountId,_that.date,_that.done,_that.type,_that.category);case _:
@@ -181,7 +181,7 @@ return $default(_that.id,_that.description,_that.value,_that.accountId,_that.dat
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'Id')  int id, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Value')  double value, @JsonKey(name: 'AccountId')  int accountId, @JsonKey(name: 'Date')  DateTime date, @JsonKey(name: 'Done')  bool done, @JsonKey(name: 'Type')  TransactionType type, @JsonKey(name: 'Category')  CategoryType category)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'Id')  int id, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Value')  double value, @JsonKey(name: 'AccountId')  int accountId, @JsonKey(name: 'Date')  DateTime date, @JsonKey(name: 'Done')  bool done, @JsonKey(name: 'Type')  TransactionType type, @JsonKey(name: 'Category', unknownEnumValue: CategoryType.others)  CategoryType category)  $default,) {final _that = this;
 switch (_that) {
 case _TransactionResponse():
 return $default(_that.id,_that.description,_that.value,_that.accountId,_that.date,_that.done,_that.type,_that.category);case _:
@@ -201,7 +201,7 @@ return $default(_that.id,_that.description,_that.value,_that.accountId,_that.dat
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'Id')  int id, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Value')  double value, @JsonKey(name: 'AccountId')  int accountId, @JsonKey(name: 'Date')  DateTime date, @JsonKey(name: 'Done')  bool done, @JsonKey(name: 'Type')  TransactionType type, @JsonKey(name: 'Category')  CategoryType category)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'Id')  int id, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Value')  double value, @JsonKey(name: 'AccountId')  int accountId, @JsonKey(name: 'Date')  DateTime date, @JsonKey(name: 'Done')  bool done, @JsonKey(name: 'Type')  TransactionType type, @JsonKey(name: 'Category', unknownEnumValue: CategoryType.others)  CategoryType category)?  $default,) {final _that = this;
 switch (_that) {
 case _TransactionResponse() when $default != null:
 return $default(_that.id,_that.description,_that.value,_that.accountId,_that.date,_that.done,_that.type,_that.category);case _:
@@ -216,7 +216,7 @@ return $default(_that.id,_that.description,_that.value,_that.accountId,_that.dat
 @JsonSerializable()
 
 class _TransactionResponse extends TransactionResponse {
-   _TransactionResponse({@JsonKey(name: 'Id') required this.id, @JsonKey(name: 'Description') required this.description, @JsonKey(name: 'Value') required this.value, @JsonKey(name: 'AccountId') required this.accountId, @JsonKey(name: 'Date') required this.date, @JsonKey(name: 'Done') required this.done, @JsonKey(name: 'Type') required this.type, @JsonKey(name: 'Category') required this.category}): super._();
+   _TransactionResponse({@JsonKey(name: 'Id') required this.id, @JsonKey(name: 'Description') required this.description, @JsonKey(name: 'Value') required this.value, @JsonKey(name: 'AccountId') required this.accountId, @JsonKey(name: 'Date') required this.date, @JsonKey(name: 'Done') required this.done, @JsonKey(name: 'Type') required this.type, @JsonKey(name: 'Category', unknownEnumValue: CategoryType.others) required this.category}): super._();
   factory _TransactionResponse.fromJson(Map<String, dynamic> json) => _$TransactionResponseFromJson(json);
 
 @override@JsonKey(name: 'Id') final  int id;
@@ -226,7 +226,7 @@ class _TransactionResponse extends TransactionResponse {
 @override@JsonKey(name: 'Date') final  DateTime date;
 @override@JsonKey(name: 'Done') final  bool done;
 @override@JsonKey(name: 'Type') final  TransactionType type;
-@override@JsonKey(name: 'Category') final  CategoryType category;
+@override@JsonKey(name: 'Category', unknownEnumValue: CategoryType.others) final  CategoryType category;
 
 /// Create a copy of TransactionResponse
 /// with the given fields replaced by the non-null parameter values.
@@ -261,7 +261,7 @@ abstract mixin class _$TransactionResponseCopyWith<$Res> implements $Transaction
   factory _$TransactionResponseCopyWith(_TransactionResponse value, $Res Function(_TransactionResponse) _then) = __$TransactionResponseCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'Id') int id,@JsonKey(name: 'Description') String description,@JsonKey(name: 'Value') double value,@JsonKey(name: 'AccountId') int accountId,@JsonKey(name: 'Date') DateTime date,@JsonKey(name: 'Done') bool done,@JsonKey(name: 'Type') TransactionType type,@JsonKey(name: 'Category') CategoryType category
+@JsonKey(name: 'Id') int id,@JsonKey(name: 'Description') String description,@JsonKey(name: 'Value') double value,@JsonKey(name: 'AccountId') int accountId,@JsonKey(name: 'Date') DateTime date,@JsonKey(name: 'Done') bool done,@JsonKey(name: 'Type') TransactionType type,@JsonKey(name: 'Category', unknownEnumValue: CategoryType.others) CategoryType category
 });
 
 

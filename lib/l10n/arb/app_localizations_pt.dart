@@ -178,4 +178,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get confirm => 'Confirmar';
+
+  @override
+  String get newPassword => 'Nova senha';
 }

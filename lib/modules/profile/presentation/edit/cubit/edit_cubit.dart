@@ -24,7 +24,7 @@ class EditCubit extends Cubit<EditState> {
   DoLogoutUserUseCase doLogoutUserUseCase;
 
   final TextEditingController nameEditController = TextEditingController();
-  final TextEditingController ageEditController = TextEditingController();
+  final TextEditingController passwordEditController = TextEditingController();
   final TextEditingController emailEditController = TextEditingController();
 
   void _textEditingListeners() {
@@ -32,8 +32,8 @@ class EditCubit extends Cubit<EditState> {
       emit(state.copyWith(name: nameEditController.text));
     });
 
-    ageEditController.addListener(() {
-      emit(state.copyWith(age: ageEditController.text));
+    passwordEditController.addListener(() {
+      emit(state.copyWith(password: passwordEditController.text));
     });
   }
 
@@ -59,6 +59,8 @@ class EditCubit extends Cubit<EditState> {
     try {
       emit(state.copyWith(isLoading: true));
       await doUpdateUserInfoUseCase(state: state);
+      AppRouter.showSuccess(message: 'Dados atualizados com sucesso');
+      AppRouter.router.pop();
     } on SMobillsException catch (e) {
       AppRouter.showError(message: e.message);
     } finally {

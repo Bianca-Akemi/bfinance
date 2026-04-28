@@ -55,5 +55,6 @@
     "account": "Conta",
     "logoutConfirmTitle": "Sair da conta",
     "logoutConfirmMessage": "Tem certeza que deseja sair da sua conta?",
-    "confirm": "Confirmar"
+    "confirm": "Confirmar",
+    "newPassword": "Nova senha"
 }

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserUpdateRequest {
 
- String get name; String get email;
+ String get name; String get email; String? get password;
 /// Create a copy of UserUpdateRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $UserUpdateRequestCopyWith<UserUpdateRequest> get copyWith => _$UserUpdateReques
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserUpdateRequest&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserUpdateRequest&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,email);
+int get hashCode => Object.hash(runtimeType,name,email,password);
 
 @override
 String toString() {
-  return 'UserUpdateRequest(name: $name, email: $email)';
+  return 'UserUpdateRequest(name: $name, email: $email, password: $password)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $UserUpdateRequestCopyWith<$Res>  {
   factory $UserUpdateRequestCopyWith(UserUpdateRequest value, $Res Function(UserUpdateRequest) _then) = _$UserUpdateRequestCopyWithImpl;
 @useResult
 $Res call({
- String name, String email
+ String name, String email, String? password
 });
 
 
@@ -62,11 +62,12 @@ class _$UserUpdateRequestCopyWithImpl<$Res>
 
 /// Create a copy of UserUpdateRequest
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? email = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? email = null,Object? password = freezed,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,
+as String,password: freezed == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -151,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String email)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String email,  String? password)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserUpdateRequest() when $default != null:
-return $default(_that.name,_that.email);case _:
+return $default(_that.name,_that.email,_that.password);case _:
   return orElse();
 
 }
@@ -172,10 +173,10 @@ return $default(_that.name,_that.email);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String email)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String email,  String? password)  $default,) {final _that = this;
 switch (_that) {
 case _UserUpdateRequest():
-return $default(_that.name,_that.email);case _:
+return $default(_that.name,_that.email,_that.password);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +193,10 @@ return $default(_that.name,_that.email);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String email)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String email,  String? password)?  $default,) {final _that = this;
 switch (_that) {
 case _UserUpdateRequest() when $default != null:
-return $default(_that.name,_that.email);case _:
+return $default(_that.name,_that.email,_that.password);case _:
   return null;
 
 }
@@ -207,11 +208,12 @@ return $default(_that.name,_that.email);case _:
 
 
 class _UserUpdateRequest extends UserUpdateRequest {
-   _UserUpdateRequest({required this.name, required this.email}): super._();
+   _UserUpdateRequest({required this.name, required this.email, this.password}): super._();
   
 
 @override final  String name;
 @override final  String email;
+@override final  String? password;
 
 /// Create a copy of UserUpdateRequest
 /// with the given fields replaced by the non-null parameter values.
@@ -223,16 +225,16 @@ _$UserUpdateRequestCopyWith<_UserUpdateRequest> get copyWith => __$UserUpdateReq
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserUpdateRequest&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserUpdateRequest&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,email);
+int get hashCode => Object.hash(runtimeType,name,email,password);
 
 @override
 String toString() {
-  return 'UserUpdateRequest(name: $name, email: $email)';
+  return 'UserUpdateRequest(name: $name, email: $email, password: $password)';
 }
 
 
@@ -243,7 +245,7 @@ abstract mixin class _$UserUpdateRequestCopyWith<$Res> implements $UserUpdateReq
   factory _$UserUpdateRequestCopyWith(_UserUpdateRequest value, $Res Function(_UserUpdateRequest) _then) = __$UserUpdateRequestCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String email
+ String name, String email, String? password
 });
 
 
@@ -260,11 +262,12 @@ class __$UserUpdateRequestCopyWithImpl<$Res>
 
 /// Create a copy of UserUpdateRequest
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? email = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? email = null,Object? password = freezed,}) {
   return _then(_UserUpdateRequest(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,
+as String,password: freezed == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

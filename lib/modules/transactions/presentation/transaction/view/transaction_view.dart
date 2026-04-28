@@ -29,16 +29,23 @@ class TransactionView extends StatelessWidget {
           backgroundColor: context.colorScheme.primary,
           body: SMobillsLoadingOverlay(
             isLoading: state.isLoading,
-            child: Column(
-              children: [
-                SMobillsSpacing.md,
-                TransactionValue(
-                  controller: context
-                      .read<TransactionCubit>()
-                      .transactionValueCurrencyTextFieldController,
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      SMobillsSpacing.md,
+                      TransactionValue(
+                        controller: context
+                            .read<TransactionCubit>()
+                            .transactionValueCurrencyTextFieldController,
+                      ),
+                      SMobillsSpacing.lg,
+                    ],
+                  ),
                 ),
-                SMobillsSpacing.lg,
-                Flexible(
+                SliverFillRemaining(
+                  hasScrollBody: false,
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
@@ -198,8 +205,7 @@ class TransactionView extends StatelessWidget {
     final yesterday = now.subtract(const Duration(days: 1));
     final isYesterdayInRefMonth =
         yesterday.month == refMonth && yesterday.year == refYear;
-    final isTodayInRefMonth =
-        now.month == refMonth && now.year == refYear;
+    final isTodayInRefMonth = now.month == refMonth && now.year == refYear;
 
     DateTime clampedInitialDate(DateTime? candidate) {
       final d = candidate ?? firstDayOfMonth;

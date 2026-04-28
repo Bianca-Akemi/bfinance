@@ -14,7 +14,8 @@ abstract class TransactionResponse with _$TransactionResponse {
     @JsonKey(name: 'Date') required DateTime date,
     @JsonKey(name: 'Done') required bool done,
     @JsonKey(name: 'Type') required TransactionType type,
-    @JsonKey(name: 'Category') required CategoryType category,
+    @JsonKey(name: 'Category', unknownEnumValue: CategoryType.others)
+    required CategoryType category,
   }) = _TransactionResponse;
 
   TransactionResponse._();

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$EditState {
 
- int get id; String get name; String get age; String get email; bool get isLoading; bool get startDeleteAccount;
+ int get id; String get name; String get password; String get email; bool get isLoading; bool get startDeleteAccount;
 /// Create a copy of EditState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $EditStateCopyWith<EditState> get copyWith => _$EditStateCopyWithImpl<EditState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditState&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.age, age) || other.age == age)&&(identical(other.email, email) || other.email == email)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.startDeleteAccount, startDeleteAccount) || other.startDeleteAccount == startDeleteAccount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditState&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.password, password) || other.password == password)&&(identical(other.email, email) || other.email == email)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.startDeleteAccount, startDeleteAccount) || other.startDeleteAccount == startDeleteAccount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,age,email,isLoading,startDeleteAccount);
+int get hashCode => Object.hash(runtimeType,id,name,password,email,isLoading,startDeleteAccount);
 
 @override
 String toString() {
-  return 'EditState(id: $id, name: $name, age: $age, email: $email, isLoading: $isLoading, startDeleteAccount: $startDeleteAccount)';
+  return 'EditState(id: $id, name: $name, password: $password, email: $email, isLoading: $isLoading, startDeleteAccount: $startDeleteAccount)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $EditStateCopyWith<$Res>  {
   factory $EditStateCopyWith(EditState value, $Res Function(EditState) _then) = _$EditStateCopyWithImpl;
 @useResult
 $Res call({
- int id, String name, String age, String email, bool isLoading, bool startDeleteAccount
+ int id, String name, String password, String email, bool isLoading, bool startDeleteAccount
 });
 
 
@@ -62,11 +62,11 @@ class _$EditStateCopyWithImpl<$Res>
 
 /// Create a copy of EditState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? age = null,Object? email = null,Object? isLoading = null,Object? startDeleteAccount = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? password = null,Object? email = null,Object? isLoading = null,Object? startDeleteAccount = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,startDeleteAccount: null == startDeleteAccount ? _self.startDeleteAccount : startDeleteAccount // ignore: cast_nullable_to_non_nullable
@@ -155,10 +155,10 @@ return initial(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int id,  String name,  String age,  String email,  bool isLoading,  bool startDeleteAccount)?  initial,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int id,  String name,  String password,  String email,  bool isLoading,  bool startDeleteAccount)?  initial,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial(_that.id,_that.name,_that.age,_that.email,_that.isLoading,_that.startDeleteAccount);case _:
+return initial(_that.id,_that.name,_that.password,_that.email,_that.isLoading,_that.startDeleteAccount);case _:
   return orElse();
 
 }
@@ -176,10 +176,10 @@ return initial(_that.id,_that.name,_that.age,_that.email,_that.isLoading,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int id,  String name,  String age,  String email,  bool isLoading,  bool startDeleteAccount)  initial,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int id,  String name,  String password,  String email,  bool isLoading,  bool startDeleteAccount)  initial,}) {final _that = this;
 switch (_that) {
 case _Initial():
-return initial(_that.id,_that.name,_that.age,_that.email,_that.isLoading,_that.startDeleteAccount);case _:
+return initial(_that.id,_that.name,_that.password,_that.email,_that.isLoading,_that.startDeleteAccount);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +196,10 @@ return initial(_that.id,_that.name,_that.age,_that.email,_that.isLoading,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int id,  String name,  String age,  String email,  bool isLoading,  bool startDeleteAccount)?  initial,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int id,  String name,  String password,  String email,  bool isLoading,  bool startDeleteAccount)?  initial,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial(_that.id,_that.name,_that.age,_that.email,_that.isLoading,_that.startDeleteAccount);case _:
+return initial(_that.id,_that.name,_that.password,_that.email,_that.isLoading,_that.startDeleteAccount);case _:
   return null;
 
 }
@@ -211,12 +211,12 @@ return initial(_that.id,_that.name,_that.age,_that.email,_that.isLoading,_that.s
 
 
 class _Initial implements EditState {
-  const _Initial({this.id = 0, this.name = '', this.age = '', this.email = '', this.isLoading = false, this.startDeleteAccount = false});
+  const _Initial({this.id = 0, this.name = '', this.password = '', this.email = '', this.isLoading = false, this.startDeleteAccount = false});
   
 
 @override@JsonKey() final  int id;
 @override@JsonKey() final  String name;
-@override@JsonKey() final  String age;
+@override@JsonKey() final  String password;
 @override@JsonKey() final  String email;
 @override@JsonKey() final  bool isLoading;
 @override@JsonKey() final  bool startDeleteAccount;
@@ -231,16 +231,16 @@ _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.age, age) || other.age == age)&&(identical(other.email, email) || other.email == email)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.startDeleteAccount, startDeleteAccount) || other.startDeleteAccount == startDeleteAccount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.password, password) || other.password == password)&&(identical(other.email, email) || other.email == email)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.startDeleteAccount, startDeleteAccount) || other.startDeleteAccount == startDeleteAccount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,age,email,isLoading,startDeleteAccount);
+int get hashCode => Object.hash(runtimeType,id,name,password,email,isLoading,startDeleteAccount);
 
 @override
 String toString() {
-  return 'EditState.initial(id: $id, name: $name, age: $age, email: $email, isLoading: $isLoading, startDeleteAccount: $startDeleteAccount)';
+  return 'EditState.initial(id: $id, name: $name, password: $password, email: $email, isLoading: $isLoading, startDeleteAccount: $startDeleteAccount)';
 }
 
 
@@ -251,7 +251,7 @@ abstract mixin class _$InitialCopyWith<$Res> implements $EditStateCopyWith<$Res>
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name, String age, String email, bool isLoading, bool startDeleteAccount
+ int id, String name, String password, String email, bool isLoading, bool startDeleteAccount
 });
 
 
@@ -268,11 +268,11 @@ class __$InitialCopyWithImpl<$Res>
 
 /// Create a copy of EditState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? age = null,Object? email = null,Object? isLoading = null,Object? startDeleteAccount = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? password = null,Object? email = null,Object? isLoading = null,Object? startDeleteAccount = null,}) {
   return _then(_Initial(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,startDeleteAccount: null == startDeleteAccount ? _self.startDeleteAccount : startDeleteAccount // ignore: cast_nullable_to_non_nullable

@@ -39,7 +39,7 @@ class HomeView extends StatelessWidget {
           appBar: SMobillsAppBar(
             title: state.userName,
             isHomePage: true,
-            customPreferredSize: const Size.fromHeight(170),
+            customPreferredSize: const Size.fromHeight(150),
             bottom: TransactionAppBarBottom(
               month: state.month,
               year: state.year,
