@@ -10,7 +10,6 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
         theme: _buildTheme(lightColorScheme),
-        darkTheme: _buildTheme(darkColorScheme),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         debugShowCheckedModeBanner: false,
@@ -23,8 +22,6 @@ class App extends StatelessWidget {
   }
 
   ThemeData _buildTheme(ColorScheme colorScheme) {
-    final isDark = colorScheme.brightness == Brightness.dark;
-
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
@@ -39,9 +36,7 @@ class App extends StatelessWidget {
       ),
       cardTheme: CardThemeData(
         elevation: 0,
-        color: isDark
-            ? colorScheme.surfaceContainerHighest
-            : Colors.white,
+        color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(
@@ -72,11 +67,9 @@ class App extends StatelessWidget {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: isDark
-            ? colorScheme.surfaceContainerHighest
-            : colorScheme.surfaceContainerHighest.withValues(
-                alpha: 0.5,
-              ),
+        fillColor: colorScheme.surfaceContainerHighest.withValues(
+          alpha: 0.5,
+        ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 16,
@@ -109,9 +102,7 @@ class App extends StatelessWidget {
         shape: const CircleBorder(),
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: isDark
-            ? colorScheme.surfaceContainerHighest
-            : Colors.white,
+        backgroundColor: Colors.white,
         selectedItemColor: colorScheme.primary,
         unselectedItemColor:
             colorScheme.onSurface.withValues(alpha: 0.5),
