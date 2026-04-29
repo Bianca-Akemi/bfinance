@@ -40,7 +40,6 @@ abstract class UserRequest with _$UserRequest {
       'Name': name,
       'Email': email,
       'Password': password,
-      'Age': 18,
     };
   }
 }
