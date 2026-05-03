@@ -8,7 +8,9 @@ enum AuthenticationEndpoint implements Endpoint {
   createAccount,
   deleteAccount,
   info,
-  edit;
+  edit,
+  profilePhoto,
+  uploadProfilePhoto;
 
   @override
   String get path {
@@ -25,6 +27,10 @@ enum AuthenticationEndpoint implements Endpoint {
         return '/user';
       case edit:
         return '/user';
+      case profilePhoto:
+        return '/user/profile-photo';
+      case uploadProfilePhoto:
+        return '/user/profile-photo';
     }
   }
 
@@ -39,6 +45,10 @@ enum AuthenticationEndpoint implements Endpoint {
         return RequestMethod.GET;
       case edit:
         return RequestMethod.PUT;
+      case profilePhoto:
+        return RequestMethod.GET;
+      case uploadProfilePhoto:
+        return RequestMethod.PUT;
     }
   }
 
@@ -48,6 +58,10 @@ enum AuthenticationEndpoint implements Endpoint {
       case login || createAccount:
         return false;
       case deleteAccount || info || edit || logout:
+        return true;
+      case profilePhoto:
+        return true;
+      case uploadProfilePhoto:
         return true;
     }
   }

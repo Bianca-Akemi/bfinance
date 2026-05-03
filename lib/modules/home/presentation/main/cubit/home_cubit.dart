@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -26,6 +28,7 @@ class HomeCubit extends Cubit<HomeState> {
     required this.getTransactionsPeriodUseCase,
     required this.getUserBankAccountsUseCase,
     required this.doGetUserInfoUseCase,
+    required this.getProfilePhotoUseCase,
   }) : super(const HomeState.initial()) {
     loadInfos();
   }
@@ -33,6 +36,7 @@ class HomeCubit extends Cubit<HomeState> {
   final GetTransactionsPeriodUseCase getTransactionsPeriodUseCase;
   final GetUserBankAccountsUseCase getUserBankAccountsUseCase;
   final DoGetUserInfoUseCase doGetUserInfoUseCase;
+  final GetProfilePhotoUseCase getProfilePhotoUseCase;
 
   Future<void> loadInfos() async {
     final date = DateTime.now();
@@ -47,7 +51,10 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> _loadUserInfo() async {
     try {
       final user = await doGetUserInfoUseCase();
-      emit(state.copyWith(userName: user.name));
+      final photoBytes = await getProfilePhotoUseCase();
+      emit(
+        state.copyWith(userName: user.name, userPhotoBytes: photoBytes),
+      );
     } on SMobillsException catch (e) {
       AppRouter.showError(message: e.message);
     }

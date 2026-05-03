@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:s_mobills/core/core.dart';
 import 'package:s_mobills/modules/auth/module.dart';
 
@@ -49,6 +51,40 @@ class AuthRepositoryImpl extends AuthRepository {
     final data = UserUpdateRequest.toData(user: user);
 
     final result = await remote.update(user: data);
+
+    if (result is Success) {
+      return;
+    }
+
+    throw result.exception!;
+  }
+
+  @override
+  Future<Uint8List?> profilePhoto() async {
+    final result = await remote.profilePhoto();
+
+    if (result is Success<List<int>>) {
+      final bytes = Uint8List.fromList(result.data!);
+      return bytes.isNotEmpty ? bytes : null;
+    }
+
+    return null;
+  }
+
+  @override
+  Future<void> uploadProfilePhoto({required String filePath}) async {
+    final result = await remote.uploadProfilePhoto(filePath: filePath);
+
+    if (result is Success) {
+      return;
+    }
+
+    throw result.exception!;
+  }
+
+  @override
+  Future<void> deleteProfilePhoto() async {
+    final result = await remote.deleteProfilePhoto();
 
     if (result is Success) {
       return;

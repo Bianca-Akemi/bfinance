@@ -15,6 +15,10 @@ class ProfilePage extends StatelessWidget {
       create: (_) => ProfileCubit(
         doLogoutUserUseCase: GetIt.I<DoLogoutUserUseCase>(),
         doGetUserInfoUseCase: GetIt.I<DoGetUserInfoUseCase>(),
+        getProfilePhotoUseCase: GetIt.I<GetProfilePhotoUseCase>(),
+        uploadProfilePhotoUseCase: GetIt.I<UploadProfilePhotoUseCase>(),
+        deleteProfilePhotoUseCase:
+            GetIt.I<DeleteProfilePhotoUseCase>(),
       )..info(),
       child: const ProfileView(),
     );
@@ -23,6 +27,73 @@ class ProfilePage extends StatelessWidget {
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
+
+  void _showPhotoOptions(BuildContext context, ProfileCubit cubit) {
+    showModalBottomSheet<void>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20),
+        ),
+      ),
+      builder: (bottomSheetContext) {
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  context.l10n.profilePhoto,
+                  style: SMobillsTextStyles.h6.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                ListTile(
+                  leading: const Icon(Icons.photo_library_outlined),
+                  title: Text(
+                    context.l10n.changePhoto,
+                    style: SMobillsTextStyles.body1,
+                  ),
+                  onTap: () {
+                    Navigator.of(bottomSheetContext).pop();
+                    cubit.pickAndUploadPhoto();
+                  },
+                ),
+                if (cubit.hasPhoto)
+                  ListTile(
+                    leading: Icon(
+                      Icons.delete_outline,
+                      color: context.colorScheme.error,
+                    ),
+                    title: Text(
+                      context.l10n.removePhoto,
+                      style: SMobillsTextStyles.body1.copyWith(
+                        color: context.colorScheme.error,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.of(bottomSheetContext).pop();
+                      cubit.removePhoto();
+                    },
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   void _showLogoutConfirmation(BuildContext context, ProfileCubit cubit) {
     showDialog<void>(
@@ -95,15 +166,54 @@ class ProfileView extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        CircleAvatar(
-                          radius: 50,
-                          backgroundColor: Colors.white.withValues(alpha: 0.4),
-                          child: Text(
-                            state.initialLetters,
-                            style: SMobillsTextStyles.h4.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                        GestureDetector(
+                          onTap: () => _showPhotoOptions(
+                            context,
+                            context.read<ProfileCubit>(),
+                          ),
+                          child: Stack(
+                            children: [
+                              CircleAvatar(
+                                radius: 50,
+                                backgroundColor:
+                                    Colors.white.withValues(alpha: 0.4),
+                                backgroundImage: state.photoBytes != null &&
+                                        state.photoBytes!.isNotEmpty
+                                    ? MemoryImage(state.photoBytes!)
+                                    : null,
+                                child: state.photoBytes != null &&
+                                        state.photoBytes!.isNotEmpty
+                                    ? null
+                                    : Text(
+                                        state.initialLetters,
+                                        style:
+                                            SMobillsTextStyles.h4.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: Container(
+                                  padding: const EdgeInsets.all(6),
+                                  decoration: BoxDecoration(
+                                    color: context.colorScheme.secondary,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.camera_alt,
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 16),

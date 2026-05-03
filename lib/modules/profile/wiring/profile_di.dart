@@ -76,4 +76,22 @@ void _useCasesDependencies() {
       repository: GetIt.I<AuthRepository>(),
     ),
   );
+
+  GetIt.I.registerLazySingleton<GetProfilePhotoUseCase>(
+    () => GetProfilePhotoUseCase(
+      repository: GetIt.I<AuthRepository>(),
+    ),
+  );
+
+  GetIt.I.registerLazySingleton<UploadProfilePhotoUseCase>(
+    () => UploadProfilePhotoUseCase(
+      repository: GetIt.I<AuthRepository>(),
+    ),
+  );
+
+  GetIt.I.registerLazySingleton<DeleteProfilePhotoUseCase>(
+    () => DeleteProfilePhotoUseCase(
+      repository: GetIt.I<AuthRepository>(),
+    ),
+  );
 }

@@ -21,6 +21,7 @@ enum Routes {
   newTransaction,
   editTransaction,
   categories,
+  goals,
 }
 
 extension RoutesExtension on Routes {
@@ -52,6 +53,8 @@ extension RoutesExtension on Routes {
         return 'edit_transaction';
       case Routes.categories:
         return '/categories';
+      case Routes.goals:
+        return '/goals';
     }
   }
 
@@ -83,6 +86,8 @@ extension RoutesExtension on Routes {
         return 'Edit Transaction';
       case Routes.categories:
         return 'Categories';
+      case Routes.goals:
+        return 'Goals';
     }
   }
 }
@@ -141,6 +146,12 @@ class AppRouter {
                 },
               ),
             ],
+          ),
+          GoRoute(
+            name: Routes.goals.name,
+            path: Routes.goals.path,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: GoalsPage()),
           ),
           GoRoute(
             name: Routes.profile.name,

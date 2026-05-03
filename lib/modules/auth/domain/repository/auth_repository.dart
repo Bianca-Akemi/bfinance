@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:s_mobills/modules/auth/module.dart';
 
 abstract class AuthRepository {
@@ -8,6 +10,12 @@ abstract class AuthRepository {
   Future<User> info();
 
   Future<void> update({required UserUpdate user});
+
+  Future<Uint8List?> profilePhoto();
+
+  Future<void> uploadProfilePhoto({required String filePath});
+
+  Future<void> deleteProfilePhoto();
 
   Future<void> saveToken({required String value});
 

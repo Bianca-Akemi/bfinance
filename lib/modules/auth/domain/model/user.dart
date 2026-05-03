@@ -17,7 +17,12 @@ class User {
   }
 
   factory User.fromData({required UserResponse data}) {
-    return User(id: data.id, name: data.name, email: data.email, password: '');
+    return User(
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      password: '',
+    );
   }
 
   final int? id;

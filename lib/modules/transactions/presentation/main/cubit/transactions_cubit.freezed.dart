@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TransactionsState {
 
- bool get isLoading; int get year; int get month; List<Transaction> get transactions;
+ bool get isLoading; int get year; int get month; List<Transaction> get transactions; DateTime? get filterStartDate; DateTime? get filterEndDate; TransactionType? get filterType;
 /// Create a copy of TransactionsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $TransactionsStateCopyWith<TransactionsState> get copyWith => _$TransactionsStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionsState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.year, year) || other.year == year)&&(identical(other.month, month) || other.month == month)&&const DeepCollectionEquality().equals(other.transactions, transactions));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionsState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.year, year) || other.year == year)&&(identical(other.month, month) || other.month == month)&&const DeepCollectionEquality().equals(other.transactions, transactions)&&(identical(other.filterStartDate, filterStartDate) || other.filterStartDate == filterStartDate)&&(identical(other.filterEndDate, filterEndDate) || other.filterEndDate == filterEndDate)&&(identical(other.filterType, filterType) || other.filterType == filterType));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,year,month,const DeepCollectionEquality().hash(transactions));
+int get hashCode => Object.hash(runtimeType,isLoading,year,month,const DeepCollectionEquality().hash(transactions),filterStartDate,filterEndDate,filterType);
 
 @override
 String toString() {
-  return 'TransactionsState(isLoading: $isLoading, year: $year, month: $month, transactions: $transactions)';
+  return 'TransactionsState(isLoading: $isLoading, year: $year, month: $month, transactions: $transactions, filterStartDate: $filterStartDate, filterEndDate: $filterEndDate, filterType: $filterType)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $TransactionsStateCopyWith<$Res>  {
   factory $TransactionsStateCopyWith(TransactionsState value, $Res Function(TransactionsState) _then) = _$TransactionsStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, int year, int month, List<Transaction> transactions
+ bool isLoading, int year, int month, List<Transaction> transactions, DateTime? filterStartDate, DateTime? filterEndDate, TransactionType? filterType
 });
 
 
@@ -62,13 +62,16 @@ class _$TransactionsStateCopyWithImpl<$Res>
 
 /// Create a copy of TransactionsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? year = null,Object? month = null,Object? transactions = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? year = null,Object? month = null,Object? transactions = null,Object? filterStartDate = freezed,Object? filterEndDate = freezed,Object? filterType = freezed,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,year: null == year ? _self.year : year // ignore: cast_nullable_to_non_nullable
 as int,month: null == month ? _self.month : month // ignore: cast_nullable_to_non_nullable
 as int,transactions: null == transactions ? _self.transactions : transactions // ignore: cast_nullable_to_non_nullable
-as List<Transaction>,
+as List<Transaction>,filterStartDate: freezed == filterStartDate ? _self.filterStartDate : filterStartDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,filterEndDate: freezed == filterEndDate ? _self.filterEndDate : filterEndDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,filterType: freezed == filterType ? _self.filterType : filterType // ignore: cast_nullable_to_non_nullable
+as TransactionType?,
   ));
 }
 
@@ -153,10 +156,10 @@ return initial(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( bool isLoading,  int year,  int month,  List<Transaction> transactions)?  initial,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( bool isLoading,  int year,  int month,  List<Transaction> transactions,  DateTime? filterStartDate,  DateTime? filterEndDate,  TransactionType? filterType)?  initial,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial(_that.isLoading,_that.year,_that.month,_that.transactions);case _:
+return initial(_that.isLoading,_that.year,_that.month,_that.transactions,_that.filterStartDate,_that.filterEndDate,_that.filterType);case _:
   return orElse();
 
 }
@@ -174,10 +177,10 @@ return initial(_that.isLoading,_that.year,_that.month,_that.transactions);case _
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( bool isLoading,  int year,  int month,  List<Transaction> transactions)  initial,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( bool isLoading,  int year,  int month,  List<Transaction> transactions,  DateTime? filterStartDate,  DateTime? filterEndDate,  TransactionType? filterType)  initial,}) {final _that = this;
 switch (_that) {
 case _Initial():
-return initial(_that.isLoading,_that.year,_that.month,_that.transactions);case _:
+return initial(_that.isLoading,_that.year,_that.month,_that.transactions,_that.filterStartDate,_that.filterEndDate,_that.filterType);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +197,10 @@ return initial(_that.isLoading,_that.year,_that.month,_that.transactions);case _
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( bool isLoading,  int year,  int month,  List<Transaction> transactions)?  initial,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( bool isLoading,  int year,  int month,  List<Transaction> transactions,  DateTime? filterStartDate,  DateTime? filterEndDate,  TransactionType? filterType)?  initial,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial(_that.isLoading,_that.year,_that.month,_that.transactions);case _:
+return initial(_that.isLoading,_that.year,_that.month,_that.transactions,_that.filterStartDate,_that.filterEndDate,_that.filterType);case _:
   return null;
 
 }
@@ -209,7 +212,7 @@ return initial(_that.isLoading,_that.year,_that.month,_that.transactions);case _
 
 
 class _Initial implements TransactionsState {
-  const _Initial({this.isLoading = false, this.year = 0, this.month = 0, final  List<Transaction> transactions = const []}): _transactions = transactions;
+  const _Initial({this.isLoading = false, this.year = 0, this.month = 0, final  List<Transaction> transactions = const [], this.filterStartDate, this.filterEndDate, this.filterType}): _transactions = transactions;
   
 
 @override@JsonKey() final  bool isLoading;
@@ -222,6 +225,9 @@ class _Initial implements TransactionsState {
   return EqualUnmodifiableListView(_transactions);
 }
 
+@override final  DateTime? filterStartDate;
+@override final  DateTime? filterEndDate;
+@override final  TransactionType? filterType;
 
 /// Create a copy of TransactionsState
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +239,16 @@ _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.year, year) || other.year == year)&&(identical(other.month, month) || other.month == month)&&const DeepCollectionEquality().equals(other._transactions, _transactions));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.year, year) || other.year == year)&&(identical(other.month, month) || other.month == month)&&const DeepCollectionEquality().equals(other._transactions, _transactions)&&(identical(other.filterStartDate, filterStartDate) || other.filterStartDate == filterStartDate)&&(identical(other.filterEndDate, filterEndDate) || other.filterEndDate == filterEndDate)&&(identical(other.filterType, filterType) || other.filterType == filterType));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,year,month,const DeepCollectionEquality().hash(_transactions));
+int get hashCode => Object.hash(runtimeType,isLoading,year,month,const DeepCollectionEquality().hash(_transactions),filterStartDate,filterEndDate,filterType);
 
 @override
 String toString() {
-  return 'TransactionsState.initial(isLoading: $isLoading, year: $year, month: $month, transactions: $transactions)';
+  return 'TransactionsState.initial(isLoading: $isLoading, year: $year, month: $month, transactions: $transactions, filterStartDate: $filterStartDate, filterEndDate: $filterEndDate, filterType: $filterType)';
 }
 
 
@@ -253,7 +259,7 @@ abstract mixin class _$InitialCopyWith<$Res> implements $TransactionsStateCopyWi
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, int year, int month, List<Transaction> transactions
+ bool isLoading, int year, int month, List<Transaction> transactions, DateTime? filterStartDate, DateTime? filterEndDate, TransactionType? filterType
 });
 
 
@@ -270,13 +276,16 @@ class __$InitialCopyWithImpl<$Res>
 
 /// Create a copy of TransactionsState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? year = null,Object? month = null,Object? transactions = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? year = null,Object? month = null,Object? transactions = null,Object? filterStartDate = freezed,Object? filterEndDate = freezed,Object? filterType = freezed,}) {
   return _then(_Initial(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,year: null == year ? _self.year : year // ignore: cast_nullable_to_non_nullable
 as int,month: null == month ? _self.month : month // ignore: cast_nullable_to_non_nullable
 as int,transactions: null == transactions ? _self._transactions : transactions // ignore: cast_nullable_to_non_nullable
-as List<Transaction>,
+as List<Transaction>,filterStartDate: freezed == filterStartDate ? _self.filterStartDate : filterStartDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,filterEndDate: freezed == filterEndDate ? _self.filterEndDate : filterEndDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,filterType: freezed == filterType ? _self.filterType : filterType // ignore: cast_nullable_to_non_nullable
+as TransactionType?,
   ));
 }
 

@@ -7,5 +7,6 @@ abstract class ProfileState with _$ProfileState {
     @Default('') String email,
     @Default('') String initialLetters,
     @Default(false) bool isLoading,
+    Uint8List? photoBytes,
   }) = _Initial;
 }

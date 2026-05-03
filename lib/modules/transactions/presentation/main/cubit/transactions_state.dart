@@ -7,5 +7,8 @@ abstract class TransactionsState with _$TransactionsState {
     @Default(0) int year,
     @Default(0) int month,
     @Default([]) List<Transaction> transactions,
+    DateTime? filterStartDate,
+    DateTime? filterEndDate,
+    TransactionType? filterType,
   }) = _Initial;
 }

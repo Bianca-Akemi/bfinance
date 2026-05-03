@@ -19,5 +19,6 @@ abstract class HomeState with _$HomeState {
     @Default(0) int month,
     @Default(false) bool isLoading,
     @Default('') String userName,
+    Uint8List? userPhotoBytes,
   }) = _Initial;
 }

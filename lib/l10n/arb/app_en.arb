@@ -56,5 +56,8 @@
     "logoutConfirmTitle": "Log out",
     "logoutConfirmMessage": "Are you sure you want to log out?",
     "confirm": "Confirm",
-    "newPassword": "New password"
+    "newPassword": "New password",
+    "profilePhoto": "Profile photo",
+    "changePhoto": "Change photo",
+    "removePhoto": "Remove photo"
 }

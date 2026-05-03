@@ -22,6 +22,7 @@ class HomePage extends StatelessWidget {
         getTransactionsPeriodUseCase: GetIt.I<GetTransactionsPeriodUseCase>(),
         getUserBankAccountsUseCase: GetIt.I<GetUserBankAccountsUseCase>(),
         doGetUserInfoUseCase: GetIt.I<DoGetUserInfoUseCase>(),
+        getProfilePhotoUseCase: GetIt.I<GetProfilePhotoUseCase>(),
       ),
       child: const HomeView(),
     );
@@ -39,6 +40,7 @@ class HomeView extends StatelessWidget {
           appBar: SMobillsAppBar(
             title: state.userName,
             isHomePage: true,
+            profilePhotoBytes: state.userPhotoBytes,
             customPreferredSize: const Size.fromHeight(150),
             bottom: TransactionAppBarBottom(
               month: state.month,
@@ -52,44 +54,49 @@ class HomeView extends StatelessWidget {
             child: Skeletonizer(
               enabled: state.isLoading,
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    HomeHeader(balance: state.balanceInAccounts.formatted),
-                    MonthBalance(
-                      totalIncome: state.totalIncome.formatted,
-                      totalExpanse: state.totalExpense.formatted,
-                      balance: state.balance.formatted,
-                      balancePercent:
-                          '${state.economyPercent.toStringAsFixed(2)}%',
-                      spentTooMuch: state.spendingTooMuch,
-                      hasIncome: state.totalIncome.value > 0,
-                    ),
-                    SMobillsSpacing.md,
-                    state.categoriesDataSource.isEmpty
-                        ? const HomeEmptyState()
-                        : SpendingCategory(
-                            categoriesDataSource: state.categoriesDataSource,
-                            month: DateHelper.formatterMonthAndYearBy(
-                              state.year,
-                              state.month,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Column(
+                    children: [
+                      if (state.month == DateTime.now().month &&
+                          state.year == DateTime.now().year)
+                        HomeHeader(balance: state.balanceInAccounts.formatted),
+                      MonthBalance(
+                        totalIncome: state.totalIncome.formatted,
+                        totalExpanse: state.totalExpense.formatted,
+                        balance: state.balance.formatted,
+                        balancePercent:
+                            '${state.economyPercent.toStringAsFixed(2)}%',
+                        spentTooMuch: state.spendingTooMuch,
+                        hasIncome: state.totalIncome.value > 0,
+                      ),
+                      SMobillsSpacing.md,
+                      state.categoriesDataSource.isEmpty
+                          ? const HomeEmptyState()
+                          : SpendingCategory(
+                              categoriesDataSource: state.categoriesDataSource,
+                              month: DateHelper.formatterMonthAndYearBy(
+                                state.year,
+                                state.month,
+                              ),
                             ),
-                          ),
-                    SMobillsSpacing.lg,
-                    state.lastSevenDaysExpenseEmpty
-                        ? const SizedBox.shrink()
-                        : Column(
-                            children: [
-                              SpendingBarChart(
-                                expenseDays: state.lastSevenDaysExpense,
-                                incomeDays: state.lastSevenDaysIncome,
-                              ),
-                              SMobillsSpacing.lg,
-                              SpendingFrequency(
-                                days: state.lastSevenDaysExpense,
-                              ),
-                            ],
-                          ),
-                  ],
+                      SMobillsSpacing.lg,
+                      state.lastSevenDaysExpenseEmpty
+                          ? const SizedBox.shrink()
+                          : Column(
+                              children: [
+                                SpendingBarChart(
+                                  expenseDays: state.lastSevenDaysExpense,
+                                  incomeDays: state.lastSevenDaysIncome,
+                                ),
+                                SMobillsSpacing.lg,
+                                SpendingFrequency(
+                                  days: state.lastSevenDaysExpense,
+                                ),
+                              ],
+                            ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -1,17 +1,19 @@
 class StringHelper {
   static String extractInitials(String fullName) {
-    final nameParts = fullName.split(' ');
+    final trimmed = fullName.trim();
+    if (trimmed.isEmpty) return '';
 
-    final firstLetterFirstName = nameParts[0].substring(0, 1);
-    String lastLetterLastName;
+    final nameParts =
+        trimmed.split(' ').where((part) => part.isNotEmpty).toList();
 
-    if (nameParts.length > 1 && nameParts.last.isNotEmpty) {
-      lastLetterLastName = nameParts.last.substring(0, 1);
-    } else {
-      lastLetterLastName = nameParts[0].substring(nameParts[0].length - 1);
-    }
+    if (nameParts.isEmpty) return '';
 
-    return firstLetterFirstName.toUpperCase() +
-        lastLetterLastName.toUpperCase();
+    final firstLetter = nameParts.first[0];
+
+    final lastLetter = nameParts.length > 1
+        ? nameParts.last[0]
+        : nameParts.first[nameParts.first.length - 1];
+
+    return '${firstLetter.toUpperCase()}${lastLetter.toUpperCase()}';
   }
 }

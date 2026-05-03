@@ -1,5 +1,6 @@
 // ignore_for_file: constant_pattern_never_matches_value_type, strict_raw_type
 
+import 'package:dio/dio.dart';
 import 'package:s_mobills/core/core.dart';
 import 'package:s_mobills/modules/auth/module.dart';
 
@@ -53,9 +54,44 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   }
 
   @override
+  Future<Result<List<int>>> profilePhoto() async {
+    return http.requestBytes(
+      request: AuthenticationEndpoint.profilePhoto.asRequest(),
+    );
+  }
+
+  @override
+  Future<Result<void>> uploadProfilePhoto({required String filePath}) async {
+    final formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(filePath),
+    });
+
+    return http.requestMultipart(
+      request: AuthenticationEndpoint.uploadProfilePhoto.asRequest(),
+      formData: formData,
+    );
+  }
+
+  @override
   Future<Result<void>> delete() {
     return http.requestVoid(
       request: AuthenticationEndpoint.deleteAccount.asRequest(),
+    );
+  }
+
+  @override
+  Future<Result<void>> deleteProfilePhoto() {
+    final formData = FormData.fromMap({
+      'file': MultipartFile.fromBytes(
+        [],
+        filename: 'empty.png',
+        contentType: DioMediaType('image', 'png'),
+      ),
+    });
+
+    return http.requestMultipart(
+      request: AuthenticationEndpoint.uploadProfilePhoto.asRequest(),
+      formData: formData,
     );
   }
 

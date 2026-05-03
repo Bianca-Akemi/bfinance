@@ -34,9 +34,9 @@
     "newTransaction": "Nova transação",
     "transactionValue": "Valor da transação",
     "newExpenseTransaction": "Nova despesa",
-    "newIncomeTransaction": "Novo rendimento",
+    "newIncomeTransaction": "Nova entrada",
     "editExpenseTransaction": "Editar despesa",
-    "editIncomeTransaction": "Editar rendimento",
+    "editIncomeTransaction": "Editar entrada",
     "transactionInstructions": "Detalhe sua transação, preencha todos os campo",
     "description": "Descrição",
     "paidOut": "Pago",
@@ -56,5 +56,8 @@
     "logoutConfirmTitle": "Sair da conta",
     "logoutConfirmMessage": "Tem certeza que deseja sair da sua conta?",
     "confirm": "Confirmar",
-    "newPassword": "Nova senha"
+    "newPassword": "Nova senha",
+    "profilePhoto": "Foto do perfil",
+    "changePhoto": "Alterar foto",
+    "removePhoto": "Remover foto"
 }

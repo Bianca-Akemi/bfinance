@@ -38,6 +38,10 @@ class MainPage extends StatelessWidget {
     _NavItem(route: Routes.home.path, icon: Icons.home_rounded),
     _NavItem(
       route: Routes.transactions.path,
+      icon: Icons.swap_vert,
+    ),
+    _NavItem(
+      route: Routes.goals.path,
       icon: Icons.monetization_on,
     ),
     _NavItem(route: Routes.profile.path, icon: Icons.person_rounded),

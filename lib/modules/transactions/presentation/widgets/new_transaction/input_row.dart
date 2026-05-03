@@ -156,7 +156,7 @@ class _CheckboxRow extends StatelessWidget {
             color: switchOn ?? false
                 ? Colors.green
                 : context.colorScheme.onBackground,
-            fontWeight: FontWeight.w600,
+            // fontWeight: FontWeight.w600,
           ),
         ),
         const Spacer(),

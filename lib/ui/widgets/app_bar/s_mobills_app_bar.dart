@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:s_mobills/core/core.dart';
 import 'package:s_mobills/ui/ui.dart';
 
 class SMobillsAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -10,6 +13,7 @@ class SMobillsAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.customPreferredSize,
     this.backgroundColor,
     this.foregroundColor,
+    this.profilePhotoBytes,
     super.key,
   });
 
@@ -20,6 +24,7 @@ class SMobillsAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Size? customPreferredSize;
   final Color? backgroundColor;
   final Color? foregroundColor;
+  final Uint8List? profilePhotoBytes;
 
   @override
   Size get preferredSize =>
@@ -33,14 +38,66 @@ class SMobillsAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: !isHomePage,
       title: Padding(
         padding: EdgeInsets.only(left: isHomePage ? 20 : 0),
-        child: Text(
-          isHomePage ? 'Olá $title' : title,
-          style: SMobillsTextStyles.h5.copyWith(fontWeight: FontWeight.w700),
-        ),
+        child: isHomePage
+            ? Row(
+                children: [
+                  _ProfileAvatar(
+                    photoBytes: profilePhotoBytes,
+                    name: title,
+                  ),
+                  const SizedBox(width: 12),
+                  Flexible(
+                    child: Text(
+                      'Olá $title',
+                      style: SMobillsTextStyles.h5
+                          .copyWith(fontWeight: FontWeight.w700),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              )
+            : Text(
+                title,
+                style: SMobillsTextStyles.h5
+                    .copyWith(fontWeight: FontWeight.w700),
+              ),
       ),
       bottom: bottom,
       elevation: elevation ?? 0,
       surfaceTintColor: Colors.transparent,
+    );
+  }
+}
+
+class _ProfileAvatar extends StatelessWidget {
+  const _ProfileAvatar({
+    required this.name,
+    this.photoBytes,
+  });
+
+  final Uint8List? photoBytes;
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    final hasPhoto = photoBytes != null && photoBytes!.isNotEmpty;
+    final initials = StringHelper.extractInitials(
+      name.isNotEmpty ? name : ' ',
+    );
+
+    return CircleAvatar(
+      radius: 20,
+      backgroundColor: context.colorScheme.primary,
+      backgroundImage: hasPhoto ? MemoryImage(photoBytes!) : null,
+      child: hasPhoto
+          ? null
+          : Text(
+              initials,
+              style: SMobillsTextStyles.subtitle2.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
     );
   }
 }

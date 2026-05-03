@@ -11,6 +11,7 @@ class Transaction {
     required this.done,
     required this.type,
     required this.category,
+    this.accountName = '',
   });
 
   factory Transaction.toDomain(TransactionResponse response) {
@@ -47,4 +48,29 @@ class Transaction {
   final bool done;
   final TransactionType type;
   final CategoryType category;
+  final String accountName;
+
+  Transaction copyWith({
+    int? id,
+    String? description,
+    Currency? value,
+    int? accountId,
+    DateTime? date,
+    bool? done,
+    TransactionType? type,
+    CategoryType? category,
+    String? accountName,
+  }) {
+    return Transaction(
+      id: id ?? this.id,
+      description: description ?? this.description,
+      value: value ?? this.value,
+      accountId: accountId ?? this.accountId,
+      date: date ?? this.date,
+      done: done ?? this.done,
+      type: type ?? this.type,
+      category: category ?? this.category,
+      accountName: accountName ?? this.accountName,
+    );
+  }
 }

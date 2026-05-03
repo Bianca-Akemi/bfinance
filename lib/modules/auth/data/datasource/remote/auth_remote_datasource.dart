@@ -15,5 +15,11 @@ abstract class AuthRemoteDataSource {
 
   Future<Result<void>> update({required UserUpdateRequest user});
 
+  Future<Result<List<int>>> profilePhoto();
+
+  Future<Result<void>> uploadProfilePhoto({required String filePath});
+
+  Future<Result<void>> deleteProfilePhoto();
+
   Future<Result<void>> logout();
 }

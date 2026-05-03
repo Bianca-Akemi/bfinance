@@ -108,4 +108,96 @@ class NetworkService {
       return Failure(exception);
     }
   }
+
+  Future<Result<String>> requestString({
+    required URLRequest request,
+    JSON? data,
+    QueryParams? queryParams,
+  }) async {
+    try {
+      final response = await _dio.request<String>(
+        request.path,
+        data: data,
+        queryParameters: queryParams,
+        options: Options(
+          method: request.method,
+          responseType: ResponseType.plain,
+          extra: <String, Object?>{
+            'requiresAuthToken': request.requiresAuthentication,
+          },
+        ),
+      );
+
+      final result = response.data;
+
+      if (result != null) {
+        return Success(result);
+      }
+
+      return Failure(
+        SMobillsException.response().copyWith(
+          statusCode: response.statusCode,
+        ),
+      );
+    } on DioError catch (e) {
+      final exception = SMobillsException.fromDioException(e);
+      return Failure(exception);
+    }
+  }
+
+  Future<Result<List<int>>> requestBytes({
+    required URLRequest request,
+  }) async {
+    try {
+      final response = await _dio.request<List<int>>(
+        request.path,
+        options: Options(
+          method: request.method,
+          responseType: ResponseType.bytes,
+          extra: <String, Object?>{
+            'requiresAuthToken': request.requiresAuthentication,
+          },
+        ),
+      );
+
+      final result = response.data;
+
+      if (result != null && result.isNotEmpty) {
+        return Success(result);
+      }
+
+      return Failure(
+        SMobillsException.response().copyWith(
+          statusCode: response.statusCode,
+        ),
+      );
+    } on DioError catch (e) {
+      final exception = SMobillsException.fromDioException(e);
+      return Failure(exception);
+    }
+  }
+
+  Future<Result<void>> requestMultipart({
+    required URLRequest request,
+    required FormData formData,
+  }) async {
+    try {
+      await _dio.request<void>(
+        request.path,
+        data: formData,
+        options: Options(
+          method: request.method,
+          contentType: 'multipart/form-data',
+          extra: <String, Object?>{
+            'requiresAuthToken': request.requiresAuthentication,
+          },
+        ),
+      );
+
+      return const Success(null);
+    } on DioError catch (e) {
+      final exception = SMobillsException.fromDioException(e);
+      return Failure(exception);
+    }
+  }
 }

@@ -112,13 +112,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get newExpenseTransaction => 'Nova despesa';
 
   @override
-  String get newIncomeTransaction => 'Novo rendimento';
+  String get newIncomeTransaction => 'Nova entrada';
 
   @override
   String get editExpenseTransaction => 'Editar despesa';
 
   @override
-  String get editIncomeTransaction => 'Editar rendimento';
+  String get editIncomeTransaction => 'Editar entrada';
 
   @override
   String get transactionInstructions =>
@@ -181,4 +181,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get newPassword => 'Nova senha';
+
+  @override
+  String get profilePhoto => 'Foto do perfil';
+
+  @override
+  String get changePhoto => 'Alterar foto';
+
+  @override
+  String get removePhoto => 'Remover foto';
 }

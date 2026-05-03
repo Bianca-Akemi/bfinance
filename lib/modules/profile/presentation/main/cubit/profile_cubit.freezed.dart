@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProfileState {
 
- String get name; String get email; String get initialLetters; bool get isLoading;
+ String get name; String get email; String get initialLetters; bool get isLoading; Uint8List? get photoBytes;
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ProfileStateCopyWith<ProfileState> get copyWith => _$ProfileStateCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileState&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.initialLetters, initialLetters) || other.initialLetters == initialLetters)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileState&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.initialLetters, initialLetters) || other.initialLetters == initialLetters)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&const DeepCollectionEquality().equals(other.photoBytes, photoBytes));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,email,initialLetters,isLoading);
+int get hashCode => Object.hash(runtimeType,name,email,initialLetters,isLoading,const DeepCollectionEquality().hash(photoBytes));
 
 @override
 String toString() {
-  return 'ProfileState(name: $name, email: $email, initialLetters: $initialLetters, isLoading: $isLoading)';
+  return 'ProfileState(name: $name, email: $email, initialLetters: $initialLetters, isLoading: $isLoading, photoBytes: $photoBytes)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ProfileStateCopyWith<$Res>  {
   factory $ProfileStateCopyWith(ProfileState value, $Res Function(ProfileState) _then) = _$ProfileStateCopyWithImpl;
 @useResult
 $Res call({
- String name, String email, String initialLetters, bool isLoading
+ String name, String email, String initialLetters, bool isLoading, Uint8List? photoBytes
 });
 
 
@@ -62,13 +62,14 @@ class _$ProfileStateCopyWithImpl<$Res>
 
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? email = null,Object? initialLetters = null,Object? isLoading = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? email = null,Object? initialLetters = null,Object? isLoading = null,Object? photoBytes = freezed,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,initialLetters: null == initialLetters ? _self.initialLetters : initialLetters // ignore: cast_nullable_to_non_nullable
 as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,photoBytes: freezed == photoBytes ? _self.photoBytes : photoBytes // ignore: cast_nullable_to_non_nullable
+as Uint8List?,
   ));
 }
 
@@ -153,10 +154,10 @@ return initial(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String name,  String email,  String initialLetters,  bool isLoading)?  initial,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String name,  String email,  String initialLetters,  bool isLoading,  Uint8List? photoBytes)?  initial,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial(_that.name,_that.email,_that.initialLetters,_that.isLoading);case _:
+return initial(_that.name,_that.email,_that.initialLetters,_that.isLoading,_that.photoBytes);case _:
   return orElse();
 
 }
@@ -174,10 +175,10 @@ return initial(_that.name,_that.email,_that.initialLetters,_that.isLoading);case
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String name,  String email,  String initialLetters,  bool isLoading)  initial,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String name,  String email,  String initialLetters,  bool isLoading,  Uint8List? photoBytes)  initial,}) {final _that = this;
 switch (_that) {
 case _Initial():
-return initial(_that.name,_that.email,_that.initialLetters,_that.isLoading);case _:
+return initial(_that.name,_that.email,_that.initialLetters,_that.isLoading,_that.photoBytes);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +195,10 @@ return initial(_that.name,_that.email,_that.initialLetters,_that.isLoading);case
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String name,  String email,  String initialLetters,  bool isLoading)?  initial,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String name,  String email,  String initialLetters,  bool isLoading,  Uint8List? photoBytes)?  initial,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial(_that.name,_that.email,_that.initialLetters,_that.isLoading);case _:
+return initial(_that.name,_that.email,_that.initialLetters,_that.isLoading,_that.photoBytes);case _:
   return null;
 
 }
@@ -209,13 +210,14 @@ return initial(_that.name,_that.email,_that.initialLetters,_that.isLoading);case
 
 
 class _Initial implements ProfileState {
-  const _Initial({this.name = '', this.email = '', this.initialLetters = '', this.isLoading = false});
+  const _Initial({this.name = '', this.email = '', this.initialLetters = '', this.isLoading = false, this.photoBytes});
   
 
 @override@JsonKey() final  String name;
 @override@JsonKey() final  String email;
 @override@JsonKey() final  String initialLetters;
 @override@JsonKey() final  bool isLoading;
+@override final  Uint8List? photoBytes;
 
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
@@ -227,16 +229,16 @@ _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.initialLetters, initialLetters) || other.initialLetters == initialLetters)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.initialLetters, initialLetters) || other.initialLetters == initialLetters)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&const DeepCollectionEquality().equals(other.photoBytes, photoBytes));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,email,initialLetters,isLoading);
+int get hashCode => Object.hash(runtimeType,name,email,initialLetters,isLoading,const DeepCollectionEquality().hash(photoBytes));
 
 @override
 String toString() {
-  return 'ProfileState.initial(name: $name, email: $email, initialLetters: $initialLetters, isLoading: $isLoading)';
+  return 'ProfileState.initial(name: $name, email: $email, initialLetters: $initialLetters, isLoading: $isLoading, photoBytes: $photoBytes)';
 }
 
 
@@ -247,7 +249,7 @@ abstract mixin class _$InitialCopyWith<$Res> implements $ProfileStateCopyWith<$R
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String email, String initialLetters, bool isLoading
+ String name, String email, String initialLetters, bool isLoading, Uint8List? photoBytes
 });
 
 
@@ -264,13 +266,14 @@ class __$InitialCopyWithImpl<$Res>
 
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? email = null,Object? initialLetters = null,Object? isLoading = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? email = null,Object? initialLetters = null,Object? isLoading = null,Object? photoBytes = freezed,}) {
   return _then(_Initial(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,initialLetters: null == initialLetters ? _self.initialLetters : initialLetters // ignore: cast_nullable_to_non_nullable
 as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,photoBytes: freezed == photoBytes ? _self.photoBytes : photoBytes // ignore: cast_nullable_to_non_nullable
+as Uint8List?,
   ));
 }
 

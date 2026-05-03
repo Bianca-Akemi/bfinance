@@ -58,16 +58,17 @@ class EditView extends StatelessWidget {
                             SMobillsSpacing.sm,
                             SMobillsTextField(
                               controller:
-                                  context.read<EditCubit>().passwordEditController,
-                              hintText: context.l10n.newPassword,
-                              obscureText: true,
-                            ),
-                            SMobillsSpacing.sm,
-                            SMobillsTextField(
-                              controller:
                                   context.read<EditCubit>().emailEditController,
                               hintText: context.l10n.email,
                               readOnly: true,
+                            ),
+                            SMobillsSpacing.sm,
+                            SMobillsTextField(
+                              controller: context
+                                  .read<EditCubit>()
+                                  .passwordEditController,
+                              hintText: context.l10n.newPassword,
+                              obscureText: true,
                             ),
                             SMobillsSpacing.md,
                             SMobillsButton(
