@@ -15,9 +15,7 @@ class AccountsPage extends StatelessWidget {
     return BlocProvider(
       create: (_) => AccountsCubit(
         getUserBankAccountsUseCase: GetIt.I<GetUserBankAccountsUseCase>(),
-      )..setIsNewTransaction(
-          isNewTransaction,
-        ),
+      )..setIsNewTransaction(isNewTransaction),
       child: const AccountsView(),
     );
   }
@@ -33,30 +31,37 @@ class AccountsView extends StatelessWidget {
         return Scaffold(
           appBar: SMobillsAppBar(
             title: context.l10n.yourAccounts,
+            customPreferredSize: const Size.fromHeight(80),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(45)),
+            ),
           ),
           body: SMobillsLoadingOverlay(
             isLoading: state.isLoading,
             child: state.isEmptyAccounts
                 ? const AccountViewEmpty()
-                : ListView.builder(
-                    itemCount: state.accounts.length,
-                    itemBuilder: (context, index) {
-                      final item = state.accounts[index];
-                      return GestureDetector(
-                        onTap: () {
-                          if (state.isNewTransaction) {
-                            context
-                                .read<AccountsCubit>()
-                                .onSelectedAccount(item);
-                          } else {
-                            context
-                                .read<AccountsCubit>()
-                                .editAccount(account: item);
-                          }
-                        },
-                        child: AccountBankItem(item: item),
-                      );
-                    },
+                : Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: ListView.builder(
+                      itemCount: state.accounts.length,
+                      itemBuilder: (context, index) {
+                        final item = state.accounts[index];
+                        return GestureDetector(
+                          onTap: () {
+                            if (state.isNewTransaction) {
+                              context.read<AccountsCubit>().onSelectedAccount(
+                                item,
+                              );
+                            } else {
+                              context.read<AccountsCubit>().editAccount(
+                                account: item,
+                              );
+                            }
+                          },
+                          child: AccountBankItem(item: item),
+                        );
+                      },
+                    ),
                   ),
           ),
           floatingActionButton: FloatingActionButton(
@@ -72,20 +77,14 @@ class AccountsView extends StatelessWidget {
 }
 
 class AccountBankItem extends StatelessWidget {
-  const AccountBankItem({
-    super.key,
-    required this.item,
-  });
+  const AccountBankItem({super.key, required this.item});
 
   final BankAccount item;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(
-        vertical: 8,
-        horizontal: 16,
-      ),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -110,9 +109,7 @@ class AccountBankItem extends StatelessWidget {
 }
 
 class AccountViewEmpty extends StatelessWidget {
-  const AccountViewEmpty({
-    super.key,
-  });
+  const AccountViewEmpty({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -121,25 +118,31 @@ class AccountViewEmpty extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
-            child: Image.asset(
-              'lib/resources/icons/empty_bank_accounts.png',
-              width: 100,
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: context.colorScheme.primaryContainer.withValues(
+                alpha: 0.5,
+              ),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.account_balance,
+              size: 48,
+              color: context.colorScheme.primary,
             ),
           ),
           SMobillsSpacing.md,
-          Text(
-            context.l10n.emptyBankAccounts,
-            style: SMobillsTextStyles.h4,
-          ),
+          Text(context.l10n.emptyBankAccounts, style: SMobillsTextStyles.h4),
           SMobillsSpacing.md,
           Text(
             context.l10n.emptyBankAccountsDetails,
             textAlign: TextAlign.center,
             style: SMobillsTextStyles.overline.copyWith(
               fontSize: 16,
-              color:
-                  Theme.of(context).colorScheme.onBackground.withOpacity(0.75),
+              color: Theme.of(
+                context,
+              ).colorScheme.onBackground.withOpacity(0.75),
             ),
             softWrap: true,
           ),

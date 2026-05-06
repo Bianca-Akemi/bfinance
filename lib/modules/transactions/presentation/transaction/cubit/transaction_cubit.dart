@@ -41,6 +41,10 @@ class TransactionCubit extends Cubit<TransactionState> {
     required int referenceYear,
     required int referenceMonth,
   }) {
+    final now = DateTime.now();
+    final isCurrentMonth =
+        referenceYear == now.year && referenceMonth == now.month;
+
     emit(
       state.copyWith(
         transactionType: transactionType,
@@ -51,7 +55,10 @@ class TransactionCubit extends Cubit<TransactionState> {
             : CategoryType.food,
       ),
     );
-    onChangeSelectedDate(DateTime.now());
+
+    if (isCurrentMonth) {
+      onChangeSelectedDate(now);
+    }
   }
 
   void setupTransaction({

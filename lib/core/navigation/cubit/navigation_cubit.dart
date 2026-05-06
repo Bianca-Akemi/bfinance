@@ -19,12 +19,7 @@ class NavigationCubit extends Cubit<NavigationState> {
         );
 
       case 2:
-        emit(
-          NavigationState(bottomNavItems: Routes.goals.name, index: 2),
-        );
-
-      case 3:
-        emit(NavigationState(bottomNavItems: Routes.profile.name, index: 3));
+        emit(NavigationState(bottomNavItems: Routes.profile.name, index: 2));
     }
   }
 }

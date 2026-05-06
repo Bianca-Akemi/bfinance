@@ -8,17 +8,36 @@ class SpendingBarChart extends StatelessWidget {
   const SpendingBarChart({
     required this.expenseDays,
     required this.incomeDays,
+    required this.chartViewMode,
+    required this.onViewModeChanged,
+    this.isLoading = false,
+    this.isEmpty = false,
     super.key,
   });
 
   final List<SalesData> expenseDays;
   final List<SalesData> incomeDays;
+  final ChartViewMode chartViewMode;
+  final ValueChanged<ChartViewMode> onViewModeChanged;
+  final bool isLoading;
+  final bool isEmpty;
 
   static final _currencyFormat = NumberFormat.currency(
     locale: 'pt_BR',
     symbol: r'R$',
     decimalDigits: 2,
   );
+
+  String get _chartTitle {
+    switch (chartViewMode) {
+      case ChartViewMode.daily:
+        return 'receita x despesa - diário';
+      case ChartViewMode.weekly:
+        return 'receita x despesa - semanal';
+      case ChartViewMode.monthly:
+        return 'receita x despesa - mensal';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +55,7 @@ class SpendingBarChart extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'receita x despesa - últimos 7 dias',
+                _chartTitle,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 style: SMobillsTextStyles.subtitle1.copyWith(
@@ -45,9 +64,34 @@ class SpendingBarChart extends StatelessWidget {
                 ),
               ),
               SMobillsSpacing.sm,
+              _buildViewModeSelector(colorScheme),
+              SMobillsSpacing.sm,
               _buildLegend(colorScheme),
               SMobillsSpacing.sm,
-              SfCartesianChart(
+              if (isLoading)
+                const SizedBox(
+                  height: 200,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              else if (isEmpty)
+                const SizedBox(
+                  height: 200,
+                  child: Center(
+                    child: Text(
+                      'Nenhum dado disponível\npara o período selecionado',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ),
+                )
+              else
+                SfCartesianChart(
                 primaryXAxis: const CategoryAxis(
                   labelStyle: TextStyle(
                     fontFamily: 'Poppins',
@@ -136,6 +180,36 @@ class SpendingBarChart extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildViewModeSelector(ColorScheme colorScheme) {
+    return SegmentedButton<ChartViewMode>(
+      segments: const [
+        ButtonSegment(
+          value: ChartViewMode.daily,
+          label: Text('Diário'),
+        ),
+        ButtonSegment(
+          value: ChartViewMode.weekly,
+          label: Text('Semanal'),
+        ),
+        ButtonSegment(
+          value: ChartViewMode.monthly,
+          label: Text('Mensal'),
+        ),
+      ],
+      selected: {chartViewMode},
+      onSelectionChanged: (selected) {
+        onViewModeChanged(selected.first);
+      },
+      style: ButtonStyle(
+        textStyle: WidgetStatePropertyAll(
+          SMobillsTextStyles.caption.copyWith(
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),

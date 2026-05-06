@@ -89,7 +89,8 @@ class TransactionView extends StatelessWidget {
                           ),
                           Visibility(
                             visible:
-                                state.transactionType == TransactionType.expense,
+                                state.transactionType ==
+                                TransactionType.expense,
                             child: InputRow.selectable(
                               icon: Icons.category_outlined,
                               hintText: context.l10n.category,
@@ -109,7 +110,9 @@ class TransactionView extends StatelessWidget {
                           SMobillsButton(
                             title: context.l10n.save,
                             onPressed: () {
-                              context.read<TransactionCubit>().saveTransaction();
+                              context
+                                  .read<TransactionCubit>()
+                                  .saveTransaction();
                             },
                             isLoading: state.isLoading,
                           ),
@@ -313,7 +316,7 @@ class TransactionView extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(30)),
               border: Border.all(),
-              color: context.colorScheme.background,
+              color: Colors.white,
             ),
             child: Text(
               context.l10n.other,
@@ -341,14 +344,18 @@ class TransactionView extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(30)),
               border: Border.all(),
-              color: context.colorScheme.primaryContainer,
+              color: Colors.white,
             ),
             child: Text(
-              SMobillsDateFormatter.formatDate(
-                context: context,
-                date: state.selectedDate ?? DateTime.now(),
+              state.selectedDate != null
+                  ? SMobillsDateFormatter.formatDate(
+                      context: context,
+                      date: state.selectedDate!,
+                    )
+                  : 'Selecione uma data',
+              style: SMobillsTextStyles.caption.copyWith(
+                fontWeight: FontWeight.w600,
               ),
-              style: SMobillsTextStyles.subtitle2,
             ),
           ),
         ),

@@ -29,12 +29,18 @@ class CreateAccountView extends StatelessWidget {
         return Scaffold(
           appBar: SMobillsAppBar(
             title: context.l10n.createAccount,
+            customPreferredSize: const Size.fromHeight(80),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(45),
+              ),
+            ),
           ),
           body: SMobillsLoadingOverlay(
             isLoading: state.isLoading,
             child: Column(
               children: [
-                SMobillsSpacing.md,
+                SMobillsSpacing.lg,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Center(
@@ -46,13 +52,15 @@ class CreateAccountView extends StatelessWidget {
                   ),
                 ),
                 SMobillsTextField(
+                  paddingVertical: 30,
                   controller: context
                       .read<CreateAccountCubit>()
                       .accountNameEditController,
                   hintText: context.l10n.name,
                 ),
-                SMobillsSpacing.md,
+                SMobillsSpacing.sm,
                 SMobillsTextField(
+                  paddingVertical: 30,
                   controller: context
                       .read<CreateAccountCubit>()
                       .accountBalanceEditController,
@@ -60,7 +68,11 @@ class CreateAccountView extends StatelessWidget {
                   keyboardType: TextInputType.number,
                 ),
                 SMobillsSpacing.lg,
+                SMobillsSpacing.lg,
+                SMobillsSpacing.lg,
+                SMobillsSpacing.lg,
                 SMobillsButton(
+                  width: 350,
                   title: context.l10n.save,
                   onPressed: context.read<CreateAccountCubit>().saveAccount,
                   isLoading: state.isLoading,

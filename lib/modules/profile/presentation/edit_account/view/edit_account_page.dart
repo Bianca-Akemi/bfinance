@@ -6,10 +6,7 @@ import 'package:s_mobills/modules/profile/module.dart';
 import 'package:s_mobills/ui/ui.dart';
 
 class EditAccountPage extends StatelessWidget {
-  const EditAccountPage({
-    super.key,
-    required this.account,
-  });
+  const EditAccountPage({super.key, required this.account});
 
   final BankAccount account;
 
@@ -19,9 +16,7 @@ class EditAccountPage extends StatelessWidget {
       create: (_) => EditAccountCubit(
         deleteBankAccountUseCase: GetIt.I<DeleteBankAccountUseCase>(),
         updateBankAccountUseCase: GetIt.I<UpdateBankAccountUseCase>(),
-      )..loadAccount(
-          account: account,
-        ),
+      )..loadAccount(account: account),
       child: const EditAccountView(),
     );
   }
@@ -37,55 +32,67 @@ class EditAccountView extends StatelessWidget {
         return Scaffold(
           appBar: SMobillsAppBar(
             title: context.l10n.editAccount,
+            customPreferredSize: const Size.fromHeight(80),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(45)),
+            ),
           ),
           body: SMobillsLoadingOverlay(
             isLoading: state.isSaveLoading || state.isDeleteLoading,
             child: Column(
               children: [
-              SMobillsSpacing.md,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Center(
-                  child: Text(
-                    context.l10n.editAccountDetails,
-                    softWrap: true,
-                    textAlign: TextAlign.center,
+                SMobillsSpacing.lg,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Center(
+                    child: Text(
+                      context.l10n.editAccountDetails,
+                      softWrap: true,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
-              ),
-              SMobillsTextField(
-                controller:
-                    context.read<EditAccountCubit>().accountNameEditController,
-                hintText: context.l10n.name,
-              ),
-              SMobillsSpacing.md,
-              SMobillsTextField(
-                controller: context
-                    .read<EditAccountCubit>()
-                    .accountBalanceEditController,
-                hintText: context.l10n.currentBalance,
-                keyboardType: TextInputType.number,
-              ),
-              SMobillsSpacing.lg,
-              SMobillsButton(
-                title: context.l10n.save,
-                onPressed: context.read<EditAccountCubit>().saveAccount,
-                isLoading: state.isSaveLoading,
-              ),
-              SMobillsSpacing.sm,
-              SMobillsButton(
-                title: context.l10n.deleteAccount,
-                onPressed: context.read<EditAccountCubit>().deleteAccount,
-                isLoading: state.isDeleteLoading,
-                buttonStyle: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
+                SMobillsTextField(
+                  paddingVertical: 30,
+                  controller: context
+                      .read<EditAccountCubit>()
+                      .accountNameEditController,
+                  hintText: context.l10n.name,
                 ),
-                textStyle: SMobillsTextStyles.button.copyWith(
-                  fontSize: FontSize.subtitle1,
-                  color: context.colorScheme.error,
+                SMobillsSpacing.sm,
+                SMobillsTextField(
+                  paddingVertical: 30,
+                  controller: context
+                      .read<EditAccountCubit>()
+                      .accountBalanceEditController,
+                  hintText: context.l10n.currentBalance,
+                  keyboardType: TextInputType.number,
                 ),
-              ),
+                SMobillsSpacing.lg,
+                SMobillsSpacing.lg,
+                SMobillsSpacing.lg,
+                SMobillsSpacing.lg,
+                SMobillsButton(
+                  width: 350,
+                  title: context.l10n.save,
+                  onPressed: context.read<EditAccountCubit>().saveAccount,
+                  isLoading: state.isSaveLoading,
+                ),
+                SMobillsSpacing.lg,
+                SMobillsButton(
+                  title: context.l10n.deleteAccount,
+                  onPressed: context.read<EditAccountCubit>().deleteAccount,
+                  isLoading: state.isDeleteLoading,
+                  buttonStyle: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  ),
+                  textStyle: SMobillsTextStyles.button.copyWith(
+                    fontSize: FontSize.subtitle1,
+                    fontWeight: FontWeight.w600,
+                    color: context.colorScheme.error,
+                  ),
+                ),
               ],
             ),
           ),

@@ -40,10 +40,6 @@ class MainPage extends StatelessWidget {
       route: Routes.transactions.path,
       icon: Icons.swap_vert,
     ),
-    _NavItem(
-      route: Routes.goals.path,
-      icon: Icons.monetization_on,
-    ),
     _NavItem(route: Routes.profile.path, icon: Icons.person_rounded),
   ];
 }
@@ -70,7 +66,7 @@ class _CustomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 12),
         child: Container(
           height: 56,
           decoration: BoxDecoration(

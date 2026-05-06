@@ -32,55 +32,63 @@ class EditView extends StatelessWidget {
         return Scaffold(
           appBar: SMobillsAppBar(
             title: context.l10n.myRegistration,
+            customPreferredSize: const Size.fromHeight(80),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(45)),
+            ),
           ),
           body: SMobillsLoadingOverlay(
             isLoading: state.isLoading || state.startDeleteAccount,
             child: SingleChildScrollView(
               child: state.startDeleteAccount
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Column(
-                    children: [
-                      SMobillsSpacing.md,
-                      Center(
-                        child: Text(context.l10n.editProfileDetails),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
+                  ? const Center(child: CircularProgressIndicator())
+                  : Column(
+                      children: [
+                        SMobillsSpacing.lg,
+                        Center(child: Text(context.l10n.editProfileDetails)),
+                        Column(
                           children: [
                             SMobillsTextField(
-                              controller:
-                                  context.read<EditCubit>().nameEditController,
+                              paddingVertical: 30,
+                              controller: context
+                                  .read<EditCubit>()
+                                  .nameEditController,
                               hintText: context.l10n.name,
                             ),
                             SMobillsSpacing.sm,
                             SMobillsTextField(
-                              controller:
-                                  context.read<EditCubit>().emailEditController,
+                              paddingVertical: 30,
+                              controller: context
+                                  .read<EditCubit>()
+                                  .emailEditController,
                               hintText: context.l10n.email,
                               readOnly: true,
                             ),
                             SMobillsSpacing.sm,
                             SMobillsTextField(
+                              paddingVertical: 30,
                               controller: context
                                   .read<EditCubit>()
                                   .passwordEditController,
                               hintText: context.l10n.newPassword,
                               obscureText: true,
                             ),
-                            SMobillsSpacing.md,
+                            SMobillsSpacing.lg,
+                            SMobillsSpacing.lg,
+                            SMobillsSpacing.lg,
+                            SMobillsSpacing.lg,
                             SMobillsButton(
+                              width: 350,
                               title: context.l10n.save,
                               onPressed: context.read<EditCubit>().updateInfo,
                               isLoading: state.isLoading,
                             ),
-                            SMobillsSpacing.sm,
+                            SMobillsSpacing.lg,
                             SMobillsButton(
                               title: context.l10n.deleteAccount,
-                              onPressed:
-                                  context.read<EditCubit>().deleteAccount,
+                              onPressed: context
+                                  .read<EditCubit>()
+                                  .deleteAccount,
                               isLoading: state.startDeleteAccount,
                               buttonStyle: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.transparent,
@@ -88,15 +96,15 @@ class EditView extends StatelessWidget {
                               ),
                               textStyle: SMobillsTextStyles.button.copyWith(
                                 fontSize: FontSize.subtitle1,
+                                fontWeight: FontWeight.w600,
                                 color: context.colorScheme.error,
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-          ),
+                      ],
+                    ),
+            ),
           ),
         );
       },

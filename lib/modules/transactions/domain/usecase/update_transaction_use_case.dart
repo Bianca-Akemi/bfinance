@@ -7,6 +7,10 @@ class UpdateTransactionUseCase {
   final TransactionRepository repository;
 
   Future<void> call({required TransactionState state}) async {
+    if (state.selectedDate == null) {
+      throw SMobillsException(message: 'Selecione uma data');
+    }
+
     if (state.bankAccountId == -1) {
       throw SMobillsException(message: 'Selecione uma conta valida');
     }

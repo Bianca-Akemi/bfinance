@@ -10,6 +10,7 @@ class SMobillsButton extends StatelessWidget {
     this.isLoading,
     this.textStyle,
     this.buttonStyle,
+    this.width,
   });
 
   final String title;
@@ -17,6 +18,7 @@ class SMobillsButton extends StatelessWidget {
   final bool? isLoading;
   final TextStyle? textStyle;
   final ButtonStyle? buttonStyle;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class SMobillsButton extends StatelessWidget {
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      width: 300,
+      width: width ?? 300,
       height: 52,
       child: ElevatedButton(
         style: buttonStyle,

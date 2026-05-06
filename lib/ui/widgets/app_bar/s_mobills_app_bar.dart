@@ -14,6 +14,7 @@ class SMobillsAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.profilePhotoBytes,
+    this.shape,
     super.key,
   });
 
@@ -25,6 +26,7 @@ class SMobillsAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color? backgroundColor;
   final Color? foregroundColor;
   final Uint8List? profilePhotoBytes;
+  final ShapeBorder? shape;
 
   @override
   Size get preferredSize =>
@@ -35,22 +37,21 @@ class SMobillsAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
+      shape: shape,
       centerTitle: !isHomePage,
       title: Padding(
         padding: EdgeInsets.only(left: isHomePage ? 20 : 0),
         child: isHomePage
             ? Row(
                 children: [
-                  _ProfileAvatar(
-                    photoBytes: profilePhotoBytes,
-                    name: title,
-                  ),
+                  _ProfileAvatar(photoBytes: profilePhotoBytes, name: title),
                   const SizedBox(width: 12),
                   Flexible(
                     child: Text(
                       'Olá $title',
-                      style: SMobillsTextStyles.h5
-                          .copyWith(fontWeight: FontWeight.w700),
+                      style: SMobillsTextStyles.h5.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -58,8 +59,9 @@ class SMobillsAppBar extends StatelessWidget implements PreferredSizeWidget {
               )
             : Text(
                 title,
-                style: SMobillsTextStyles.h5
-                    .copyWith(fontWeight: FontWeight.w700),
+                style: SMobillsTextStyles.h5.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
       ),
       bottom: bottom,
@@ -70,10 +72,7 @@ class SMobillsAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class _ProfileAvatar extends StatelessWidget {
-  const _ProfileAvatar({
-    required this.name,
-    this.photoBytes,
-  });
+  const _ProfileAvatar({required this.name, this.photoBytes});
 
   final Uint8List? photoBytes;
   final String name;
@@ -81,13 +80,11 @@ class _ProfileAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasPhoto = photoBytes != null && photoBytes!.isNotEmpty;
-    final initials = StringHelper.extractInitials(
-      name.isNotEmpty ? name : ' ',
-    );
+    final initials = StringHelper.extractInitials(name.isNotEmpty ? name : ' ');
 
     return CircleAvatar(
       radius: 20,
-      backgroundColor: context.colorScheme.primary,
+      backgroundColor: Colors.white.withValues(alpha: 0.4),
       backgroundImage: hasPhoto ? MemoryImage(photoBytes!) : null,
       child: hasPhoto
           ? null

@@ -147,7 +147,8 @@ class ProfileView extends StatelessWidget {
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: SMobillsAppBar(title: context.l10n.profile),
+          appBar: SMobillsAppBar(title: context.l10n.profile, ),
+          
           body: SMobillsLoadingOverlay(
             isLoading: state.isLoading,
             child: Column(

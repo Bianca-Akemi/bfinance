@@ -81,20 +81,26 @@ class HomeView extends StatelessWidget {
                               ),
                             ),
                       SMobillsSpacing.lg,
-                      state.lastSevenDaysExpenseEmpty
-                          ? const SizedBox.shrink()
-                          : Column(
-                              children: [
-                                SpendingBarChart(
-                                  expenseDays: state.lastSevenDaysExpense,
-                                  incomeDays: state.lastSevenDaysIncome,
-                                ),
-                                SMobillsSpacing.lg,
-                                SpendingFrequency(
-                                  days: state.lastSevenDaysExpense,
-                                ),
-                              ],
-                            ),
+                      if (state.month == DateTime.now().month &&
+                          state.year == DateTime.now().year) ...[
+                        SpendingBarChart(
+                          expenseDays: state.chartExpenseData,
+                          incomeDays: state.chartIncomeData,
+                          chartViewMode: state.chartViewMode,
+                          isLoading: state.isChartLoading,
+                          isEmpty: state.chartDataEmpty,
+                          onViewModeChanged: context
+                              .read<HomeCubit>()
+                              .changeChartViewMode,
+                        ),
+                        if (!state.chartDataEmpty) ...[
+                          SMobillsSpacing.lg,
+                          SpendingFrequency(
+                            days: state.chartExpenseData,
+                            chartViewMode: state.chartViewMode,
+                          ),
+                        ],
+                      ],
                     ],
                   ),
                 ),

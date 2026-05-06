@@ -10,6 +10,7 @@ class SMobillsTextField extends StatefulWidget {
     this.obscureText,
     this.readOnly,
     this.title,
+    this.paddingVertical,
   });
 
   final TextEditingController? controller;
@@ -18,6 +19,7 @@ class SMobillsTextField extends StatefulWidget {
   final bool? obscureText;
   final bool? readOnly;
   final String? title;
+  final double? paddingVertical;
 
   @override
   State<SMobillsTextField> createState() => _SMobillsTextFieldState();
@@ -43,7 +45,10 @@ class _SMobillsTextFieldState extends State<SMobillsTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+      padding: EdgeInsets.symmetric(
+        horizontal: widget.paddingVertical ?? 50,
+        vertical: 10,
+      ),
       child: Column(
         spacing: 8,
         crossAxisAlignment: CrossAxisAlignment.start,

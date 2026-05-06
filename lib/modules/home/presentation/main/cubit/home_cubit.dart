@@ -43,7 +43,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(month: date.month, year: date.year));
 
     await _loadUserInfo();
-    await _loadLastSevenDays();
+    await _loadChartData();
     await _loadTransactionsMonth();
     await _loadAllAccounts();
   }
@@ -60,87 +60,195 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<void> _loadLastSevenDays() async {
+  void changeChartViewMode(ChartViewMode mode) {
+    emit(state.copyWith(chartViewMode: mode));
+    _loadChartData();
+  }
+
+  Future<void> _loadChartData() async {
     try {
-      emit(state.copyWith(isLoading: true));
-      final inputFormatter = DateFormat('dd/MM');
-      final expenseDays = <SalesData>[];
-      final incomeDays = <SalesData>[];
+      emit(state.copyWith(isChartLoading: true));
 
-      final lastDayOfMonth =
-          DateHelper.lastDayMonth(state.year, state.month);
-      final referenceDate = DateTime.now().isBefore(lastDayOfMonth)
-          && state.year == DateTime.now().year
-          && state.month == DateTime.now().month
-          ? DateTime.now()
-          : lastDayOfMonth;
-
-      for (var i = 0; i < 7; i++) {
-        final date = referenceDate.subtract(Duration(days: i));
-        final label = inputFormatter.format(date);
-        expenseDays.add(SalesData(label, 0));
-        incomeDays.add(SalesData(label, 0));
+      switch (state.chartViewMode) {
+        case ChartViewMode.daily:
+          await _loadDailyChart();
+        case ChartViewMode.weekly:
+          await _loadWeeklyChart();
+        case ChartViewMode.monthly:
+          await _loadMonthlyChart();
       }
-
-      final start = referenceDate.subtract(const Duration(days: 7));
-      final end = referenceDate;
-
-      final result = await getTransactionsPeriodUseCase(
-        start: start,
-        end: end,
-      );
-
-      final expenses = result
-          .where((e) => e.type == TransactionType.expense)
-          .map(
-            (e) => SalesData(
-              inputFormatter.format(e.date),
-              e.value.value,
-            ),
-          );
-
-      for (final e in expenses) {
-        final day = expenseDays.firstWhereOrNull(
-          (element) => e.year == element.year,
-        );
-        if (day != null) {
-          day.sales += e.sales;
-        }
-      }
-
-      final incomes = result
-          .where((e) => e.type == TransactionType.income)
-          .map(
-            (e) => SalesData(
-              inputFormatter.format(e.date),
-              e.value.value,
-            ),
-          );
-
-      for (final e in incomes) {
-        final day = incomeDays.firstWhereOrNull(
-          (element) => e.year == element.year,
-        );
-        if (day != null) {
-          day.sales += e.sales;
-        }
-      }
-
-      final lastSevenDaysExpenseEmpty =
-          expenseDays.every((e) => e.sales == 0.00);
-
-      emit(
-        state.copyWith(
-          lastSevenDaysExpense: expenseDays.reversed.toList(),
-          lastSevenDaysIncome: incomeDays.reversed.toList(),
-          lastSevenDaysExpenseEmpty: lastSevenDaysExpenseEmpty,
-        ),
-      );
     } on SMobillsException catch (e) {
       AppRouter.showError(message: e.message);
     } finally {
-      emit(state.copyWith(isLoading: false));
+      emit(state.copyWith(isChartLoading: false));
     }
+  }
+
+  Future<void> _loadDailyChart() async {
+    final inputFormatter = DateFormat('EEE', 'pt_BR');
+    final dayFormatter = DateFormat('dd/MM');
+    final expenseDays = <SalesData>[];
+    final incomeDays = <SalesData>[];
+
+    final now = DateTime.now();
+    // Início da semana (segunda-feira)
+    final weekday = now.weekday; // 1=seg, 7=dom
+    final startOfWeek = DateTime(now.year, now.month, now.day)
+        .subtract(Duration(days: weekday - 1));
+
+    for (var i = 0; i < 7; i++) {
+      final date = startOfWeek.add(Duration(days: i));
+      final label =
+          '${inputFormatter.format(date)}\n${dayFormatter.format(date)}';
+      expenseDays.add(SalesData(label, 0));
+      incomeDays.add(SalesData(label, 0));
+    }
+
+    final endOfWeek = startOfWeek.add(
+      const Duration(days: 6, hours: 23, minutes: 59, seconds: 59),
+    );
+
+    final result = await getTransactionsPeriodUseCase(
+      start: startOfWeek,
+      end: endOfWeek,
+    );
+
+    final expenses =
+        result.where((e) => e.type == TransactionType.expense);
+    final incomes =
+        result.where((e) => e.type == TransactionType.income);
+
+    for (final e in expenses) {
+      final index = e.date.weekday - 1; // 0=seg, 6=dom
+      if (index >= 0 && index < expenseDays.length) {
+        expenseDays[index].sales += e.value.value;
+      }
+    }
+
+    for (final e in incomes) {
+      final index = e.date.weekday - 1;
+      if (index >= 0 && index < incomeDays.length) {
+        incomeDays[index].sales += e.value.value;
+      }
+    }
+
+    _emitChartState(expenseDays: expenseDays, incomeDays: incomeDays);
+  }
+
+  Future<void> _loadWeeklyChart() async {
+    final expenseDays = <SalesData>[];
+    final incomeDays = <SalesData>[];
+
+    final start = DateHelper.firstDayMonth(state.year, state.month);
+    final end = DateHelper.lastDayMonth(state.year, state.month);
+
+    // Agrupar por semanas do mês
+    final weeks = <_WeekRange>[];
+    var weekStart = start;
+    var weekNumber = 1;
+
+    while (weekStart.isBefore(end) || weekStart.isAtSameMomentAs(end)) {
+      // Fim da semana = próximo domingo ou último dia do mês
+      var weekEnd = weekStart.add(Duration(days: 6 - (weekStart.weekday - 1)));
+      if (weekEnd.isAfter(end)) {
+        weekEnd = end;
+      }
+
+      final label = 'Sem $weekNumber';
+      weeks.add(_WeekRange(start: weekStart, end: weekEnd, label: label));
+      expenseDays.add(SalesData(label, 0));
+      incomeDays.add(SalesData(label, 0));
+
+      weekStart = weekEnd.add(const Duration(days: 1));
+      weekStart = DateTime(weekStart.year, weekStart.month, weekStart.day);
+      weekNumber++;
+    }
+
+    final result = await getTransactionsPeriodUseCase(
+      start: start,
+      end: end,
+    );
+
+    final expenses =
+        result.where((e) => e.type == TransactionType.expense);
+    final incomes =
+        result.where((e) => e.type == TransactionType.income);
+
+    for (final e in expenses) {
+      for (var i = 0; i < weeks.length; i++) {
+        final week = weeks[i];
+        if (!e.date.isBefore(week.start) && !e.date.isAfter(week.end)) {
+          expenseDays[i].sales += e.value.value;
+          break;
+        }
+      }
+    }
+
+    for (final e in incomes) {
+      for (var i = 0; i < weeks.length; i++) {
+        final week = weeks[i];
+        if (!e.date.isBefore(week.start) && !e.date.isAfter(week.end)) {
+          incomeDays[i].sales += e.value.value;
+          break;
+        }
+      }
+    }
+
+    _emitChartState(expenseDays: expenseDays, incomeDays: incomeDays);
+  }
+
+  Future<void> _loadMonthlyChart() async {
+    final inputFormatter = DateFormat('MMM', 'pt_BR');
+    final expenseDays = <SalesData>[];
+    final incomeDays = <SalesData>[];
+
+    // Todos os meses do ano selecionado
+    for (var m = 1; m <= 12; m++) {
+      final date = DateTime(state.year, m);
+      final label = inputFormatter.format(date);
+      expenseDays.add(SalesData(label, 0));
+      incomeDays.add(SalesData(label, 0));
+    }
+
+    final start = DateTime(state.year);
+    final end = DateTime(state.year, 12, 31, 23, 59, 59);
+
+    final result = await getTransactionsPeriodUseCase(
+      start: start,
+      end: end,
+    );
+
+    final expenses =
+        result.where((e) => e.type == TransactionType.expense);
+    final incomes =
+        result.where((e) => e.type == TransactionType.income);
+
+    for (final e in expenses) {
+      expenseDays[e.date.month - 1].sales += e.value.value;
+    }
+
+    for (final e in incomes) {
+      incomeDays[e.date.month - 1].sales += e.value.value;
+    }
+
+    _emitChartState(expenseDays: expenseDays, incomeDays: incomeDays);
+  }
+
+  void _emitChartState({
+    required List<SalesData> expenseDays,
+    required List<SalesData> incomeDays,
+  }) {
+    final hasExpense = expenseDays.any((e) => e.sales > 0);
+    final hasIncome = incomeDays.any((e) => e.sales > 0);
+    final chartDataEmpty = !hasExpense && !hasIncome;
+
+    emit(
+      state.copyWith(
+        chartExpenseData: expenseDays,
+        chartIncomeData: incomeDays,
+        chartDataEmpty: chartDataEmpty,
+      ),
+    );
   }
 
   Future<void> _loadTransactionsMonth() async {
@@ -232,7 +340,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(state.copyWith(month: state.month + 1));
     }
     _loadTransactionsMonth();
-    _loadLastSevenDays();
+    _loadChartData();
   }
 
   void previousMonth() {
@@ -242,6 +350,14 @@ class HomeCubit extends Cubit<HomeState> {
       emit(state.copyWith(month: state.month - 1));
     }
     _loadTransactionsMonth();
-    _loadLastSevenDays();
+    _loadChartData();
   }
+}
+
+class _WeekRange {
+  _WeekRange({required this.start, required this.end, required this.label});
+
+  final DateTime start;
+  final DateTime end;
+  final String label;
 }

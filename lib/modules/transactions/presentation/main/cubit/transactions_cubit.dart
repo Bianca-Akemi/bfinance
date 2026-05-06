@@ -36,6 +36,12 @@ class TransactionsCubit extends Cubit<TransactionsState> {
     await _getTransactions();
   }
 
+  Future<void> _refreshTransactions() async {
+    emit(state.copyWith(isLoading: true));
+    await _loadAccounts();
+    await _getTransactions();
+  }
+
   Future<void> _loadAccounts() async {
     try {
       _accounts = await getUserBankAccountsUseCase();
@@ -92,7 +98,7 @@ class TransactionsCubit extends Cubit<TransactionsState> {
       },
     );
 
-    await _loadTransactions();
+    await _refreshTransactions();
   }
 
   Future<void> editTransaction({required Transaction transaction}) async {
@@ -101,7 +107,7 @@ class TransactionsCubit extends Cubit<TransactionsState> {
       extra: transaction,
     );
 
-    await _loadTransactions();
+    await _refreshTransactions();
   }
 
   void _floatingButtonToggle() {

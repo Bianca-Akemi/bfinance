@@ -94,7 +94,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get editProfileDetails =>
-      'Edite as informações basicas do seu cadastro';
+      'Edite as informações básicas do seu cadastro';
 
   @override
   String get save => 'Salvar';

@@ -4,15 +4,31 @@ import 'package:s_mobills/modules/home/presentation/main/cubit/home_cubit.dart';
 import 'package:s_mobills/ui/utils/s_mobills_styles.dart';
 
 class SpendingFrequency extends StatelessWidget {
-  const SpendingFrequency({required this.days, super.key});
+  const SpendingFrequency({
+    required this.days,
+    required this.chartViewMode,
+    super.key,
+  });
 
   final List<SalesData> days;
+  final ChartViewMode chartViewMode;
 
   static final _currencyFormat = NumberFormat.currency(
     locale: 'pt_BR',
     symbol: r'R$',
     decimalDigits: 2,
   );
+
+  String get _title {
+    switch (chartViewMode) {
+      case ChartViewMode.daily:
+        return 'gastos da semana';
+      case ChartViewMode.weekly:
+        return 'gastos por semana do mês';
+      case ChartViewMode.monthly:
+        return 'gastos por mês do ano';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +38,7 @@ class SpendingFrequency extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'gastos dos últimos 7 dias',
+            _title,
             style: SMobillsTextStyles.subtitle1.copyWith(
               color: Colors.black,
               fontWeight: FontWeight.w600,
